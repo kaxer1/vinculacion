@@ -1,11 +1,10 @@
 package com.core.arnuv.repository;
 
-import java.util.List;
-
+import com.core.arnuv.model.Catalogo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.core.arnuv.model.Catalogo;
+import java.util.List;
 
 public interface ICatalogoRepository extends JpaRepository<Catalogo, Integer> {
 

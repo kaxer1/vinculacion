@@ -1,34 +1,48 @@
 package com.core.arnuv.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
-import java.io.Serializable;
+import java.util.List;
 
-/**
- * Clase entity de CatalogoDetalle de JPA
- */
 @Data
+@Comment("Tabla que almacena el detalle de cada catalogos que maneja el sistema")
 @Entity
-public class CatalogoDetalle implements Serializable {
+@Table(name = "catalogodetalle")
+public class CatalogoDetalle {
+    @EmbeddedId
+    private CatalogoDetalleId id;
 
-	@EmbeddedId
-	private CatalogoDetallePk pk;
-	
-	@Column(length = 100)
-	private String nombre;
-	
-	@Convert(converter = NumericBooleanConverter.class)
-	private Boolean activo;
+    @MapsId("idcatalogo")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Comment("Codigo de catalogo")
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "idcatalogo", nullable = false)
+    @JsonBackReference
+    @ToString.Exclude
+    private Catalogo idcatalogo;
 
-	@ManyToOne
-	@JoinColumn(name = "id_catalogo", insertable = false, updatable = false, nullable = false) // solo sirve de utileria para la relacion
-	@MapsId("idCatalogo")
-	@JsonBackReference
-	@ToString.Exclude
-	private Catalogo catalogo;
+    @Comment("Nombre del catalogo")
+    @Column(name = "nombre", length = 100)
+    private String nombre;
+
+    @Comment("1 catalogo activo, 0 Inactivo")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean activo;
+
+    @OneToMany(mappedBy = "catalogodetalle")
+    @JsonIgnore
+    private List<MascotaDetalle> mascotaDetalles;
+
+    @OneToMany(mappedBy = "catalogodetalle")
+    @JsonIgnore
+    private List<Personadetalle> personadetalles;
 
 }

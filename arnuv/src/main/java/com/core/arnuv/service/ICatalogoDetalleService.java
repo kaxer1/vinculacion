@@ -1,8 +1,8 @@
 package com.core.arnuv.service;
 
-import java.util.List;
-
 import com.core.arnuv.model.CatalogoDetalle;
+
+import java.util.List;
 
 /**
  * Interfaz de metodos que expone el servicio
