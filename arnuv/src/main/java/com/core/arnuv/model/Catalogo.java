@@ -13,21 +13,21 @@ import java.util.List;
 @Entity
 @Table(name = "catalogo")
 public class Catalogo {
-    @Id
-    @Comment("Codigo de catalogo")
-    @Column(name = "idcatalogo", nullable = false)
-    private Integer id;
+	@Id
+	@Comment("Codigo de catalogo")
+	@Column(name = "idcatalogo", nullable = false)
+	private Integer id;
 
-    @Comment("Nombre del catalogo")
-    @Column(name = "nombre", length = 100)
-    private String nombre;
+	@Comment("Nombre del catalogo")
+	@Column(name = "nombre", length = 100)
+	private String nombre;
 
-    @Comment("1 catalogo activo, 0 Inactivo")
-    @Convert(converter = NumericBooleanConverter.class)
-    private Boolean activo;
+	@Comment("1 catalogo activo, 0 Inactivo")
+	@Convert(converter = NumericBooleanConverter.class)
+	private Boolean activo;
 
-    @OneToMany(mappedBy = "idcatalogo")
-    @JsonManagedReference
-    private List<CatalogoDetalle> catalogodetalles;
+	@OneToMany(mappedBy = "idcatalogo")
+	@JsonManagedReference
+	private List<CatalogoDetalle> catalogodetalles;
 
 }

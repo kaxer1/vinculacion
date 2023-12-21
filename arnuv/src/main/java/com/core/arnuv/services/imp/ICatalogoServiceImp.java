@@ -31,5 +31,8 @@ public class ICatalogoServiceImp implements ICatalogoService {
 		return repo.findAll();
 	}
 
-
+	@Override
+	public Catalogo insertarCatalogo(Catalogo nuevo) {
+		return repo.save(nuevo);
+	}
 }

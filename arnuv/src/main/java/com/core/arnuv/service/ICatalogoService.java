@@ -14,4 +14,5 @@ public interface ICatalogoService {
 	List<Catalogo> listarCatalogosInactivos();
 	List<Catalogo> listarTodosCatalogos();
 
+	public Catalogo insertarCatalogo(Catalogo nuevo);
 }
