@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @Component
 public class ICatalogoServiceImp implements ICatalogoService {
-	
+
 	@Autowired
 	private ICatalogoRepository repo;
 
@@ -42,5 +42,10 @@ public class ICatalogoServiceImp implements ICatalogoService {
 		existeCatalogo.setNombre(data.getNombre());
 		existeCatalogo.setActivo(data.getActivo());
 		return repo.save(existeCatalogo);
+	}
+
+	@Override
+	public Catalogo buscarPorId(int id) {
+		return repo.findById(id).orElse(null);
 	}
 }

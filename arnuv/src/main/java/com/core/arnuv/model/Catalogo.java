@@ -6,16 +6,21 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.type.NumericBooleanConverter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Comment("Tabla que almacena los catalogos que maneja el sistema")
 @Entity
 @Table(name = "catalogo")
-public class Catalogo {
+public class Catalogo implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Comment("Codigo de catalogo")
 	@Column(name = "idcatalogo", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Comment("Nombre del catalogo")
