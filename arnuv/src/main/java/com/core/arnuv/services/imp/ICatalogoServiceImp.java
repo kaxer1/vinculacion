@@ -32,7 +32,15 @@ public class ICatalogoServiceImp implements ICatalogoService {
 	}
 
 	@Override
-	public Catalogo insertarCatalogo(Catalogo nuevo) {
-		return repo.save(nuevo);
+	public Catalogo insertarCatalogo(Catalogo data) {
+		return repo.save(data);
+	}
+
+	@Override
+	public Catalogo actualizarCatalogo(Catalogo data) {
+		Catalogo existeCatalogo = repo.findById(data.getId()).orElse(null);
+		existeCatalogo.setNombre(data.getNombre());
+		existeCatalogo.setActivo(data.getActivo());
+		return repo.save(existeCatalogo);
 	}
 }
