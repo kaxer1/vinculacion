@@ -6,6 +6,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -13,49 +14,53 @@ import java.time.Instant;
 @Comment("Tabla que almacena sessiones de usuario, cuando este esta conectado a  la aplicacion")
 @Entity
 @Table(name = "usuariosession")
-public class Usuariosession {
-    @Id
-    @Comment("Codigo de usuario.")
-    @Column(name = "idusuario", nullable = false, length = 20)
-    private String idusuario;
+public class Usuariosession implements Serializable {
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @Comment("Codigo de usuario.")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idusuario", nullable = false)
-    private Usuariodetalle usuariodetalle;
+	private static final long serialVersionUID = 1L;
 
-    @Comment("Numero de intentos de login")
-    @Column(name = "numerointentos", precision = 2)
-    private BigDecimal numerointentos;
+	@Id
+	@Comment("Codigo de usuario.")
+	@Column(name = "idusuario", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idusuario;
 
-    @Comment("ID de la session del browser o movil")
-    @Column(name = "idsession", length = 70)
-    private String idsession;
+	@MapsId
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@Comment("Codigo de usuario.")
+	@OnDelete(action = OnDeleteAction.RESTRICT)
+	@JoinColumn(name = "idusuario", nullable = false)
+	private Usuariodetalle usuariodetalle;
 
-    @Comment("Fecha de inicio de la session")
-    @Column(name = "fechainicio")
-    private Instant fechainicio;
+	@Comment("Numero de intentos de login")
+	@Column(name = "numerointentos", precision = 2)
+	private BigDecimal numerointentos;
 
-    @Comment("Fecha de cierre de la session")
-    @Column(name = "fechasalida")
-    private Instant fechasalida;
+	@Comment("ID de la session del browser o movil")
+	@Column(name = "idsession", length = 70)
+	private String idsession;
 
-    @Comment("1 Indica que el usuario realizo un login a la aplicacion y mantien la aplicacion activa, 0 el usuario esta fuera de la aplicacion.")
-    @Column(name = "activo", precision = 1)
-    private BigDecimal activo;
+	@Comment("Fecha de inicio de la session")
+	@Column(name = "fechainicio")
+	private Instant fechainicio;
 
-    @Comment("I(usuario realiza login con exito), F(Intento fallido de login), L(Usuario relizo logout), S(Sistema realizo logout por inactividad)")
-    @Column(name = "estado", length = 1)
-    private String estado;
+	@Comment("Fecha de cierre de la session")
+	@Column(name = "fechasalida")
+	private Instant fechasalida;
 
-    @Comment("identificacion del dispositivo que ingresa el usuario")
-    @Column(name = "useragent", length = 200)
-    private String useragent;
+	@Comment("1 Indica que el usuario realizo un login a la aplicacion y mantien la aplicacion activa, 0 el usuario esta fuera de la aplicacion.")
+	@Column(name = "activo", precision = 1)
+	private BigDecimal activo;
 
-    @Comment("Codigo de terminal publico o privado con la que sale la peticon del usuario, IPV4 y IPV6")
-    @Column(name = "iptermialremoto", length = 130)
-    private String iptermialremoto;
+	@Comment("I(usuario realiza login con exito), F(Intento fallido de login), L(Usuario relizo logout), S(Sistema realizo logout por inactividad)")
+	@Column(name = "estado", length = 1)
+	private String estado;
+
+	@Comment("identificacion del dispositivo que ingresa el usuario")
+	@Column(name = "useragent", length = 200)
+	private String useragent;
+
+	@Comment("Codigo de terminal publico o privado con la que sale la peticon del usuario, IPV4 y IPV6")
+	@Column(name = "iptermialremoto", length = 130)
+	private String iptermialremoto;
 
 }

@@ -5,7 +5,9 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.NumericBooleanConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -14,62 +16,67 @@ import java.util.List;
 @Comment("Tabla que almacena detalle de informacion de un usuario")
 @Entity
 @Table(name = "usuariodetalle")
-public class Usuariodetalle {
-    @Id
-    @Comment("Codigo de usuario.")
-    @Column(name = "idusuario", nullable = false, length = 20)
-    private String idusuario;
+public class Usuariodetalle implements Serializable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Codigo de personas")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idpersona")
-    private Personadetalle idpersona;
+	private static final long serialVersionUID = 1L;
 
-    @Comment("Codigo de usuario de ingreso.")
-    @Column(name = "idusuarioing", length = 20)
-    private String idusuarioing;
+	@Id
+	@Comment("Codigo de usuario.")
+	@Column(name = "idusuario", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idusuario;
 
-    @Comment("Codigo de usuario de modificacion")
-    @Column(name = "idusuariomod", length = 20)
-    private String idusuariomod;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@Comment("Codigo de personas")
+	@OnDelete(action = OnDeleteAction.RESTRICT)
+	@JoinColumn(name = "idpersona")
+	private Personadetalle idpersona;
 
-    @Comment("Codigo de usuario de aprobacion.")
-    @Column(name = "idusuarioaprobacion", length = 20)
-    private String idusuarioaprobacion;
+	@Comment("Codigo de usuario de ingreso.")
+	@Column(name = "idusuarioing", length = 20)
+	private String idusuarioing;
 
-    @Comment("Fecha de ingreso del registro")
-    @Column(name = "fechaingreso")
-    private Instant fechaingreso;
+	@Comment("Codigo de usuario de modificacion")
+	@Column(name = "idusuariomod", length = 20)
+	private String idusuariomod;
 
-    @Comment("Fecha de modificacion del registro")
-    @Column(name = "fechamodificacion")
-    private Instant fechamodificacion;
+	@Comment("Codigo de usuario de aprobacion.")
+	@Column(name = "idusuarioaprobacion", length = 20)
+	private String idusuarioaprobacion;
 
-    @Comment("Fecha de Aprobacion del registro")
-    @Column(name = "fechaaprobacion")
-    private Instant fechaaprobacion;
+	@Comment("Fecha de ingreso del registro")
+	@Column(name = "fechaingreso")
+	private Instant fechaingreso;
 
-    @Comment("1 Activo, 0 Inactivo")
-    @Column(name = "estado", precision = 1)
-    private BigDecimal estado;
+	@Comment("Fecha de modificacion del registro")
+	@Column(name = "fechamodificacion")
+	private Instant fechamodificacion;
 
-    @Comment("Password encriptado del usuario.")
-    @Column(name = "password", length = 70)
-    private String password;
+	@Comment("Fecha de Aprobacion del registro")
+	@Column(name = "fechaaprobacion")
+	private Instant fechaaprobacion;
 
-    @Comment("1, Indica que el usuario tiene que cambiar de password")
-    @Column(name = "cambiopassword", precision = 1)
-    private BigDecimal cambiopassword;
+	@Comment("1 catalogo activo, 0 Inactivo")
+	@Convert(converter = NumericBooleanConverter.class)
+	private Boolean estado;
 
-    @Comment("Observacion del usuario, ejemplo cuando hay cambio de estado")
-    @Column(name = "observacion", length = 100)
-    private String observacion;
+	@Comment("Password encriptado del usuario.")
+	@Column(name = "password", length = 70)
+	private String password;
 
-    @OneToMany(mappedBy = "idusuario")
-    private List<Usuariorol> usuariorols;
+	@Comment("1, Indica que el usuario tiene que cambiar de password")
+	@Column(name = "cambiopassword", precision = 1)
+	@Convert(converter = NumericBooleanConverter.class)
+	private Boolean cambiopassword;
 
-    @OneToOne(mappedBy = "usuariodetalle")
-    private Usuariosession usuariosession;
+	@Comment("Observacion del usuario, ejemplo cuando hay cambio de estado")
+	@Column(name = "observacion", length = 100)
+	private String observacion;
+
+	@OneToMany(mappedBy = "idusuario")
+	private List<Usuariorol> usuariorols;
+
+	@OneToOne(mappedBy = "usuariodetalle")
+	private Usuariosession usuariosession;
 
 }

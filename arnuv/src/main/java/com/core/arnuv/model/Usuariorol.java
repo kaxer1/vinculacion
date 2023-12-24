@@ -6,6 +6,8 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.Instant;
 
 @Data
