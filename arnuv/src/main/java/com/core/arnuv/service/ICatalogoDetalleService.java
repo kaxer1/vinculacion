@@ -8,7 +8,7 @@ import java.util.List;
  * Interfaz de metodos que expone el servicio
  */
 public interface ICatalogoDetalleService {
-	
+
 	public List<CatalogoDetalle> listarPorCatalogo(int idCatalogo);
 
 }

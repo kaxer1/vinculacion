@@ -11,8 +11,8 @@ import java.util.List;
 
 @Service
 @Component
-public class ICatalogoDetalleServiceImp implements ICatalogoDetalleService {
-	
+public class CatalogoDetalleServiceImp implements ICatalogoDetalleService {
+
 	@Autowired
 	private ICatalogoDetalleRepository repo;
 
@@ -20,9 +20,4 @@ public class ICatalogoDetalleServiceImp implements ICatalogoDetalleService {
 	public List<CatalogoDetalle> listarPorCatalogo(int idCatalogo) {
 		return repo.buscarPorIdCatalogo(idCatalogo);
 	}
-
-
-
-	
-
 }

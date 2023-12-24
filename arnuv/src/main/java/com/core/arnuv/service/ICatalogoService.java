@@ -18,6 +18,6 @@ public interface ICatalogoService {
 	public Catalogo insertarCatalogo(Catalogo data);
 
 	public Catalogo actualizarCatalogo(Catalogo data);
-	
+
 	public Catalogo buscarPorId(int id);
 }

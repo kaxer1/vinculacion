@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Component
-public class ICatalogoServiceImp implements ICatalogoService {
+public class CatalogoServiceImp implements ICatalogoService {
 
 	@Autowired
 	private ICatalogoRepository repo;
