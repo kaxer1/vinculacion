@@ -1,8 +1,7 @@
 package com.core.arnuv.controller;
 
-import com.core.arnuv.model.Catalogo;
-import com.core.arnuv.service.ICatalogoService;
-import jakarta.persistence.TableGenerator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,30 +15,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.core.arnuv.model.Usuariosession;
+import com.core.arnuv.service.IUsuarioSesionService;
+
+import jakarta.persistence.TableGenerator;
 
 @RestController
 @Validated
-@RequestMapping("/catalogos")
-@TableGenerator(name = "Catalogo")
-public class CatalogoController {
-
+@RequestMapping("/usuario-sesion")
+@TableGenerator(name = "UsuarioSesion")
+public class UsuarioSesionController {
+	
 	@Autowired
-	private ICatalogoService servicioCatalogo;
-
+	private IUsuarioSesionService servicioUsuarioSesion;
+	
 	@GetMapping("/listar")
-	public ResponseEntity<List<Catalogo>> getCatalogos() throws Exception {
+	public ResponseEntity<List<Usuariosession>> getUsuariosSesion() throws Exception {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("token", "kldjsfdsfjlksdj");
-		var aux = this.servicioCatalogo.listarTodosCatalogos();
+		var aux = this.servicioUsuarioSesion.listarTodosUsuariosSesion();
 		return new ResponseEntity<>(aux, responseHeaders, HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
-	public ResponseEntity<?> crearCatalogo(@RequestBody Catalogo catalogo) {
+	public ResponseEntity<?> crearUsuarioSesion(@RequestBody Usuariosession sesion) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.insertarCatalogo(catalogo);
+			entity = servicioUsuarioSesion.insertarUsuarioSesion(sesion);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}
@@ -47,10 +49,10 @@ public class CatalogoController {
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarCatalogo(@RequestBody Catalogo catalogo) {
+	public ResponseEntity<?> actualizarUsuarioSesion(@RequestBody Usuariosession sesion) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.actualizarCatalogo(catalogo);
+			entity = servicioUsuarioSesion.actualizarUsuarioSesion(sesion);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}
@@ -58,10 +60,10 @@ public class CatalogoController {
 	}
 
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<?> buscarCatalogoPorId(@PathVariable int id) {
+	public ResponseEntity<?> buscarUsuarioSesionPorId(@PathVariable int id) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.buscarPorId(id);
+			entity = servicioUsuarioSesion.buscarPorId(id);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}

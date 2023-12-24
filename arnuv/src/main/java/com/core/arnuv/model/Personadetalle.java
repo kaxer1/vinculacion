@@ -6,6 +6,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
@@ -13,70 +14,72 @@ import java.util.List;
 @Comment("Tabla que almacena detalle de informacion de una persona")
 @Entity
 @Table(name = "personadetalle")
-public class Personadetalle {
-    @Id
-    @Comment("Codigo de personas")
-    @Column(name = "idpersona", nullable = false)
-    private Long id;
+public class Personadetalle implements Serializable {
 
-    @Comment("Codigo de usuario de ingreso.")
-    @Column(name = "idusuarioing", length = 20)
-    private String idusuarioing;
+	private static final long serialVersionUID = 1L;
 
-    @Comment("Codigo de usuario de modificacion")
-    @Column(name = "idusuariomod", length = 20)
-    private String idusuariomod;
+	@Id
+	@Comment("Codigo de personas")
+	@Column(name = "idpersona", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Comment("Fecha de ingreso del registro")
-    @Column(name = "fechaingreso")
-    private Instant fechaingreso;
+	@Comment("Codigo de usuario de ingreso.")
+	@Column(name = "idusuarioing", length = 20)
+	private String idusuarioing;
 
-    @Comment("Fecha de modificacion del registro")
-    @Column(name = "fechamodificacion")
-    private Instant fechamodificacion;
+	@Comment("Codigo de usuario de modificacion")
+	@Column(name = "idusuariomod", length = 20)
+	private String idusuariomod;
 
-    @Comment("Nombre de la persona")
-    @Column(name = "nombres", length = 120)
-    private String nombres;
+	@Comment("Fecha de ingreso del registro")
+	@Column(name = "fechaingreso")
+	private Instant fechaingreso;
 
-    @Comment("Apellido de la persona")
-    @Column(name = "apellidos", length = 120)
-    private String apellidos;
+	@Comment("Fecha de modificacion del registro")
+	@Column(name = "fechamodificacion")
+	private Instant fechamodificacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "idcatalogoidentificacion", referencedColumnName = "iddetalle"),
-            @JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo")
-    })
-    @Comment("Codigo de catalogo")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    private CatalogoDetalle catalogodetalle;
+	@Comment("Nombre de la persona")
+	@Column(name = "nombres", length = 120)
+	private String nombres;
 
-    @Comment("Identificacion, cedula, ruc, pasaporte")
-    @Column(name = "identificacion", length = 15)
-    private String identificacion;
+	@Comment("Apellido de la persona")
+	@Column(name = "apellidos", length = 120)
+	private String apellidos;
 
-    @Comment("Numero de celular")
-    @Column(name = "celular", length = 20)
-    private String celular;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumns({ @JoinColumn(name = "idcatalogoidentificacion", referencedColumnName = "iddetalle"),
+			@JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo") })
+	@Comment("Codigo de catalogo")
+	@OnDelete(action = OnDeleteAction.RESTRICT)
+	private CatalogoDetalle catalogodetalle;
 
-    @Comment("Correo electronico")
-    @Column(name = "email", length = 150)
-    private String email;
+	@Comment("Identificacion, cedula, ruc, pasaporte")
+	@Column(name = "identificacion", length = 15)
+	private String identificacion;
 
-    @OneToMany(mappedBy = "idpersona")
-    private List<MascotaDetalle> mascotaDetalles;
+	@Comment("Numero de celular")
+	@Column(name = "celular", length = 20)
+	private String celular;
 
-    @OneToMany(mappedBy = "idpersonapasedor")
-    private List<Paseo> paseospaseador;
+	@Comment("Correo electronico")
+	@Column(name = "email", length = 150)
+	private String email;
 
-    @OneToMany(mappedBy = "idpersonacliente")
-    private List<Paseo> paseoscliente;
+	@OneToMany(mappedBy = "idpersona")
+	private List<MascotaDetalle> mascotaDetalles;
 
-    @OneToMany(mappedBy = "idpersona")
-    private List<Personadireccion> personadireccions;
+	@OneToMany(mappedBy = "idpersonapasedor")
+	private List<Paseo> paseospaseador;
 
-    @OneToMany(mappedBy = "idpersona")
-    private List<Usuariodetalle> usuariodetalles;
+	@OneToMany(mappedBy = "idpersonacliente")
+	private List<Paseo> paseoscliente;
+
+	@OneToMany(mappedBy = "idpersona")
+	private List<Personadireccion> personadireccions;
+
+	@OneToMany(mappedBy = "idpersona")
+	private List<Usuariodetalle> usuariodetalles;
 
 }

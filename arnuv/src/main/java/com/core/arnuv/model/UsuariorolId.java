@@ -18,8 +18,8 @@ public class UsuariorolId implements Serializable {
     private Integer idrol;
 
     @Comment("Codigo de usuario.")
-    @Column(name = "idusuario", nullable = false, length = 20)
-    private String idusuario;
+    @Column(name = "idusuario", nullable = false)
+    private Integer idusuario;
 
     @Override
     public boolean equals(Object o) {

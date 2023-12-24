@@ -5,7 +5,9 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.NumericBooleanConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,30 +15,33 @@ import java.util.List;
 @Comment("Tabla que almacena roles de usuario")
 @Entity
 @Table(name = "rol")
-public class Rol {
-    @Id
-    @Comment("Codigo de rol")
-    @Column(name = "idrol", nullable = false)
-    private Integer id;
+public class Rol implements Serializable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Codigo de politica")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idpolitica")
-    private Seguridadpolitica idpolitica;
+	private static final long serialVersionUID = 1L;
 
-    @Comment("Nombre del rol")
-    @Column(name = "nombre", length = 100)
-    private String nombre;
+	@Id
+	@Comment("Codigo de rol")
+	@Column(name = "idrol", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Comment("Campo para el menu y transaccion activos")
-    @Column(name = "activo", precision = 1)
-    private BigDecimal activo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@Comment("Codigo de politica")
+	@OnDelete(action = OnDeleteAction.RESTRICT)
+	@JoinColumn(name = "idpolitica")
+	private Seguridadpolitica idpolitica;
 
-    @OneToMany(mappedBy = "idrol")
-    private List<Opcionespermiso> opcionespermisos;
+	@Comment("Nombre del rol")
+	@Column(name = "nombre", length = 100)
+	private String nombre;
 
-    @OneToMany(mappedBy = "idrol")
-    private List<Usuariorol> usuariorols;
+	@Comment("Campo para el menu y transaccion activos")
+	@Convert(converter = NumericBooleanConverter.class)
+	private Boolean activo;
 
+	@OneToMany(mappedBy = "idrol")
+	private List<Opcionespermiso> opcionespermisos;
+
+	@OneToMany(mappedBy = "idrol")
+	private List<Usuariorol> usuariorols;
 }

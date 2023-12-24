@@ -1,8 +1,7 @@
 package com.core.arnuv.controller;
 
-import com.core.arnuv.model.Catalogo;
-import com.core.arnuv.service.ICatalogoService;
-import jakarta.persistence.TableGenerator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,30 +15,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.core.arnuv.model.Usuariodetalle;
+import com.core.arnuv.service.IUsuarioDetalleService;
+
+import jakarta.persistence.TableGenerator;
 
 @RestController
 @Validated
-@RequestMapping("/catalogos")
-@TableGenerator(name = "Catalogo")
-public class CatalogoController {
+@RequestMapping("/usuarios")
+@TableGenerator(name = "UsuariosDetalle")
+public class UsuarioDetalleController {
 
 	@Autowired
-	private ICatalogoService servicioCatalogo;
-
+	private IUsuarioDetalleService servicioUsuarioDetalle;
+	
 	@GetMapping("/listar")
-	public ResponseEntity<List<Catalogo>> getCatalogos() throws Exception {
+	public ResponseEntity<List<Usuariodetalle>> getUsuariosDetalle() throws Exception {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("token", "kldjsfdsfjlksdj");
-		var aux = this.servicioCatalogo.listarTodosCatalogos();
+		var aux = this.servicioUsuarioDetalle.listarTodosUsuariosDetalle();
 		return new ResponseEntity<>(aux, responseHeaders, HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
-	public ResponseEntity<?> crearCatalogo(@RequestBody Catalogo catalogo) {
+	public ResponseEntity<?> crearUsuarioDetalle(@RequestBody Usuariodetalle usuario) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.insertarCatalogo(catalogo);
+			entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuario);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}
@@ -47,10 +49,10 @@ public class CatalogoController {
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarCatalogo(@RequestBody Catalogo catalogo) {
+	public ResponseEntity<?> actualizarUsuarioDetalle(@RequestBody Usuariodetalle usuario) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.actualizarCatalogo(catalogo);
+			entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuario);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}
@@ -61,7 +63,7 @@ public class CatalogoController {
 	public ResponseEntity<?> buscarCatalogoPorId(@PathVariable int id) {
 		Object entity;
 		try {
-			entity = servicioCatalogo.buscarPorId(id);
+			entity = servicioUsuarioDetalle.buscarPorId(id);
 		} catch (Exception e) {
 			entity = e.getMessage();
 		}
