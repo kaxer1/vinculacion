@@ -5,8 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.NumericBooleanConverter;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -14,14 +14,11 @@ import java.time.Instant;
 @Comment("Tabla que almacena sessiones de usuario, cuando este esta conectado a  la aplicacion")
 @Entity
 @Table(name = "usuariosession")
-public class Usuariosession implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Usuariosession {
 
 	@Id
 	@Comment("Codigo de usuario.")
 	@Column(name = "idusuario", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idusuario;
 
 	@MapsId
@@ -48,8 +45,8 @@ public class Usuariosession implements Serializable {
 	private Instant fechasalida;
 
 	@Comment("1 Indica que el usuario realizo un login a la aplicacion y mantien la aplicacion activa, 0 el usuario esta fuera de la aplicacion.")
-	@Column(name = "activo", precision = 1)
-	private BigDecimal activo;
+	@Convert(converter = NumericBooleanConverter.class)
+	private Boolean activo;
 
 	@Comment("I(usuario realiza login con exito), F(Intento fallido de login), L(Usuario relizo logout), S(Sistema realizo logout por inactividad)")
 	@Column(name = "estado", length = 1)
