@@ -6,6 +6,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalTime;
@@ -14,11 +15,15 @@ import java.time.LocalTime;
 @Comment("Tabla que almacena al paseador con la mascota ")
 @Entity
 @Table(name = "paseo")
-public class Paseo {
-    @Id
+public class Paseo implements Serializable {
+    
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Comment("Codigo del paseo")
     @Column(name = "idpaseo", nullable = false, length = 100)
-    private String idpaseo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idpaseo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Codigo de personas")

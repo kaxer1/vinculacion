@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -14,11 +15,14 @@ import java.time.Instant;
 @Comment("Tabla que almacena sessiones de usuario, cuando este esta conectado a  la aplicacion")
 @Entity
 @Table(name = "usuariosession")
-public class Usuariosession {
+public class Usuariosession implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Comment("Codigo de usuario.")
 	@Column(name = "idusuario", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idusuario;
 
 	@MapsId

@@ -3,7 +3,9 @@ package com.core.arnuv.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
+import org.hibernate.type.NumericBooleanConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,11 +13,15 @@ import java.util.List;
 @Comment("Tabla que almacena las tarifas basicas del paseo")
 @Entity
 @Table(name = "tarifario")
-public class Tarifario {
-    @Id
+public class Tarifario implements Serializable {
+    
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Comment("Codigo de tarifas")
     @Column(name = "idtarifario", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Comment("Nombre del tarifario")
     @Column(name = "nombre", length = 120)
@@ -30,8 +36,8 @@ public class Tarifario {
     private BigDecimal precio;
 
     @Comment("1 tarifa activa, 0 inactiva")
-    @Column(name = "activo", precision = 1)
-    private BigDecimal activo;
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean activo;
 
     @OneToMany(mappedBy = "idtarifario")
     private List<Paseo> paseos;
