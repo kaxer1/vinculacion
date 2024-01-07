@@ -1,8 +1,8 @@
 package com.core.arnuv.service;
 
-import java.util.List;
-
 import com.core.arnuv.model.Usuariodetalle;
+
+import java.util.List;
 
 public interface IUsuarioDetalleService {
 
@@ -13,4 +13,6 @@ public interface IUsuarioDetalleService {
 	public Usuariodetalle actualizarUsuarioDetalle(Usuariodetalle data);
 
 	public Usuariodetalle buscarPorId(int id);
+
+	public Usuariodetalle buscarPorCredenciales(String usuario, String password);
 }

@@ -1,14 +1,13 @@
 package com.core.arnuv.services.imp;
 
-import java.util.List;
-
+import com.core.arnuv.model.Usuariodetalle;
+import com.core.arnuv.repository.IUsuarioDetalleRepository;
+import com.core.arnuv.service.IUsuarioDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.core.arnuv.model.Usuariodetalle;
-import com.core.arnuv.repository.IUsuarioDetalleRepository;
-import com.core.arnuv.service.IUsuarioDetalleService;
+import java.util.List;
 
 @Service
 @Component
@@ -46,5 +45,10 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	@Override
 	public Usuariodetalle buscarPorId(int id) {
 		return repo.findById(id).orElse(null);
+	}
+
+	@Override
+	public Usuariodetalle buscarPorCredenciales(String usuario, String password) {
+		return repo.buscarPorCredenciales(usuario, password);
 	}
 }

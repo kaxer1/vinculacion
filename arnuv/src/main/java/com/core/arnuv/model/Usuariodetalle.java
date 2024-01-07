@@ -59,6 +59,10 @@ public class Usuariodetalle implements Serializable {
 	@Convert(converter = NumericBooleanConverter.class)
 	private Boolean estado;
 
+	@Comment("Nombre de usuario ")
+	@Column(name = "username", length = 20)
+	private String username;
+
 	@Comment("Password encriptado del usuario.")
 	@Column(name = "password", length = 70)
 	private String password;

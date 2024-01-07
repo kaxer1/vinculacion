@@ -42,7 +42,7 @@ mixin ArnuvServicios {
          throw SystemException('Token incorrecto');
       }
       if( e.response?.statusCode == 500 ){
-        throw SystemException('${e.response?.data['detail']}');
+        throw SystemException('${e.response?.data['message']}');
       }
       throw SystemException('Error en el consumo del servicio: ${e.message}');
     } catch (e) {

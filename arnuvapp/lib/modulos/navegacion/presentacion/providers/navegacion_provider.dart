@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,10 +33,9 @@ class NavegacionState {
     this.menuIndex = 0,
     this.items = const [
       BottomNavigationBarItem(
-        icon: ImageIcon( AssetImage('assets/footer icons/ic_banking.png') ),
-        activeIcon: ImageIcon( AssetImage('assets/footer icons/ic_banking_act.png') ),
-        label: 'Banco'
-        // label: localizations.translate('banco'),
+        icon: Icon(Icons.home),
+        activeIcon: Icon(Icons.home_outlined),
+        label: 'Home'
       ),
       // BottomNavigationBarItem(
       //   icon: ImageIcon( AssetImage('assets/footer icons/ic_transaction.png') ),
@@ -43,10 +43,9 @@ class NavegacionState {
       //   label: localizations.translate('transacciones'),
       // ),
       BottomNavigationBarItem(
-        icon: ImageIcon( AssetImage('assets/footer icons/ic_accounts.png') ),
-        activeIcon: ImageIcon( AssetImage('assets/footer icons/ic_accounts_act.png') ),
+        icon: Icon(Icons.person),
+        activeIcon: Icon(Icons.person_outline),
         label: 'Perfil'
-        // label: localizations.translate('perfil'),
       ),
     ]
   });

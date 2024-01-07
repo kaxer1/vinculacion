@@ -50,6 +50,10 @@ public class Usuariodetallehistorial {
     @Column(name = "estado", precision = 1)
     private BigDecimal estado;
 
+    @Comment("Nombre de usuario ")
+    @Column(name = "username", length = 20)
+    private String username;
+
     @Comment("Password encriptado del usuario.")
     @Column(name = "password", length = 70)
     private String password;
