@@ -15,16 +15,16 @@ import java.math.BigDecimal;
 public class MascotaDetalle {
     @Id
     @Comment("Codigo de la mascota")
-    @Column(name = "idmascota", nullable = false)
+    @Column(name = "idmascota")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersona")
     private Personadetalle idpersona;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumns({
             @JoinColumn(name = "idcatalogorasa", referencedColumnName = "iddetalle"),
             @JoinColumn(name = "iddetallerasa", referencedColumnName = "idcatalogo")

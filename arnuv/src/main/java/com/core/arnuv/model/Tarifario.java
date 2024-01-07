@@ -14,7 +14,7 @@ import java.util.List;
 public class Tarifario {
     @Id
     @Comment("Codigo de tarifas")
-    @Column(name = "idtarifario", nullable = false)
+    @Column(name = "idtarifario")
     private Long id;
 
     @Comment("Nombre del tarifario")

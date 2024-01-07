@@ -1,6 +1,5 @@
 package com.core.arnuv.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
@@ -19,7 +18,7 @@ public class Catalogo implements Serializable {
 
 	@Id
 	@Comment("Codigo de catalogo")
-	@Column(name = "idcatalogo", nullable = false)
+	@Column(name = "idcatalogo")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
@@ -32,7 +31,6 @@ public class Catalogo implements Serializable {
 	private Boolean activo;
 
 	@OneToMany(mappedBy = "idcatalogo")
-	@JsonManagedReference
 	private List<CatalogoDetalle> catalogodetalles;
 
 }

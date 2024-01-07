@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -21,11 +20,11 @@ public class Rol implements Serializable {
 
 	@Id
 	@Comment("Codigo de rol")
-	@Column(name = "idrol", nullable = false)
+	@Column(name = "idrol")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@Comment("Codigo de politica")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpolitica")

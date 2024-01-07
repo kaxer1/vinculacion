@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -22,11 +21,11 @@ public class Usuariodetalle implements Serializable {
 
 	@Id
 	@Comment("Codigo de usuario.")
-	@Column(name = "idusuario", nullable = false)
+	@Column(name = "idusuario")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idusuario;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@Comment("Codigo de personas")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpersona")

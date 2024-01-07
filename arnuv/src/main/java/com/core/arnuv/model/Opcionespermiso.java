@@ -17,13 +17,13 @@ public class Opcionespermiso {
     private OpcionespermisoId id;
 
     @MapsId("idrol")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo de rol")
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idrol", nullable = false)
+    @JoinColumn(name = "idrol")
     private Rol idrol;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumns({
             @JoinColumn(name = "idrecurso", referencedColumnName = "idrecurso"),
             @JoinColumn(name = "idmodulo", referencedColumnName = "idmodulo")

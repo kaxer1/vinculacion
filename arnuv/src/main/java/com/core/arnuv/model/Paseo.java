@@ -17,22 +17,22 @@ import java.time.LocalTime;
 public class Paseo {
     @Id
     @Comment("Codigo del paseo")
-    @Column(name = "idpaseo", nullable = false, length = 100)
+    @Column(name = "idpaseo", length = 100)
     private String idpaseo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersonapasedor")
     private Personadetalle idpersonapasedor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersonacliente")
     private Personadetalle idpersonacliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @Comment("Codigo de tarifas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idtarifario")

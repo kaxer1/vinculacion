@@ -14,7 +14,7 @@ import java.util.List;
 public class Modulo {
     @Id
     @Comment("Codigo del modulo")
-    @Column(name = "idmodulo", nullable = false)
+    @Column(name = "idmodulo")
     private Integer id;
 
     @Comment("Nombre del modulo")
