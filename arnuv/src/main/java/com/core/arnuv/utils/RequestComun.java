@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class RequestComun<T> {
 
     /**
-     * Metodo que inserta los datos de una entidad JPA a una clase DTO para transferir los datos.
+     * Metodo que inserta los datos de una entidad DTO a una clase de JPA para manejar los datos en el backend.
      * @param source   Entidad JPA
      * @param excludedProperties    Propiedades que no van a ser mapeadas
      */

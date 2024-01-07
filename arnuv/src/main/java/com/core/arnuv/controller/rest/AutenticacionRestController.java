@@ -24,8 +24,7 @@ public class AutenticacionRestController {
         var entity = serviceUsuarioDetalle.buscarPorCredenciales(login.getUsername(), login.getPassword());
         BaseResponse resp = new BaseResponse();
         if (entity == null) {
-            resp.setCodigo("ERR-001");
-            resp.setMensaje("Credenciales del usuario no existe");
+            throw new Exception("Credenciales del usuario no existe");
         } else {
             resp.setCodigo("OK");
             resp.setMensaje("LOGIN APROBADO");
