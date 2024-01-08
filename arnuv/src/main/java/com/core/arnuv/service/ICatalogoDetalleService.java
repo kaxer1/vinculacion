@@ -15,4 +15,6 @@ public interface ICatalogoDetalleService {
 
 	public CatalogoDetalle actualizarCatalogoDetalle(CatalogoDetalle data);
 
+	public CatalogoDetalle buscarPorId(int idCatalogo, String idDetalle);
+
 }

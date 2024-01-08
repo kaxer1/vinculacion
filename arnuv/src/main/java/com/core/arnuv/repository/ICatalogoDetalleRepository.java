@@ -13,5 +13,7 @@ public interface ICatalogoDetalleRepository extends JpaRepository<CatalogoDetall
 
 	@Query("Select t from CatalogoDetalle t where t.id.idcatalogo= ?1")
 	List<CatalogoDetalle> buscarPorIdCatalogo(int idCatalogo);
-	
+
+	@Query("Select t from CatalogoDetalle t where t.id.idcatalogo= ?1 and t.id.iddetalle= ?2")
+	CatalogoDetalle buscarPorId(int idCatalogo, String idDetalle);
 }

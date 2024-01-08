@@ -35,7 +35,7 @@ public class CatalogoDetalleController {
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarCatalogoDetalle(@RequestBody CatalogoDetalleRequest catalogo) throws Exception {
+	public ResponseEntity<RespuestaComun> actualizarCatalogoDetalle(@RequestBody CatalogoDetalleRequest catalogo) throws Exception {
 		var entity = servicioCatalogoDetalle.actualizarCatalogoDetalle(catalogo.mapearDato(catalogo, CatalogoDetalle.class));
 		CatalogoDetalleResponse resp = new CatalogoDetalleResponse();
 		resp.mapearDato(entity, CatalogoDetalleResponse.CatalogoDetalleDto.class,  "mascotaDetalles","personadetalles");

@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -53,6 +54,7 @@ public class Personadetalle implements Serializable {
 			@JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo") })
 	@Comment("Codigo de catalogo")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
+	@ToString.Exclude
 	private CatalogoDetalle catalogodetalle;
 
 	@Comment("Identificacion, cedula, ruc, pasaporte")
