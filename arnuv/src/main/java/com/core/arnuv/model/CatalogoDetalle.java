@@ -1,13 +1,9 @@
 package com.core.arnuv.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
 import java.util.List;
@@ -21,11 +17,9 @@ public class CatalogoDetalle {
     private CatalogoDetalleId id;
 
     @MapsId("idcatalogo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo de catalogo")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idcatalogo", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "idcatalogo")
     @ToString.Exclude
     private Catalogo idcatalogo;
 
@@ -38,11 +32,9 @@ public class CatalogoDetalle {
     private Boolean activo;
 
     @OneToMany(mappedBy = "catalogodetalle")
-    @JsonIgnore
     private List<MascotaDetalle> mascotaDetalles;
 
     @OneToMany(mappedBy = "catalogodetalle")
-    @JsonIgnore
     private List<Personadetalle> personadetalles;
 
 }

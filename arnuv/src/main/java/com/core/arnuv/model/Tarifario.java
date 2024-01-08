@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.type.NumericBooleanConverter;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,15 +12,11 @@ import java.util.List;
 @Comment("Tabla que almacena las tarifas basicas del paseo")
 @Entity
 @Table(name = "tarifario")
-public class Tarifario implements Serializable {
-    
-	private static final long serialVersionUID = 1L;
-
+public class Tarifario {
 	@Id
     @Comment("Codigo de tarifas")
-    @Column(name = "idtarifario", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "idtarifario")
+    private Long id;
 
     @Comment("Nombre del tarifario")
     @Column(name = "nombre", length = 120)

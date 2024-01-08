@@ -6,30 +6,25 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
 @Comment("Tabla que almacena el detalle de la mascota")
 @Entity
 @Table(name = "mascotadetalle")
-public class MascotaDetalle implements Serializable {
-    
-	private static final long serialVersionUID = 1L;
-
+public class MascotaDetalle {
 	@Id
     @Comment("Codigo de la mascota")
-    @Column(name = "idmascota", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "idmascota")
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersona")
     private Personadetalle idpersona;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumns({
             @JoinColumn(name = "idcatalogorasa", referencedColumnName = "iddetalle"),
             @JoinColumn(name = "iddetallerasa", referencedColumnName = "idcatalogo")

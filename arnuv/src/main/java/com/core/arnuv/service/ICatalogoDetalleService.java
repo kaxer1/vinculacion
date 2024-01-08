@@ -11,4 +11,8 @@ public interface ICatalogoDetalleService {
 
 	public List<CatalogoDetalle> listarPorCatalogo(int idCatalogo);
 
+	public CatalogoDetalle insertarCatalogoDetalle(CatalogoDetalle data);
+
+	public CatalogoDetalle actualizarCatalogoDetalle(CatalogoDetalle data);
+
 }

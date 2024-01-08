@@ -29,7 +29,7 @@ public class Usuariosession implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@Comment("Codigo de usuario.")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
-	@JoinColumn(name = "idusuario", nullable = false)
+	@JoinColumn(name = "idusuario")
 	private Usuariodetalle usuariodetalle;
 
 	@Comment("Numero de intentos de login")

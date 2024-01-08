@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -22,11 +21,11 @@ public class Usuariodetalle implements Serializable {
 
 	@Id
 	@Comment("Codigo de usuario.")
-	@Column(name = "idusuario", nullable = false)
+	@Column(name = "idusuario")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idusuario;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@Comment("Codigo de personas")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpersona")
@@ -59,6 +58,10 @@ public class Usuariodetalle implements Serializable {
 	@Comment("1 catalogo activo, 0 Inactivo")
 	@Convert(converter = NumericBooleanConverter.class)
 	private Boolean estado;
+
+	@Comment("Nombre de usuario ")
+	@Column(name = "username", length = 20)
+	private String username;
 
 	@Comment("Password encriptado del usuario.")
 	@Column(name = "password", length = 70)

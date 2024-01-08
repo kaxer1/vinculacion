@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.type.NumericBooleanConverter;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,14 +12,10 @@ import java.util.List;
 @Comment("Tabla que almacena los recursos del sistema.")
 @Entity
 @Table(name = "modulos")
-public class Modulo implements Serializable {
-    
-	private static final long serialVersionUID = 1L;
-
+public class Modulo {
 	@Id
     @Comment("Codigo del modulo")
-    @Column(name = "idmodulo", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idmodulo")
     private Integer id;
 
     @Comment("Nombre del modulo")

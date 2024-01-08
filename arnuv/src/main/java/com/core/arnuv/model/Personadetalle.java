@@ -20,7 +20,7 @@ public class Personadetalle implements Serializable {
 
 	@Id
 	@Comment("Codigo de personas")
-	@Column(name = "idpersona", nullable = false)
+	@Column(name = "idpersona")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
@@ -48,7 +48,7 @@ public class Personadetalle implements Serializable {
 	@Column(name = "apellidos", length = 120)
 	private String apellidos;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumns({ @JoinColumn(name = "idcatalogoidentificacion", referencedColumnName = "iddetalle"),
 			@JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo") })
 	@Comment("Codigo de catalogo")

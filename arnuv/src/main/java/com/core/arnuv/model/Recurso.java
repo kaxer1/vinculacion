@@ -17,10 +17,10 @@ public class Recurso {
     private RecursoId id;
 
     @MapsId("idmodulo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo del modulo")
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idmodulo", nullable = false)
+    @JoinColumn(name = "idmodulo")
     private Modulo idmodulo;
 
     @Comment("Nombre del recurso")

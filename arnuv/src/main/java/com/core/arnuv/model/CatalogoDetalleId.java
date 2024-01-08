@@ -14,11 +14,11 @@ import java.util.Objects;
 public class CatalogoDetalleId implements Serializable {
     private static final long serialVersionUID = 1L;
     @Comment("Codigo de catalogo")
-    @Column(name = "idcatalogo", nullable = false)
+    @Column(name = "idcatalogo")
     private Integer idcatalogo;
 
     @Comment("Codigo de catalogo detalle")
-    @Column(name = "iddetalle", nullable = false, length = 3)
+    @Column(name = "iddetalle", length = 3)
     private String iddetalle;
 
     @Override

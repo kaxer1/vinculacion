@@ -18,7 +18,7 @@ public class Seguridadpolitica implements Serializable {
 
 	@Id
 	@Comment("Codigo de politica")
-	@Column(name = "idpolitica", nullable = false)
+	@Column(name = "idpolitica")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 

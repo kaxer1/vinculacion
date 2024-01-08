@@ -18,10 +18,10 @@ public class Personadireccion {
     private PersonadireccionId id;
 
     @MapsId("idpersona")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idpersona", nullable = false)
+    @JoinColumn(name = "idpersona")
     private Personadetalle idpersona;
 
     @Comment("Codigo de usuario de ingreso.")

@@ -6,8 +6,6 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import java.time.Instant;
 
 @Data
@@ -19,17 +17,17 @@ public class Usuariorol {
     private UsuariorolId id;
 
     @MapsId("idrol")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo de rol")
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idrol", nullable = false)
+    @JoinColumn(name = "idrol")
     private Rol idrol;
 
     @MapsId("idusuario")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @Comment("Codigo de usuario.")
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "idusuario", nullable = false)
+    @JoinColumn(name = "idusuario")
     private Usuariodetalle idusuario;
 
     @Comment("Codigo de usuario de ingreso.")
