@@ -8,4 +8,8 @@ public interface IModuloService {
 	List<Modulo> listarModulos();
 
 	public Modulo insertarModulo(Modulo data);
+	
+	public Modulo actualizarModulo(Modulo data);
+
+	public Modulo buscarPorId(int id);
 }

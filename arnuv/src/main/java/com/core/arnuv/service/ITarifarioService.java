@@ -8,4 +8,8 @@ public interface ITarifarioService {
 	List<Tarifario> listarTarifarios();
 
 	public Tarifario insertarTarifario(Tarifario data);
+	
+	public Tarifario actualizarTarifario(Tarifario data);
+
+	public Tarifario buscarPorId(Long id);
 }

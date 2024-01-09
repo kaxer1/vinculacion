@@ -27,4 +27,17 @@ public class ModuloServiceImp implements IModuloService {
 		return repo.save(data);
 	}
 
+	@Override
+	public Modulo actualizarModulo(Modulo data) {
+		Modulo existeModulo = repo.findById(data.getId()).orElse(null);
+        existeModulo.setNombre(data.getNombre());
+		existeModulo.setActivo(data.getActivo());
+		return repo.save(existeModulo);
+	}
+
+	@Override
+	public Modulo buscarPorId(int id) {
+		return repo.findById(id).orElse(null);
+	}
+
 }

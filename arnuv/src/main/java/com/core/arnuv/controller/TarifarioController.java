@@ -2,16 +2,16 @@ package com.core.arnuv.controller;
 
 import java.util.List;
 
+import com.core.arnuv.request.TarifarioRequest;
+import com.core.arnuv.response.TarifarioResponse;
+import com.core.arnuv.utils.ArnuvUtils;
+import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.core.arnuv.model.Tarifario;
 import com.core.arnuv.service.ITarifarioService;
@@ -44,5 +44,21 @@ public class TarifarioController {
 			entity = e.getMessage();
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+
+	@PutMapping("/actualizar")
+	public ResponseEntity<?> actualizar(@RequestBody TarifarioRequest tarifario) throws Exception {
+		var entity = servicioTarifario.actualizarTarifario(tarifario.mapearDato(tarifario, Tarifario.class));
+		TarifarioResponse resp = new TarifarioResponse();
+		resp.mapearDato(entity, TarifarioResponse.TarifarioDto.class);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
+
+	@GetMapping("/buscar/{id}")
+	public ResponseEntity<RespuestaComun> buscarPorId(@PathVariable Long id) throws Exception {
+		var entity = servicioTarifario.buscarPorId(id);
+		TarifarioResponse resp = new TarifarioResponse();
+		resp.mapearDato(entity, TarifarioResponse.TarifarioDto.class, "paseos");
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 }

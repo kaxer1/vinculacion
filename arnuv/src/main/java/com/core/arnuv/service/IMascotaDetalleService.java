@@ -9,4 +9,8 @@ public interface IMascotaDetalleService {
 	List<MascotaDetalle> listarMascotasDetalle();
 
 	public MascotaDetalle insertarMascotaDetalle(MascotaDetalle data);
+	
+	public MascotaDetalle actualizarMascotaDetalle(MascotaDetalle data);
+
+	public MascotaDetalle buscarPorId(Long id);
 }

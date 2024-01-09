@@ -27,4 +27,23 @@ public class PaseoServiceImp implements IPaseoService {
 		return repo.save(data);
 	}
 
+	@Override
+	public Paseo actualizarPaseo(Paseo data) {
+		Paseo existePaseo = repo.findById(data.getIdpaseo()).orElse(null);
+		existePaseo.setFecharealinicio(data.getFecharealinicio());
+		existePaseo.setFecharealfin(data.getFecharealfin());
+		existePaseo.setFechainicio(data.getFechainicio());
+		existePaseo.setFechafin(data.getFechafin());
+		existePaseo.setHorainicio(data.getHorainicio());
+		existePaseo.setHorafin(data.getHorafin());
+		existePaseo.setPreciototal(data.getPreciototal());
+		existePaseo.setObservacionpaseo(data.getObservacionpaseo());
+		existePaseo.setObservacionpaseador(data.getObservacionpaseador());
+		return repo.save(existePaseo);
+	}
+
+	@Override
+	public Paseo buscarPorId(String id) {
+		return repo.findById(id).orElse(null);
+	}
 }

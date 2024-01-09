@@ -27,4 +27,18 @@ public class TarifarioServiceImp implements ITarifarioService {
 		return repo.save(data);
 	}
 
+	@Override
+	public Tarifario actualizarTarifario(Tarifario data) {
+		Tarifario existeTarifario = repo.findById(data.getId()).orElse(null);
+		existeTarifario.setNombre(data.getNombre());
+		existeTarifario.setTiempo(data.getTiempo());
+		existeTarifario.setPrecio(data.getPrecio());
+		existeTarifario.setActivo(data.getActivo());
+		return repo.save(existeTarifario);
+	}
+
+	@Override
+	public Tarifario buscarPorId(Long id) {
+		return repo.findById(id).orElse(null);
+	}
 }

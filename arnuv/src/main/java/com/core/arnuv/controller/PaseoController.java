@@ -2,16 +2,16 @@ package com.core.arnuv.controller;
 
 import java.util.List;
 
+import com.core.arnuv.request.PaseoRequest;
+import com.core.arnuv.response.PaseoResponse;
+import com.core.arnuv.utils.ArnuvUtils;
+import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.core.arnuv.model.Paseo;
 import com.core.arnuv.service.IPaseoService;
@@ -44,5 +44,21 @@ public class PaseoController {
 			entity = e.getMessage();
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+
+	@PutMapping("/actualizar")
+	public ResponseEntity<?> actualizar(@RequestBody PaseoRequest paseo) throws Exception {
+		var entity = servicioPase.actualizarPaseo(paseo.mapearDato(paseo, Paseo.class));
+		PaseoResponse resp = new PaseoResponse();
+		resp.mapearDato(entity, PaseoResponse.PaseoDto.class);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
+
+	@GetMapping("/buscar/{id}")
+	public ResponseEntity<RespuestaComun> buscarPorId(@PathVariable String id) throws Exception {
+		var entity = servicioPase.buscarPorId(id);
+		PaseoResponse resp = new PaseoResponse();
+		resp.mapearDato(entity, PaseoResponse.PaseoDto.class);
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 }

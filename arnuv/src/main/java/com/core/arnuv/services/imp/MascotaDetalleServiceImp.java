@@ -26,4 +26,17 @@ public class MascotaDetalleServiceImp implements IMascotaDetalleService {
 	public MascotaDetalle insertarMascotaDetalle(MascotaDetalle data) {
 		return repo.save(data);
 	}
+
+	@Override
+	public MascotaDetalle actualizarMascotaDetalle(MascotaDetalle data) {
+		MascotaDetalle existeMascota = repo.findById(data.getId()).orElse(null);
+		existeMascota.setNombre(data.getNombre());
+		existeMascota.setEdad(data.getEdad());
+		return repo.save(existeMascota);
+	}
+
+	@Override
+	public MascotaDetalle buscarPorId(Long id) {
+		return repo.findById(id).orElse(null);
+	}
 }
