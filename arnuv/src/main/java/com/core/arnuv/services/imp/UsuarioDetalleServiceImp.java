@@ -29,6 +29,7 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	@Override
 	public Usuariodetalle actualizarUsuarioDetalle(Usuariodetalle data) {
 		Usuariodetalle existeUsuarioDetalle = repo.findById(data.getIdusuario()).orElse(null);
+		existeUsuarioDetalle.setIdpersona(data.getIdpersona());
 		existeUsuarioDetalle.setIdusuarioing(data.getIdusuarioing());
 		existeUsuarioDetalle.setIdusuariomod(data.getIdusuariomod());
 		existeUsuarioDetalle.setIdusuarioaprobacion(data.getIdusuarioaprobacion());

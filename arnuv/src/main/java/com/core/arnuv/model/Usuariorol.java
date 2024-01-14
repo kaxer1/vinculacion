@@ -2,11 +2,12 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Comment("Tabla que almacena los roles asociados a un usuario")
@@ -21,6 +22,7 @@ public class Usuariorol {
     @Comment("Codigo de rol")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idrol")
+    @ToString.Exclude
     private Rol idrol;
 
     @MapsId("idusuario")
@@ -28,6 +30,7 @@ public class Usuariorol {
     @Comment("Codigo de usuario.")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idusuario")
+    @ToString.Exclude
     private Usuariodetalle idusuario;
 
     @Comment("Codigo de usuario de ingreso.")
@@ -40,10 +43,12 @@ public class Usuariorol {
 
     @Comment("Fecha de ingreso del registro")
     @Column(name = "fechaingreso")
-    private Instant fechaingreso;
+    @Temporal(TemporalType.DATE)
+    private Date fechaingreso;
 
     @Comment("Fecha de modificacion del registro")
     @Column(name = "fechamodificacion")
-    private Instant fechamodificacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechamodificacion;
 
 }

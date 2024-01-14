@@ -2,10 +2,12 @@ package com.core.arnuv.request;
 
 import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.utils.RequestComun;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 public class PersonaDetalleRequest extends RequestComun<Personadetalle> {
@@ -20,10 +22,12 @@ public class PersonaDetalleRequest extends RequestComun<Personadetalle> {
     private String idusuariomod;
 
     @Comment("Fecha de ingreso del registro")
-    private Instant fechaingreso;
+    @Temporal(TemporalType.DATE)
+    private Date fechaingreso;
 
     @Comment("Fecha de modificacion del registro")
-    private Instant fechamodificacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechamodificacion;
 
     @Comment("Nombre de la persona")
     private String nombres;

@@ -32,26 +32,29 @@ public class PersonaDetalleController {
 	}
 
 	@PostMapping("/crear")
-	public ResponseEntity<RespuestaComun> crearCatalogo(@RequestBody PersonaDetalleRequest persona) {
+	public ResponseEntity<RespuestaComun> crearCatalogo(@RequestBody PersonaDetalleRequest persona) throws Exception {
 		var catDetEntity = servicioCatalogoDetalle.buscarPorId(persona.getIdcatalogoidentificacion(), persona.getIddetalleidentificacion());
 		Personadetalle personadetalle = persona.mapearDato(persona, Personadetalle.class, "idcatalogoidentificacion", "iddetalleidentificacion");
 		personadetalle.setCatalogodetalle(catDetEntity);
 		var entity = servicioPersonaDetalle.insertarPersonaDetalle(personadetalle);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<RespuestaComun> actualizarCatalogo(@RequestBody PersonaDetalleRequest persona) {
-		var entity = servicioPersonaDetalle.actualizarPersonaDetalle(persona.mapearDato(persona, Personadetalle.class));
+	public ResponseEntity<RespuestaComun> actualizarCatalogo(@RequestBody PersonaDetalleRequest persona) throws Exception {
+		var catDetEntity = servicioCatalogoDetalle.buscarPorId(persona.getIdcatalogoidentificacion(), persona.getIddetalleidentificacion());
+		Personadetalle pd = persona.mapearDato(persona, Personadetalle.class);
+		pd.setCatalogodetalle(catDetEntity);
+		var entity = servicioPersonaDetalle.actualizarPersonaDetalle(pd);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<RespuestaComun> buscarPersonaDetallePorId(@PathVariable int id) {
+	public ResponseEntity<RespuestaComun> buscarPersonaDetallePorId(@PathVariable int id) throws Exception {
 		var entity = servicioPersonaDetalle.buscarPorId(id);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");

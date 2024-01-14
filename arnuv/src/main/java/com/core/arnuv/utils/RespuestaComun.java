@@ -22,7 +22,10 @@ public abstract class RespuestaComun<T> {
      * @param destinationType   Clase DTO destino
      * @param excludedProperties    Propiedades que no van a ser mapeadas
      */
-    public void mapearDato(Object source, Class<T> destinationType, String... excludedProperties) {
+    public void mapearDato(Object source, Class<T> destinationType, String... excludedProperties) throws Exception {
+        if (source == null) {
+            throw new ArnuvNotFoundException("No existe la fuente o entidad de datos");
+        }
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         modelMapper.getConfiguration().setFieldMatchingEnabled(true)
@@ -43,6 +46,7 @@ public abstract class RespuestaComun<T> {
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public void setListaDto(List lsource, Class<T> destinationType, String... excludedProperties) {
+        if (lsource == null || lsource.isEmpty()) return;
 
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);

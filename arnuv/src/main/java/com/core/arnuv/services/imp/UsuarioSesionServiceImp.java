@@ -1,14 +1,13 @@
 package com.core.arnuv.services.imp;
 
-import java.util.List;
-
+import com.core.arnuv.model.Usuariosession;
+import com.core.arnuv.repository.IUsuarioSesionRepository;
+import com.core.arnuv.service.IUsuarioSesionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.core.arnuv.model.Usuariosession;
-import com.core.arnuv.repository.IUsuarioSesionRepository;
-import com.core.arnuv.service.IUsuarioSesionService;
+import java.util.List;
 
 @Service
 @Component
@@ -48,6 +47,7 @@ public class UsuarioSesionServiceImp implements IUsuarioSesionService {
 		existeUsuarioSesion.setEstado(data.getEstado());
 		existeUsuarioSesion.setUseragent(data.getUseragent());
 		existeUsuarioSesion.setIptermialremoto(data.getIptermialremoto());
+		existeUsuarioSesion.setUsuariodetalle(data.getUsuariodetalle());
 		return repo.save(existeUsuarioSesion);
 	}
 

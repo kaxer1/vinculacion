@@ -3,6 +3,8 @@ package com.core.arnuv.controller.rest;
 import com.core.arnuv.request.LoginRequest;
 import com.core.arnuv.response.BaseResponse;
 import com.core.arnuv.service.IUsuarioDetalleService;
+import com.core.arnuv.utils.ArnuvNotFoundException;
+import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,24 @@ public class AutenticacionRestController {
         var entity = serviceUsuarioDetalle.buscarPorCredenciales(login.getUsername(), login.getPassword());
         BaseResponse resp = new BaseResponse();
         if (entity == null) {
-            throw new Exception("Credenciales del usuario no existe");
+            throw new ArnuvNotFoundException("Credenciales del usuario no existe {0}",login.getUsername());
         } else {
             resp.setCodigo("OK");
             resp.setMensaje("LOGIN APROBADO");
         }
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+    }
+
+    @PostMapping("/menu")
+    public ResponseEntity<RespuestaComun> consultaMenu(@RequestBody LoginRequest login) throws Exception {
+        var entity = serviceUsuarioDetalle.buscarPorCredenciales(login.getUsername(), login.getPassword());
+        BaseResponse resp = new BaseResponse();
+        if (entity == null) {
+            throw new ArnuvNotFoundException("Credenciales del usuario no existe");
+        } else {
+            resp.setCodigo("OK");
+            resp.setMensaje("LOGIN APROBADO");
+        }
+        return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
     }
 }

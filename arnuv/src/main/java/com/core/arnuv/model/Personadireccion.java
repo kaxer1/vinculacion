@@ -2,12 +2,13 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Comment("Tabla que almacena las riecciones de la persona")
@@ -22,6 +23,7 @@ public class Personadireccion {
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersona")
+    @ToString.Exclude
     private Personadetalle idpersona;
 
     @Comment("Codigo de usuario de ingreso.")
@@ -34,11 +36,13 @@ public class Personadireccion {
 
     @Comment("Fecha de ingreso del registro")
     @Column(name = "fechaingreso")
-    private Instant fechaingreso;
+    @Temporal(TemporalType.DATE)
+    private Date fechaingreso;
 
     @Comment("Fecha de modificacion del registro")
     @Column(name = "fechamodificacion")
-    private Instant fechamodificacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechamodificacion;
 
     @Comment("Nombre del barrio")
     @Column(name = "barrio", length = 120)

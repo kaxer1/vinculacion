@@ -1,10 +1,12 @@
 package com.core.arnuv.response;
 
 import com.core.arnuv.utils.RespuestaComun;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 public class PersonaDetalleResponse extends RespuestaComun<PersonaDetalleResponse.PersonaDetalleDto> {
@@ -21,10 +23,12 @@ public class PersonaDetalleResponse extends RespuestaComun<PersonaDetalleRespons
 		private String idusuariomod;
 
 		@Comment("Fecha de ingreso del registro")
-		private Instant fechaingreso;
+		@Temporal(TemporalType.DATE)
+		private Date fechaingreso;
 
 		@Comment("Fecha de modificacion del registro")
-		private Instant fechamodificacion;
+		@Temporal(TemporalType.DATE)
+		private Date fechamodificacion;
 
 		@Comment("Nombre de la persona")
 		private String nombres;

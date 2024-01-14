@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -22,6 +23,7 @@ public class MascotaDetalle {
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersona")
+    @ToString.Exclude
     private Personadetalle idpersona;
 
     @ManyToOne()
@@ -31,6 +33,7 @@ public class MascotaDetalle {
     })
     @Comment("Codigo de catalogo")
     @OnDelete(action = OnDeleteAction.RESTRICT)
+    @ToString.Exclude
     private CatalogoDetalle catalogodetalle;
 
     @Comment("Nombre de la mascota")

@@ -2,13 +2,14 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Data
 @Comment("Tabla que almacena al paseador con la mascota ")
@@ -24,27 +25,32 @@ public class Paseo {
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersonapasedor")
+    @ToString.Exclude
     private Personadetalle idpersonapasedor;
 
     @ManyToOne()
     @Comment("Codigo de personas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idpersonacliente")
+    @ToString.Exclude
     private Personadetalle idpersonacliente;
 
     @ManyToOne()
     @Comment("Codigo de tarifas")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idtarifario")
+    @ToString.Exclude
     private Tarifario idtarifario;
 
     @Comment("Fecha real de inicio del paseo")
     @Column(name = "fecharealinicio")
-    private Instant fecharealinicio;
+    @Temporal(TemporalType.DATE)
+    private Date fecharealinicio;
 
     @Comment("Fecha real de fin del paseo")
     @Column(name = "fecharealfin")
-    private Instant fecharealfin;
+    @Temporal(TemporalType.DATE)
+    private Date fecharealfin;
 
     @Comment("Fecha de inicio del paseo formato YYYYMMDD")
     @Column(name = "fechainicio", precision = 8)

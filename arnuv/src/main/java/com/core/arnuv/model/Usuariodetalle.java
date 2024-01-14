@@ -2,13 +2,14 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,6 +30,7 @@ public class Usuariodetalle implements Serializable {
 	@Comment("Codigo de personas")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpersona")
+	@ToString.Exclude
 	private Personadetalle idpersona;
 
 	@Comment("Codigo de usuario de ingreso.")
@@ -45,22 +47,25 @@ public class Usuariodetalle implements Serializable {
 
 	@Comment("Fecha de ingreso del registro")
 	@Column(name = "fechaingreso")
-	private Instant fechaingreso;
+	@Temporal(TemporalType.DATE)
+	private Date fechaingreso;
 
 	@Comment("Fecha de modificacion del registro")
 	@Column(name = "fechamodificacion")
-	private Instant fechamodificacion;
+	@Temporal(TemporalType.DATE)
+	private Date fechamodificacion;
 
 	@Comment("Fecha de Aprobacion del registro")
 	@Column(name = "fechaaprobacion")
-	private Instant fechaaprobacion;
+	@Temporal(TemporalType.DATE)
+	private Date fechaaprobacion;
 
 	@Comment("1 catalogo activo, 0 Inactivo")
 	@Convert(converter = NumericBooleanConverter.class)
 	private Boolean estado;
 
 	@Comment("Nombre de usuario ")
-	@Column(name = "username", length = 20)
+	@Column(name = "username", length = 20, unique=true)
 	private String username;
 
 	@Comment("Password encriptado del usuario.")
