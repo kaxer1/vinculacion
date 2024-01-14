@@ -1,72 +1,62 @@
 package com.core.arnuv.controller;
 
-import java.util.List;
-
+import com.core.arnuv.model.Usuariodetalle;
+import com.core.arnuv.request.UsuarioDetalleRequest;
+import com.core.arnuv.response.UsuarioDetalleResponse;
+import com.core.arnuv.service.IPersonaDetalleService;
+import com.core.arnuv.service.IUsuarioDetalleService;
+import com.core.arnuv.utils.ArnuvUtils;
+import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.core.arnuv.model.Usuariodetalle;
-import com.core.arnuv.service.IUsuarioDetalleService;
-
-import jakarta.persistence.TableGenerator;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Validated
 @RequestMapping("/usuarios")
-@TableGenerator(name = "UsuariosDetalle")
 public class UsuarioDetalleController {
 
 	@Autowired
 	private IUsuarioDetalleService servicioUsuarioDetalle;
+
+	@Autowired
+	private IPersonaDetalleService servicioPersonaDetalle;
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<Usuariodetalle>> getUsuariosDetalle() throws Exception {
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("token", "kldjsfdsfjlksdj");
-		var aux = this.servicioUsuarioDetalle.listarTodosUsuariosDetalle();
-		return new ResponseEntity<>(aux, responseHeaders, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> getUsuariosDetalle() throws Exception {
+		var entity = servicioUsuarioDetalle.listarTodosUsuariosDetalle();
+		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
+		resp.setListaDto(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
-	public ResponseEntity<?> crearUsuarioDetalle(@RequestBody Usuariodetalle usuario) {
-		Object entity;
-		try {
-			entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuario);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> crearUsuarioDetalle(@RequestBody UsuarioDetalleRequest usuario) throws Exception {
+		var personaentity = servicioPersonaDetalle.buscarPorId(usuario.getIdpersona());
+		Usuariodetalle usuariodetalle = usuario.mapearDato(usuario, Usuariodetalle.class);
+		usuariodetalle.setIdpersona(personaentity);
+		var entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
+		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
+		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarUsuarioDetalle(@RequestBody Usuariodetalle usuario) {
-		Object entity;
-		try {
-			entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuario);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> actualizarUsuarioDetalle(@RequestBody UsuarioDetalleRequest usuario) throws Exception {
+		var personaentity = servicioPersonaDetalle.buscarPorId(usuario.getIdpersona());
+		Usuariodetalle usuariodetalle = usuario.mapearDato(usuario, Usuariodetalle.class);
+		usuariodetalle.setIdpersona(personaentity);
+		var entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuariodetalle);
+		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
+		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<?> buscarCatalogoPorId(@PathVariable int id) {
-		Object entity;
-		try {
-			entity = servicioUsuarioDetalle.buscarPorId(id);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> buscarCatalogoPorId(@PathVariable int id) throws Exception {
+		var entity = servicioUsuarioDetalle.buscarPorId(id);
+		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
+		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 }

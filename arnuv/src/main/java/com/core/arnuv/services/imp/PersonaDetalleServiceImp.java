@@ -1,14 +1,13 @@
 package com.core.arnuv.services.imp;
 
-import java.util.List;
-
+import com.core.arnuv.model.Personadetalle;
+import com.core.arnuv.repository.IPersonaDetalleRepository;
+import com.core.arnuv.service.IPersonaDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.core.arnuv.model.Personadetalle;
-import com.core.arnuv.repository.IPersonaDetalleRepository;
-import com.core.arnuv.service.IPersonaDetalleService;
+import java.util.List;
 
 @Service
 @Component
@@ -39,6 +38,7 @@ public class PersonaDetalleServiceImp implements IPersonaDetalleService {
 		existePersonaDetalle.setIdentificacion(data.getIdentificacion());
 		existePersonaDetalle.setCelular(data.getCelular());
 		existePersonaDetalle.setEmail(data.getEmail());
+		existePersonaDetalle.setCatalogodetalle(data.getCatalogodetalle());
 		return repo.save(existePersonaDetalle);
 	}
 

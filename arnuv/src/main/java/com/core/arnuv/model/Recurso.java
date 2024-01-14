@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,6 +22,7 @@ public class Recurso {
     @Comment("Codigo del modulo")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idmodulo")
+    @ToString.Exclude
     private Modulo idmodulo;
 
     @Comment("Nombre del recurso")

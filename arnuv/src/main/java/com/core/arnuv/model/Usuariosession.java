@@ -9,7 +9,7 @@ import org.hibernate.type.NumericBooleanConverter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Comment("Tabla que almacena sessiones de usuario, cuando este esta conectado a  la aplicacion")
@@ -42,11 +42,13 @@ public class Usuariosession implements Serializable {
 
 	@Comment("Fecha de inicio de la session")
 	@Column(name = "fechainicio")
-	private Instant fechainicio;
+	@Temporal(TemporalType.DATE)
+	private Date fechainicio;
 
 	@Comment("Fecha de cierre de la session")
 	@Column(name = "fechasalida")
-	private Instant fechasalida;
+	@Temporal(TemporalType.DATE)
+	private Date fechasalida;
 
 	@Comment("1 Indica que el usuario realizo un login a la aplicacion y mantien la aplicacion activa, 0 el usuario esta fuera de la aplicacion.")
 	@Convert(converter = NumericBooleanConverter.class)

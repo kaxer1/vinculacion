@@ -1,14 +1,11 @@
 package com.core.arnuv.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Comment("Tabla que almacena detalle de informacion de un usuario")
@@ -36,15 +33,18 @@ public class Usuariodetallehistorial {
 
     @Comment("Fecha de ingreso del registro")
     @Column(name = "fechaingreso")
-    private Instant fechaingreso;
+    @Temporal(TemporalType.DATE)
+    private Date fechaingreso;
 
     @Comment("Fecha de modificacion del registro")
     @Column(name = "fechamodificacion")
-    private Instant fechamodificacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechamodificacion;
 
     @Comment("Fecha de Aprobacion del registro")
     @Column(name = "fechaaprobacion")
-    private Instant fechaaprobacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechaaprobacion;
 
     @Comment("1 Activo, 0 Inactivo")
     @Column(name = "estado", precision = 1)

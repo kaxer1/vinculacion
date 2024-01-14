@@ -1,72 +1,64 @@
 package com.core.arnuv.controller;
 
-import java.util.List;
-
+import com.core.arnuv.model.Rol;
+import com.core.arnuv.model.Seguridadpolitica;
+import com.core.arnuv.request.RolRequest;
+import com.core.arnuv.response.RolResponse;
+import com.core.arnuv.service.IRolService;
+import com.core.arnuv.service.ISeguridadPoliticaService;
+import com.core.arnuv.utils.ArnuvUtils;
+import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.core.arnuv.model.Rol;
-import com.core.arnuv.service.IRolService;
-
-import jakarta.persistence.TableGenerator;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Validated
 @RequestMapping("/roles")
-@TableGenerator(name = "Rol")
 public class RolController {
 
 	@Autowired
 	private IRolService servicioRol;
 
+	@Autowired
+	private ISeguridadPoliticaService servicioSeguridadPolitica;
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Rol>> getRoles() throws Exception {
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("token", "kldjsfdsfjlksdj");
-		var aux = this.servicioRol.listarTodosRoles();
-		return new ResponseEntity<>(aux, responseHeaders, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> getRoles() throws Exception {
+		var entity = servicioRol.listarTodosRoles();
+		RolResponse resp = new RolResponse();
+		resp.setListaDto(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
-	public ResponseEntity<?> crearRol(@RequestBody Rol rol) {
-		Object entity;
-		try {
-			entity = servicioRol.insertarRol(rol);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> crearRol(@RequestBody RolRequest rolrequest) throws Exception {
+		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica());
+		Rol rol = rolrequest.mapearDato(rolrequest, Rol.class, "idpolitica");
+		rol.setIdpolitica(seguridad);
+
+		var entity = servicioRol.insertarRol(rol);
+		RolResponse resp = new RolResponse();
+		resp.mapearDato(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarRol(@RequestBody Rol rol) {
-		Object entity;
-		try {
-			entity = servicioRol.actualizarRol(rol);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> actualizarRol(@RequestBody RolRequest rolrequest) throws Exception {
+		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica());
+		Rol rol = rolrequest.mapearDato(rolrequest, Rol.class);
+		rol.setIdpolitica(seguridad);
+		var entity = servicioRol.actualizarRol(rol);
+		RolResponse resp = new RolResponse();
+		resp.mapearDato(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<?> buscarRolPorId(@PathVariable int id) {
-		Object entity;
-		try {
-			entity = servicioRol.buscarPorId(id);
-		} catch (Exception e) {
-			entity = e.getMessage();
-		}
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+	public ResponseEntity<RespuestaComun> buscarRolPorId(@PathVariable int id) throws Exception {
+		var entity = servicioRol.buscarPorId(id);
+		RolResponse resp = new RolResponse();
+		resp.mapearDato(entity, RolResponse.RolDto.class,  "opcionespermisos", "usuariorols" );
+		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
 	}
 }

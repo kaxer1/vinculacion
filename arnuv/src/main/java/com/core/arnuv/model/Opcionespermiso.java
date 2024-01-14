@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,6 +22,7 @@ public class Opcionespermiso {
     @Comment("Codigo de rol")
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idrol")
+    @ToString.Exclude
     private Rol idrol;
 
     @ManyToOne()
@@ -30,6 +32,7 @@ public class Opcionespermiso {
     })
     @Comment("Codigo de recurso")
     @OnDelete(action = OnDeleteAction.RESTRICT)
+    @ToString.Exclude
     private Recurso recursos;
 
     @Comment("Codigo de opcion permiso Padre para manejar en el menu")

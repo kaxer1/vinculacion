@@ -37,4 +37,9 @@ public class CatalogoDetalleServiceImp implements ICatalogoDetalleService {
 		existeCatalogo.setActivo(data.getActivo());
 		return repo.save(existeCatalogo);
 	}
+
+	@Override
+	public CatalogoDetalle buscarPorId(int idCatalogo, String idDetalle) {
+		return repo.buscarPorId(idCatalogo, idDetalle);
+	}
 }

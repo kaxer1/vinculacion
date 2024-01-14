@@ -2,12 +2,13 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -34,11 +35,13 @@ public class Personadetalle implements Serializable {
 
 	@Comment("Fecha de ingreso del registro")
 	@Column(name = "fechaingreso")
-	private Instant fechaingreso;
+	@Temporal(TemporalType.DATE)
+	private Date fechaingreso;
 
 	@Comment("Fecha de modificacion del registro")
 	@Column(name = "fechamodificacion")
-	private Instant fechamodificacion;
+	@Temporal(TemporalType.DATE)
+	private Date fechamodificacion;
 
 	@Comment("Nombre de la persona")
 	@Column(name = "nombres", length = 120)
@@ -53,6 +56,7 @@ public class Personadetalle implements Serializable {
 			@JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo") })
 	@Comment("Codigo de catalogo")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
+	@ToString.Exclude
 	private CatalogoDetalle catalogodetalle;
 
 	@Comment("Identificacion, cedula, ruc, pasaporte")

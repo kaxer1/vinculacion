@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -28,6 +29,7 @@ public class Rol implements Serializable {
 	@Comment("Codigo de politica")
 	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpolitica")
+	@ToString.Exclude
 	private Seguridadpolitica idpolitica;
 
 	@Comment("Nombre del rol")

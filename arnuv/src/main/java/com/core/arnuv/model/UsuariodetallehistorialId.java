@@ -2,12 +2,14 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 @Data
@@ -20,7 +22,8 @@ public class UsuariodetallehistorialId implements Serializable {
 
     @Comment("Fecha Hisotrial")
     @Column(name = "fechahistoria", nullable = false)
-    private Instant fechahistoria;
+    @Temporal(TemporalType.DATE)
+    private Date fechahistoria;
 
     @Override
     public boolean equals(Object o) {
