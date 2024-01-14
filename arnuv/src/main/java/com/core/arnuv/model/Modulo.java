@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.type.NumericBooleanConverter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -16,6 +15,7 @@ public class Modulo {
 	@Id
     @Comment("Codigo del modulo")
     @Column(name = "idmodulo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Comment("Nombre del modulo")

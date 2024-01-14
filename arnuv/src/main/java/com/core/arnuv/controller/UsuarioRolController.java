@@ -1,6 +1,7 @@
 package com.core.arnuv.controller;
 
 import com.core.arnuv.model.Usuariorol;
+import com.core.arnuv.model.UsuariorolId;
 import com.core.arnuv.request.UsuarioRolRequest;
 import com.core.arnuv.response.UsuarioRolResponse;
 import com.core.arnuv.service.IRolService;
@@ -36,12 +37,16 @@ public class UsuarioRolController {
 
 	@PostMapping("/crear")
 	public ResponseEntity<RespuestaComun> crearUsuarioRol(@RequestBody UsuarioRolRequest usuarioRol) throws Exception {
+		UsuariorolId usuariorolId = new UsuariorolId();
+		usuariorolId.setIdusuario(usuarioRol.getIdusuario());
+		usuariorolId.setIdrol(usuarioRol.getIdrol());
 		var rolentity = servicioRol.buscarPorId(usuarioRol.getIdrol());
 		var usuariodetalleentity = servicioUsuarioDetalle.buscarPorId(usuarioRol.getIdusuario());
 
 		var usuariorolentity = usuarioRol.mapearDato(usuarioRol, Usuariorol.class, "idrol","idusuario");
 		usuariorolentity.setIdrol(rolentity);
 		usuariorolentity.setIdusuario(usuariodetalleentity);
+		usuariorolentity.setId(usuariorolId);
 
 		var entity = servicioUsuarioRol.insertarUsuarioRol(usuariorolentity);
 		UsuarioRolResponse resp = new UsuarioRolResponse();

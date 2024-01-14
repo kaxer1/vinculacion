@@ -1,4 +1,4 @@
-package com.core.arnuv.controller.rest;
+package com.core.arnuv.configuration;
 
 import com.core.arnuv.response.RestErrorResponse;
 import com.core.arnuv.utils.ArnuvNotFoundException;

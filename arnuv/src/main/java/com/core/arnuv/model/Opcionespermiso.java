@@ -6,8 +6,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.math.BigDecimal;
+import org.hibernate.type.NumericBooleanConverter;
 
 @Data
 @Comment("Tabla que almacena los menus de opciones del sistema")
@@ -37,30 +36,35 @@ public class Opcionespermiso {
 
     @Comment("Codigo de opcion permiso Padre para manejar en el menu")
     @Column(name = "idopcionpadre", precision = 10)
-    private BigDecimal idopcionpadre;
+    private Long idopcionpadre;
 
     @Comment("Nombre del item de menu")
     @Column(name = "nombre", length = 100)
     private String nombre;
 
     @Comment("1 Opcion permiso activo, 0 inactivo")
-    @Column(name = "activo", precision = 1)
-    private BigDecimal activo;
+    @Column(name = "activo")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean activo;
 
     @Comment("Muestra el menu")
-    @Column(name = "mostar", precision = 1)
-    private BigDecimal mostar;
+    @Column(name = "mostar")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean mostar;
 
     @Comment("Permiso de crear")
-    @Column(name = "crear", precision = 1)
-    private BigDecimal crear;
+    @Column(name = "crear")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean crear;
 
     @Comment("Permiso de editar")
-    @Column(name = "editar", precision = 1)
-    private BigDecimal editar;
+    @Column(name = "editar")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean editar;
 
     @Comment("Permiso de eliminar")
-    @Column(name = "eliminar", precision = 1)
-    private BigDecimal eliminar;
+    @Column(name = "eliminar")
+    @Convert(converter = NumericBooleanConverter.class)
+    private Boolean eliminar;
 
 }

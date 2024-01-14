@@ -1,5 +1,6 @@
 package com.core.arnuv.response;
 
+import com.core.arnuv.model.UsuariorolId;
 import com.core.arnuv.utils.RespuestaComun;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
@@ -31,14 +32,5 @@ public class UsuarioRolResponse extends RespuestaComun<UsuarioRolResponse.Usuari
         @Comment("Fecha de modificacion del registro")
         private Date fechamodificacion;
     }
-
-    private static class UsuariorolId {
-        @Comment("Codigo de rol")
-        private Integer idrol;
-
-        @Comment("Codigo de usuario.")
-        private Integer idusuario;
-    }
-
 
 }
