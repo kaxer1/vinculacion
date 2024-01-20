@@ -19,7 +19,6 @@ public class Opcionespermiso {
     @MapsId("idrol")
     @ManyToOne()
     @Comment("Codigo de rol")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idrol")
     @ToString.Exclude
     private Rol idrol;
@@ -30,7 +29,6 @@ public class Opcionespermiso {
             @JoinColumn(name = "idmodulo", referencedColumnName = "idmodulo")
     })
     @Comment("Codigo de recurso")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
     @ToString.Exclude
     private Recurso recursos;
 

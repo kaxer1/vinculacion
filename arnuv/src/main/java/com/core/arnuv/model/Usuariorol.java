@@ -20,7 +20,6 @@ public class Usuariorol {
     @MapsId("idrol")
     @ManyToOne()
     @Comment("Codigo de rol")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idrol")
     @ToString.Exclude
     private Rol idrol;
@@ -28,7 +27,6 @@ public class Usuariorol {
     @MapsId("idusuario")
     @ManyToOne()
     @Comment("Codigo de usuario.")
-    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "idusuario")
     @ToString.Exclude
     private Usuariodetalle idusuario;

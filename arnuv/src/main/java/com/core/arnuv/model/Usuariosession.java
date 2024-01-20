@@ -2,6 +2,7 @@ package com.core.arnuv.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,20 +22,19 @@ public class Usuariosession implements Serializable {
 
 	@Id
 	@Comment("Codigo de usuario.")
-	@Column(name = "idusuario", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idusuario")
 	private Integer idusuario;
 
 	@MapsId
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne()
 	@Comment("Codigo de usuario.")
-	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idusuario")
+	@ToString.Exclude
 	private Usuariodetalle usuariodetalle;
 
 	@Comment("Numero de intentos de login")
-	@Column(name = "numerointentos", precision = 2)
-	private BigDecimal numerointentos;
+	@Column(name = "numerointentos")
+	private Integer numerointentos;
 
 	@Comment("ID de la session del browser o movil")
 	@Column(name = "idsession", length = 70)

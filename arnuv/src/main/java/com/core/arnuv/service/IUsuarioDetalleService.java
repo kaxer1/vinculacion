@@ -14,5 +14,5 @@ public interface IUsuarioDetalleService {
 
 	public Usuariodetalle buscarPorId(int id);
 
-	public Usuariodetalle buscarPorCredenciales(String usuario, String password);
+	public Usuariodetalle buscarPorUsuario(String username);
 }

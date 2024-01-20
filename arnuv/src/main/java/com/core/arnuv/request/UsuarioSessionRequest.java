@@ -14,7 +14,7 @@ public class UsuarioSessionRequest extends RequestComun<Usuariosession> {
     private Integer idusuario;
 
     @Comment("Numero de intentos de login")
-    private BigDecimal numerointentos;
+    private Integer numerointentos;
 
     @Comment("ID de la session del browser o movil")
     private String idsession;

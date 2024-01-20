@@ -49,7 +49,7 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	}
 
 	@Override
-	public Usuariodetalle buscarPorCredenciales(String usuario, String password) {
-		return repo.buscarPorCredenciales(usuario, password);
+	public Usuariodetalle buscarPorUsuario(String username) {
+		return repo.buscarPorUsuario(username);
 	}
 }

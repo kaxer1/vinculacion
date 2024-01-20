@@ -28,7 +28,6 @@ public class Usuariodetalle implements Serializable {
 
 	@ManyToOne()
 	@Comment("Codigo de personas")
-	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@JoinColumn(name = "idpersona")
 	@ToString.Exclude
 	private Personadetalle idpersona;
@@ -85,6 +84,7 @@ public class Usuariodetalle implements Serializable {
 	private List<Usuariorol> usuariorols;
 
 	@OneToOne(mappedBy = "usuariodetalle")
+	@ToString.Exclude
 	private Usuariosession usuariosession;
 
 }

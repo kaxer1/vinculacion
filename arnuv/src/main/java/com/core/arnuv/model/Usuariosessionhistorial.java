@@ -16,8 +16,8 @@ public class Usuariosessionhistorial {
     private UsuariosessionhistorialId id;
 
     @Comment("Numero de intentos de login")
-    @Column(name = "numerointentos", precision = 2)
-    private BigDecimal numerointentos;
+    @Column(name = "numerointentos")
+    private Integer numerointentos;
 
     @Comment("ID de la session del browser o movil")
     @Column(name = "idsession", length = 70)

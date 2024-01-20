@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Component
@@ -46,5 +49,40 @@ public class OpcionesPermisoServiceImp implements IOpcionesPermisoService {
 	@Override
 	public Opcionespermiso buscarPorId(OpcionespermisoId id) {
 		return repo.findById(id).orElse(null);
+	}
+
+	@Override
+	public List<Map<String, Object>> buscarTitulosMenu(int idrol) {
+		var lresult = repo.buscarTitulosMenu(idrol);
+		var lresponse = new ArrayList<Map<String, Object>>();
+		for (Object[] obj : lresult) {
+			var mapaObjeto = new HashMap<String, Object>();
+			mapaObjeto.put("nombre", obj[0]);
+			mapaObjeto.put("idopcion", obj[1]);
+			lresponse.add(mapaObjeto);
+		}
+
+		return lresponse;
+	}
+
+	@Override
+	public List<Map<String, Object>> buscarItemMenu(int idrol, Long idopcionpadre) {
+		var lresult = repo.buscarItemMenu(idrol, idopcionpadre);
+		var lresponse = new ArrayList<Map<String, Object>>();
+		for (Object[] obj : lresult) {
+			var mapaObjeto = new HashMap<String, Object>();
+			mapaObjeto.put("idrol", obj[0]);
+			mapaObjeto.put("idopcion", obj[1]);
+			mapaObjeto.put("idmodulo", obj[2]);
+			mapaObjeto.put("idrecurso", obj[3]);
+			mapaObjeto.put("nombre", obj[4]);
+			mapaObjeto.put("ruta", obj[5]);
+			mapaObjeto.put("crear", obj[6]);
+			mapaObjeto.put("editar", obj[7]);
+			mapaObjeto.put("eliminar", obj[8]);
+			lresponse.add(mapaObjeto);
+		}
+
+		return lresponse;
 	}
 }

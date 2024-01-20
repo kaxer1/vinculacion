@@ -20,7 +20,7 @@ public class UsuarioSessionResponse extends RespuestaComun<UsuarioSessionRespons
 		private UsuarioDetalleResponse.UsuarioDetalleDto usuariodetalle;
 
 		@Comment("Numero de intentos de login")
-		private BigDecimal numerointentos;
+		private Integer numerointentos;
 
 		@Comment("ID de la session del browser o movil")
 		private String idsession;
