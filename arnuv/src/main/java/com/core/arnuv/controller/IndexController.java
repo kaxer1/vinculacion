@@ -22,9 +22,16 @@ public class IndexController {
     private IUsuarioDetalleService servicioUsuarioDetalle;
 
     @GetMapping("/listarusuario")
-    public String listarClientes(Model model) {
+    public String listarUsuarios(Model model) {
         List<Usuariodetalle> lusuariodetalle = servicioUsuarioDetalle.listarTodosUsuariosDetalle();
         model.addAttribute("listaUserD", lusuariodetalle);
         return "/usuario/listarusuario";
+    }
+
+    @GetMapping("/nuevousuario")
+    public String nuevosClientes(Model model) {
+//        List<Usuariodetalle> lusuariodetalle = servicioUsuarioDetalle.listarTodosUsuariosDetalle();
+//        model.addAttribute("listaUserD", lusuariodetalle);
+        return "/usuario/nuevousuario";
     }
 }
