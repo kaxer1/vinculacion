@@ -2,6 +2,7 @@ package com.core.arnuv.controller.rest;
 
 import java.util.List;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class MascotaDetalleController {
 
 	@Autowired
 	private IMascotaDetalleService servicioMascota;
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
 
 	@GetMapping("/listar")
 	public ResponseEntity<List<MascotaDetalle>> listarMascotaDetalle() throws Exception {
@@ -65,6 +69,6 @@ public class MascotaDetalleController {
 		var entity = servicioMascota.buscarPorId(id);
 		MascotaDetalleReponse resp = new MascotaDetalleReponse();
 		resp.mapearDato(entity, MascotaDetalleReponse.MascotaDetalleDto.class,  "catalogodetalle");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

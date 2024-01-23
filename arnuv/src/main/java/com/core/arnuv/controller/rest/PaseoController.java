@@ -2,6 +2,7 @@ package com.core.arnuv.controller.rest;
 
 import java.util.List;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.request.PaseoRequest;
 import com.core.arnuv.response.PaseoResponse;
 import com.core.arnuv.utils.ArnuvUtils;
@@ -26,6 +27,9 @@ public class PaseoController {
 
 	@Autowired
 	private IPaseoService servicioPase;
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
 
 	@GetMapping("/listar")
 	public ResponseEntity<List<Paseo>> listar() throws Exception {
@@ -59,6 +63,6 @@ public class PaseoController {
 		var entity = servicioPase.buscarPorId(id);
 		PaseoResponse resp = new PaseoResponse();
 		resp.mapearDato(entity, PaseoResponse.PaseoDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

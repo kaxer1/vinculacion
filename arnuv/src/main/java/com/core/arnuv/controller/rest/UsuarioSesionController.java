@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Usuariosession;
 import com.core.arnuv.request.UsuarioSessionRequest;
 import com.core.arnuv.response.UsuarioSessionResponse;
@@ -21,13 +22,16 @@ public class UsuarioSesionController {
 
 	@Autowired
 	private IUsuarioDetalleService servicioUsuarioDetalle;
-	
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getUsuariosSesion() throws Exception {
 		var entity = servicioUsuarioSesion.listarTodosUsuariosSesion();
 		UsuarioSessionResponse resp = new UsuarioSessionResponse();
 		resp.setListaDto(entity, UsuarioSessionResponse.UsuarioSesionDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -38,7 +42,7 @@ public class UsuarioSesionController {
 		var entity = servicioUsuarioSesion.insertarUsuarioSesion(sesionentity);
 		UsuarioSessionResponse resp = new UsuarioSessionResponse();
 		resp.mapearDato(entity, UsuarioSessionResponse.UsuarioSesionDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -49,7 +53,7 @@ public class UsuarioSesionController {
 		var entity = servicioUsuarioSesion.actualizarUsuarioSesion(sesionentity);
 		UsuarioSessionResponse resp = new UsuarioSessionResponse();
 		resp.mapearDato(entity, UsuarioSessionResponse.UsuarioSesionDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
@@ -57,6 +61,6 @@ public class UsuarioSesionController {
 		var entity = servicioUsuarioSesion.buscarPorId(id);
 		UsuarioSessionResponse resp = new UsuarioSessionResponse();
 		resp.mapearDato(entity, UsuarioSessionResponse.UsuarioSesionDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

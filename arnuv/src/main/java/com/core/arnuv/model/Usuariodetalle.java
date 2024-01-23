@@ -7,8 +7,12 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.NumericBooleanConverter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +20,7 @@ import java.util.List;
 @Comment("Tabla que almacena detalle de informacion de un usuario")
 @Entity
 @Table(name = "usuariodetalle")
-public class Usuariodetalle implements Serializable {
+public class Usuariodetalle implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,11 +84,36 @@ public class Usuariodetalle implements Serializable {
 	@Column(name = "observacion", length = 100)
 	private String observacion;
 
-	@OneToMany(mappedBy = "idusuario")
+	@OneToMany(mappedBy = "idusuario", fetch = FetchType.EAGER)
+	@ToString.Exclude
 	private List<Usuariorol> usuariorols;
 
 	@OneToOne(mappedBy = "usuariodetalle")
 	@ToString.Exclude
 	private Usuariosession usuariosession;
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(usuariorols.get(0).getIdrol().getNombre()));
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 }

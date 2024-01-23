@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.request.PersonaDetalleRequest;
 import com.core.arnuv.response.PersonaDetalleResponse;
@@ -22,13 +23,16 @@ public class PersonaDetalleController {
 
 	@Autowired
 	private IPersonaDetalleService servicioPersonaDetalle;
-	
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getPersonasDetalle() throws Exception {
 		var entity = servicioPersonaDetalle.listarTodosPersonaDetalle();
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.setListaDto(entity, PersonaDetalleResponse.PersonaDetalleDto.class, "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -39,7 +43,7 @@ public class PersonaDetalleController {
 		var entity = servicioPersonaDetalle.insertarPersonaDetalle(personadetalle);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -50,7 +54,7 @@ public class PersonaDetalleController {
 		var entity = servicioPersonaDetalle.actualizarPersonaDetalle(pd);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
@@ -58,6 +62,6 @@ public class PersonaDetalleController {
 		var entity = servicioPersonaDetalle.buscarPorId(id);
 		PersonaDetalleResponse resp = new PersonaDetalleResponse();
 		resp.mapearDato(entity, PersonaDetalleResponse.PersonaDetalleDto.class,  "usuariodetalles", "personadireccions", "paseoscliente", "paseospaseador", "mascotaDetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

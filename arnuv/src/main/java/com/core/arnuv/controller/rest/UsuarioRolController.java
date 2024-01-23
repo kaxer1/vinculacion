@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Usuariorol;
 import com.core.arnuv.model.UsuariorolId;
 import com.core.arnuv.request.UsuarioRolRequest;
@@ -26,13 +27,16 @@ public class UsuarioRolController {
 
 	@Autowired
 	private IUsuarioRolService servicioUsuarioRol;
-	
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getUsuariosRol() throws Exception {
 		var entity = servicioUsuarioRol.listarTodosUsuariosRol();
 		UsuarioRolResponse resp = new UsuarioRolResponse();
 		resp.setListaDto(entity, UsuarioRolResponse.UsuarioRolDto.class,  "usuariorols","idpersona");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -59,6 +63,6 @@ public class UsuarioRolController {
 		var entity = servicioUsuarioRol.buscarPorId(idrol, idusuario);
 		UsuarioRolResponse resp = new UsuarioRolResponse();
 		resp.mapearDato(entity, UsuarioRolResponse.UsuarioRolDto.class,  "idrol", "idusuario" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

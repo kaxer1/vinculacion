@@ -2,6 +2,7 @@ package com.core.arnuv.controller.rest;
 
 import java.util.List;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.request.TarifarioRequest;
 import com.core.arnuv.response.TarifarioResponse;
 import com.core.arnuv.utils.ArnuvUtils;
@@ -26,6 +27,9 @@ public class TarifarioController {
 
 	@Autowired
 	private ITarifarioService servicioTarifario;
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
 
 	@GetMapping("/listar")
 	public ResponseEntity<List<Tarifario>> listar() throws Exception {
@@ -59,6 +63,6 @@ public class TarifarioController {
 		var entity = servicioTarifario.buscarPorId(id);
 		TarifarioResponse resp = new TarifarioResponse();
 		resp.mapearDato(entity, TarifarioResponse.TarifarioDto.class, "paseos");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

@@ -1,6 +1,7 @@
 package com.core.arnuv.controller.rest;
 
 import com.core.arnuv.enums.EnumEstadoSession;
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Usuariosession;
 import com.core.arnuv.model.Usuariosessionhistorial;
 import com.core.arnuv.request.LoginRequest;
@@ -16,9 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -34,6 +37,9 @@ public class AutenticacionRestController {
     @Autowired
     private IOpcionesPermisoService servicioOpciones;
 
+    @Autowired
+    private JwtServiceImpl serviceJwt;
+
     @PostMapping("/login")
     public ResponseEntity<RespuestaComun> validarLogin(HttpServletRequest request, @RequestBody LoginRequest login) throws Exception {
         var entity = serviceUsuarioDetalle.buscarPorUsuario(login.getUsername());
@@ -47,9 +53,9 @@ public class AutenticacionRestController {
             if (!entity.getEstado()) {
                 throw new ArnuvNotFoundException("El usuario esta deshabilitado");
             }
-            if (entity.getUsuariosession() != null && (entity.getUsuariosession().getActivo() || entity.getUsuariosession().getEstado().equals(EnumEstadoSession.INGRESADO.getCodigo())) ) {
-                throw new ArnuvNotFoundException("El usuario ya tiene una sesion activa desde {0}",entity.getUsuariosession().getFechainicio().toLocaleString());
-            }
+//            if (entity.getUsuariosession() != null && (entity.getUsuariosession().getActivo() || entity.getUsuariosession().getEstado().equals(EnumEstadoSession.INGRESADO.getCodigo())) ) {
+//                throw new ArnuvNotFoundException("El usuario ya tiene una sesion activa desde {0}",entity.getUsuariosession().getFechainicio().toLocaleString());
+//            }
 
             if (entity.getUsuariosession() == null) {
                 Usuariosession sesion = new Usuariosession();
@@ -70,6 +76,10 @@ public class AutenticacionRestController {
                 Usuariosessionhistorial sesionhistorial = ArnuvUtils.convertirObjeto(entity, Usuariosessionhistorial.class);
 //                TODO: guardar el historial
             }
+
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(entity.getIdpersona().getEmail(), entity.getPassword()));
+
             LoginResponse.DataUserDto dto = new LoginResponse.DataUserDto();
             dto.setIdusuario(entity.getIdusuario());
             dto.setIdpersona(entity.getIdpersona().getId());
@@ -83,7 +93,13 @@ public class AutenticacionRestController {
             resp.setCodigo("OK");
             resp.setMensaje("LOGIN APROBADO");
         }
-        return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+        Map<String, Object> mdatos = new HashMap<>();
+        mdatos.put("idusuario",resp.getDto().getIdusuario());
+        mdatos.put("idpersona",resp.getDto().getIdpersona());
+        mdatos.put("username",resp.getDto().getUsername());
+        mdatos.put("idrol",resp.getDto().getIdrol());
+        mdatos.put("nrol",resp.getDto().getNrol());
+        return new ResponseEntity<>(resp, serviceJwt.generaToken(mdatos, entity), HttpStatus.OK);
     }
 
     @PostMapping("/menu")
@@ -100,6 +116,6 @@ public class AutenticacionRestController {
 
         resp.setLista(lresultados);
 
-        return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+        return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
     }
 }

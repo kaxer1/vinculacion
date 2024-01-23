@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Usuariodetalle;
 import com.core.arnuv.request.UsuarioDetalleRequest;
 import com.core.arnuv.response.UsuarioDetalleResponse;
@@ -21,13 +22,16 @@ public class UsuarioDetalleController {
 
 	@Autowired
 	private IPersonaDetalleService servicioPersonaDetalle;
+
+	@Autowired
+	private JwtServiceImpl serviceJwt;
 	
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getUsuariosDetalle() throws Exception {
 		var entity = servicioUsuarioDetalle.listarTodosUsuariosDetalle();
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.setListaDto(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -38,7 +42,7 @@ public class UsuarioDetalleController {
 		var entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -49,7 +53,7 @@ public class UsuarioDetalleController {
 		var entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuariodetalle);
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
@@ -57,6 +61,6 @@ public class UsuarioDetalleController {
 		var entity = servicioUsuarioDetalle.buscarPorId(id);
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

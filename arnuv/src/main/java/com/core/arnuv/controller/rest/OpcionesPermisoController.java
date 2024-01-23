@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Opcionespermiso;
 import com.core.arnuv.model.OpcionespermisoId;
 import com.core.arnuv.model.RecursoId;
@@ -28,12 +29,15 @@ public class OpcionesPermisoController {
 	@Autowired
 	private IOpcionesPermisoService servicioOpcionPermiso;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> listar() throws Exception {
 		var entity = servicioOpcionPermiso.listarTodos();
 		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
 		resp.setListaDto(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -60,7 +64,7 @@ public class OpcionesPermisoController {
 		var entity = servicioOpcionPermiso.insertar(opcionPermisoEntity);
 		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
 		resp.mapearDato(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -79,7 +83,7 @@ public class OpcionesPermisoController {
 		var entity = servicioOpcionPermiso.actualizar(opcionPermisoEntity);
 		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
 		resp.mapearDato(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{idrol}/{idopcion}")
@@ -90,6 +94,6 @@ public class OpcionesPermisoController {
 		var entity = servicioOpcionPermiso.buscarPorId(opcionespermisoId);
 		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
 		resp.mapearDato(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class);
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

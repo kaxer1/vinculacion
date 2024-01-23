@@ -19,7 +19,7 @@ class AuthDataSourceImpl extends AuthDataSource with ArnuvServicios {
   
   @override
   Future<User> checkLogin() async {
-    final response = await postServicio('/auth/validarlogin', data: {
+    final response = await postServicio('/api/autenticacion/menu', data: {
       'serial': await getUuid(true)
     });
 

@@ -55,7 +55,6 @@ public class Personadetalle implements Serializable {
 	@JoinColumns({ @JoinColumn(name = "idcatalogoidentificacion", referencedColumnName = "iddetalle"),
 			@JoinColumn(name = "iddetalleidentificacion", referencedColumnName = "idcatalogo") })
 	@Comment("Codigo de catalogo")
-	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@ToString.Exclude
 	private CatalogoDetalle catalogodetalle;
 

@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Catalogo;
 import com.core.arnuv.request.CatalogoRequest;
 import com.core.arnuv.response.CatalogoResponse;
@@ -19,12 +20,15 @@ public class CatalogoController {
 	@Autowired
 	private ICatalogoService servicioCatalogo;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getCatalogos() throws Exception {
 		var entity = servicioCatalogo.listarTodosCatalogos();
 		CatalogoResponse resp = new CatalogoResponse();
 		resp.setListaDto(entity, CatalogoResponse.CatalogoDto.class, "catalogodetalles" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -48,6 +52,6 @@ public class CatalogoController {
 		var entity = servicioCatalogo.buscarPorId(id);
 		CatalogoResponse resp = new CatalogoResponse();
 		resp.mapearDato(entity, CatalogoResponse.CatalogoDto.class,  "catalogodetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

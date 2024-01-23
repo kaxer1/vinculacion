@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Seguridadpolitica;
 import com.core.arnuv.request.SeguridadPoliticaRequest;
 import com.core.arnuv.response.SeguridadPoliticaResponse;
@@ -18,12 +19,15 @@ public class SeguridadPoliticaController {
 	@Autowired
 	private ISeguridadPoliticaService servicioSeguridadPolitica;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getSeguridadPolitica() throws Exception {
 		var entity = servicioSeguridadPolitica.listarSeguridadPoliticas();
 		SeguridadPoliticaResponse resp = new SeguridadPoliticaResponse();
 		resp.setListaDto(entity, SeguridadPoliticaResponse.SeguridadPoliticaDto.class, "rols" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -31,7 +35,7 @@ public class SeguridadPoliticaController {
 		var entity = servicioSeguridadPolitica.insertarSeguridadPolitica(data.mapearDato(data, Seguridadpolitica.class));
 		SeguridadPoliticaResponse resp = new SeguridadPoliticaResponse();
 		resp.mapearDato(entity, SeguridadPoliticaResponse.SeguridadPoliticaDto.class,  "rols");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -39,7 +43,7 @@ public class SeguridadPoliticaController {
 		var entity = servicioSeguridadPolitica.actualizarSeguridadPolitica(data.mapearDato(data, Seguridadpolitica.class));
 		SeguridadPoliticaResponse resp = new SeguridadPoliticaResponse();
 		resp.mapearDato(entity, SeguridadPoliticaResponse.SeguridadPoliticaDto.class,  "rols");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
@@ -47,6 +51,6 @@ public class SeguridadPoliticaController {
 		var entity = servicioSeguridadPolitica.buscarPorId(id);
 		SeguridadPoliticaResponse resp = new SeguridadPoliticaResponse();
 		resp.mapearDato(entity, SeguridadPoliticaResponse.SeguridadPoliticaDto.class,  "rols");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

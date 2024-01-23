@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Rol;
 import com.core.arnuv.model.Seguridadpolitica;
 import com.core.arnuv.request.RolRequest;
@@ -23,12 +24,15 @@ public class RolController {
 	@Autowired
 	private ISeguridadPoliticaService servicioSeguridadPolitica;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> getRoles() throws Exception {
 		var entity = servicioRol.listarTodosRoles();
 		RolResponse resp = new RolResponse();
 		resp.setListaDto(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -40,7 +44,7 @@ public class RolController {
 		var entity = servicioRol.insertarRol(rol);
 		RolResponse resp = new RolResponse();
 		resp.mapearDato(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -51,7 +55,7 @@ public class RolController {
 		var entity = servicioRol.actualizarRol(rol);
 		RolResponse resp = new RolResponse();
 		resp.mapearDato(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")
@@ -59,6 +63,6 @@ public class RolController {
 		var entity = servicioRol.buscarPorId(id);
 		RolResponse resp = new RolResponse();
 		resp.mapearDato(entity, RolResponse.RolDto.class,  "opcionespermisos", "usuariorols" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

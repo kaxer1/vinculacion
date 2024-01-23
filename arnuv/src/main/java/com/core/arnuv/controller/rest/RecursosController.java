@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.Recurso;
 import com.core.arnuv.model.RecursoId;
 import com.core.arnuv.request.RecursosRequest;
@@ -23,12 +24,15 @@ public class RecursosController {
 	@Autowired
 	private IModuloService servicioModulo;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@GetMapping("/listar")
 	public ResponseEntity<RespuestaComun> listar() throws Exception {
 		var entity = servicioRecurso.listarTodos();
 		RecursosResponse resp = new RecursosResponse();
 		resp.setListaDto(entity, RecursosResponse.RecursosDto.class, "opcionespermisos","idmodulo" );
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -45,7 +49,7 @@ public class RecursosController {
 		var entity = servicioRecurso.insertar(recursoEntity);
 		RecursosResponse resp = new RecursosResponse();
 		resp.mapearDato(entity, RecursosResponse.RecursosDto.class,  "opcionespermisos");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -62,7 +66,7 @@ public class RecursosController {
 		var entity = servicioRecurso.actualizar(recursoEntity);
 		RecursosResponse resp = new RecursosResponse();
 		resp.mapearDato(entity, RecursosResponse.RecursosDto.class,  "opcionespermisos");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{idrecurso}/{idmodulo}")
@@ -73,6 +77,6 @@ public class RecursosController {
 		var entity = servicioRecurso.buscarPorId(recursoId);
 		RecursosResponse resp = new RecursosResponse();
 		resp.mapearDato(entity, RecursosResponse.RecursosDto.class,  "recursos");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

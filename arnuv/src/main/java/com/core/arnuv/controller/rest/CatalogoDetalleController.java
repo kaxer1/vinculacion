@@ -1,5 +1,6 @@
 package com.core.arnuv.controller.rest;
 
+import com.core.arnuv.jwt.JwtServiceImpl;
 import com.core.arnuv.model.CatalogoDetalle;
 import com.core.arnuv.request.CatalogoDetalleRequest;
 import com.core.arnuv.response.CatalogoDetalleResponse;
@@ -23,6 +24,9 @@ public class CatalogoDetalleController {
 	@Autowired
 	private ICatalogoDetalleService servicioCatalogoDetalle;
 
+	@Autowired
+	private JwtServiceImpl serviceJwt;
+
 	@PostMapping("/crear")
 	public ResponseEntity<RespuestaComun> crearCatalogoDetalle(@RequestBody CatalogoDetalleRequest catalogo) throws Exception {
 		CatalogoDetalle catalogoDetalle = catalogo.mapearDato(catalogo, CatalogoDetalle.class, "mascotaDetalles","personadetalles");
@@ -31,7 +35,7 @@ public class CatalogoDetalleController {
 		var entity = servicioCatalogoDetalle.insertarCatalogoDetalle(catalogoDetalle);
 		CatalogoDetalleResponse resp = new CatalogoDetalleResponse();
 		resp.mapearDato(entity, CatalogoDetalleResponse.CatalogoDetalleDto.class,  "mascotaDetalles","personadetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
@@ -39,7 +43,7 @@ public class CatalogoDetalleController {
 		var entity = servicioCatalogoDetalle.actualizarCatalogoDetalle(catalogo.mapearDato(catalogo, CatalogoDetalle.class));
 		CatalogoDetalleResponse resp = new CatalogoDetalleResponse();
 		resp.mapearDato(entity, CatalogoDetalleResponse.CatalogoDetalleDto.class,  "mascotaDetalles","personadetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/listarCatalogo/{idcatalogo}")
@@ -47,6 +51,6 @@ public class CatalogoDetalleController {
 		var lentity = servicioCatalogoDetalle.listarPorCatalogo(idcatalogo);
 		CatalogoDetalleResponse resp = new CatalogoDetalleResponse();
 		resp.setListaDto(lentity, CatalogoDetalleResponse.CatalogoDetalleDto.class,  "mascotaDetalles","personadetalles");
-		return new ResponseEntity<>(resp, ArnuvUtils.validaRegeneracionToken(), HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

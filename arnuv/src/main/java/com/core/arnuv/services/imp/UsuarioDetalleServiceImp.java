@@ -4,6 +4,9 @@ import com.core.arnuv.model.Usuariodetalle;
 import com.core.arnuv.repository.IUsuarioDetalleRepository;
 import com.core.arnuv.service.IUsuarioDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +54,16 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	@Override
 	public Usuariodetalle buscarPorUsuario(String username) {
 		return repo.buscarPorUsuario(username);
+	}
+
+	@Override
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsService() {
+			@Override
+			public UserDetails loadUserByUsername(String username) {
+				return repo.buscarPorUsername(username)
+						.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+			}
+		};
 	}
 }
