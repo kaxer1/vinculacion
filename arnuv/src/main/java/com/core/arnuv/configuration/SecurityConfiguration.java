@@ -58,14 +58,4 @@ public class SecurityConfiguration {
         return config.getAuthenticationManager();
     }
 
-//    @SuppressWarnings("removal")
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeHttpRequests((authorize) -> authorize
-//                        .anyRequest().authenticated() )
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults());
-//        return http.build();
-//    }
 }

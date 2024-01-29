@@ -1,13 +1,10 @@
 
 
-class ConnectionTimeout implements Exception {}
-class InvalidToken implements Exception {}
-class WrongCredentials implements Exception {}
+import 'package:arnuvapp/modulos/shared/infrastructure/errors/system_errors.dart';
 
-class SystemException implements Exception {
-  final String message;
+class AutenticacionException extends SystemException {
 
-  // final int errorCode;
-  SystemException(this.message) ;
+  AutenticacionException(super.message);
+
 }
 

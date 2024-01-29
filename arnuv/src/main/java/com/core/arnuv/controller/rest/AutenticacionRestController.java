@@ -14,6 +14,7 @@ import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,18 +104,38 @@ public class AutenticacionRestController {
     }
 
     @PostMapping("/menu")
-    public ResponseEntity<RespuestaComun> consultaMenu(@RequestBody LoginRequest login) throws Exception {
-        var lresultados = servicioOpciones.buscarTitulosMenu(1);
+    public ResponseEntity<RespuestaComun> consultaMenu() throws Exception {
+
+        var data = serviceJwt.extraerTokenData();
+        String username = (String) data.get("username");
+        var entity = serviceUsuarioDetalle.buscarPorUsuario(username);
+
+        int idrol = Integer.parseInt(data.get("idrol").toString());
+        var lresultados = servicioOpciones.buscarTitulosMenu(idrol);
         for (Map<String, Object> titulo : lresultados) {
             if (titulo.get("idopcion") == null) continue;
 
             Long idopcionpadre = Long.parseLong(titulo.get("idopcion").toString());
-            titulo.put("items", servicioOpciones.buscarItemMenu(1, idopcionpadre));
+            titulo.put("items", servicioOpciones.buscarItemMenu(idrol, idopcionpadre));
         }
 
         BaseResponse resp = new BaseResponse();
 
         resp.setLista(lresultados);
+        resp.setCodigo("OK");
+        resp.setMensaje("");
+
+        Map<String, Object> mdatos = new HashMap<>();
+        mdatos.put("idusuario", entity.getIdusuario());
+        mdatos.put("idpersona", entity.getIdpersona().getId());
+        mdatos.put("username", entity.getUsername());
+        var lroles = entity.getUsuariorols();
+        if (!lroles.isEmpty()) {
+            mdatos.put("idrol", lroles.get(0).getIdrol().getId());
+            mdatos.put("nrol", lroles.get(0).getIdrol().getNombre());
+        }
+
+        resp.setDto(mdatos);
 
         return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
     }

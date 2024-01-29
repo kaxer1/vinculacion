@@ -22,6 +22,7 @@ class _NavegacionApp extends ConsumerWidget {
 
   final List<Widget> _children = [
     const HomeScreen(),
+    const PerfilScreen(),
   ];
 
   @override

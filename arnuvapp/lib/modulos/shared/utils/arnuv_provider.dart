@@ -1,13 +1,11 @@
 
-
-import 'package:arnuvapp/modulos/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 abstract class ArnuvNotifier<T> extends StateNotifier<T> {
-  ArnuvNotifier(super.state);
 
+  ArnuvNotifier(super.state);
 
   void setMensajeError( [String? errorMessage, BuildContext? context] ) {
     
@@ -15,7 +13,7 @@ abstract class ArnuvNotifier<T> extends StateNotifier<T> {
       super.state = (super.state as dynamic).copyWithArnuv(errorMessage: errorMessage);
     }
     if (context != null) {
-      clouseLoading(context);
+      closeLoading(context);
     }
   }
 
@@ -39,8 +37,8 @@ abstract class ArnuvNotifier<T> extends StateNotifier<T> {
     );
   }
   
-  void clouseLoading(BuildContext context) {
-    context.pop();
+  void closeLoading(BuildContext context) {
+    Navigator.pop(context);
   }
 
 }
@@ -59,5 +57,21 @@ abstract class ArnuvState {
     String? errorMessage
   }) ;
 
+
+}
+
+abstract class ArnuvCrud<T> {
+
+  limpiarRegistro();
+
+  listar(int limit, int page);
+
+  guardar();
+
+  actualizar( T reg);
+
+  eliminar( T reg);
+
+  seleccionaRegistro( T reg);
 
 }

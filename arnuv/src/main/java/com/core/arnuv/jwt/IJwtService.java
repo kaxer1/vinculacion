@@ -1,5 +1,6 @@
 package com.core.arnuv.jwt;
 
+import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,4 +14,10 @@ public interface IJwtService {
     HttpHeaders regeneraToken();
 
     boolean isTokenValid(String token, UserDetails userDetails);
+
+    Claims extraerTokenData();
+
+    void setTokenSession(String token);
+
+    String getTokenSession();
 }

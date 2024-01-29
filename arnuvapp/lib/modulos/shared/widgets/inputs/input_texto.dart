@@ -20,7 +20,8 @@ class InputTexto extends StatelessWidget {
   final Function(String)? onChange;
   final String? Function(String?)? validacion;
   final Function? onTapIcon; // permite realizar algo al presionar en el icono
-
+  final double? espacioTop; 
+  
   const InputTexto({
     Key? key, 
     this.hint,
@@ -37,7 +38,8 @@ class InputTexto extends StatelessWidget {
     this.maxLength,
     required this.onChange,
     this.validacion,
-    this.onTapIcon
+    this.onTapIcon,
+    this.espacioTop = 0.0
   }) : super(key: key);
 
   @override
@@ -45,10 +47,12 @@ class InputTexto extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        SizedBox(height: espacioTop),
         TextFormField(
           inputFormatters: [
             LengthLimitingTextInputFormatter(maxLength ?? 255),
           ],
+          initialValue: initialValue,
           autocorrect: false,
           obscureText: obscureText ?? false,
           keyboardType: textInputType,

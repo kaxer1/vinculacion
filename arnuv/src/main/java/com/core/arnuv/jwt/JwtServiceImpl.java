@@ -22,6 +22,8 @@ public class JwtServiceImpl implements IJwtService {
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 
+    private String tokenSession;
+
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
 
@@ -34,6 +36,11 @@ public class JwtServiceImpl implements IJwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    @Override
+    public Claims extraerTokenData() {
+        return this.extractAllClaims(getTokenSession());
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
@@ -75,6 +82,16 @@ public class JwtServiceImpl implements IJwtService {
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
                 .getBody();
+    }
+
+    @Override
+    public void setTokenSession(String token) {
+        this.tokenSession = token;
+    }
+
+    @Override
+    public String getTokenSession() {
+        return tokenSession;
     }
 
     private Key getSigningKey() {

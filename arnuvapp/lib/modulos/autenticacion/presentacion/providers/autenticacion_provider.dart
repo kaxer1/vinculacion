@@ -1,9 +1,7 @@
+import 'package:arnuvapp/modulos/shared/shared.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/autenticacion/domain/domain.dart';
 import 'package:arnuvapp/modulos/autenticacion/infraestructura/infrastructure.dart';
-import 'package:arnuvapp/modulos/shared/infrastructure/services/key_value_storage_service.dart';
-import 'package:arnuvapp/modulos/shared/infrastructure/services/key_value_storage_service_impl.dart';
-import 'package:arnuvapp/modulos/shared/utils/arnuv_provider.dart';
 
 
 final authProvider = StateNotifierProvider<AuthNotifier,AuthState>((ref) {
@@ -37,12 +35,27 @@ class AuthNotifier extends ArnuvNotifier<AuthState>  {
     if( token == null ) return logout();
 
     try {
-      final user = await authRepository.checkLogin();
-      _setUsuarioLogeado(user);
+      final menu = await authRepository.checkMenuLogin();
+      state = state.copyWith(
+        user: menu.dto,
+        menu: menu.lista,
+        authStatus: AuthStatus.authenticated,
+      );
 
-    } on SystemException catch (e) {
+    } on AutenticacionException catch (e) {
       logout( e.message );
+      state = state.copyWith(
+        authStatus: AuthStatus.notAuthenticated,
+      );
+    } on SystemException catch (e){
+      logout( e.message );
+      state = state.copyWith(
+        authStatus: AuthStatus.notAuthenticated,
+      );
     } catch (e) {
+      state = state.copyWith(
+        authStatus: AuthStatus.notAuthenticated,
+      );
       logout(e.toString());
     }
 
@@ -54,14 +67,16 @@ class AuthNotifier extends ArnuvNotifier<AuthState>  {
 
     try {
       final user = await authRepository.login(username, password);
-      _setUsuarioLogeado( user );
-
-    } on SystemException catch (e) {
+      final menu = await authRepository.checkMenuLogin();
+      _setUsuarioLogeado( user, menu.lista );
+    } on AutenticacionException catch (e) {
+      logout( e.message );
+    } on SystemException catch (e){
       logout( e.message );
     } catch (e){
-      logout( 'Error no controlado' );
+      logout( 'Error no controlado: ${e.toString()}' );
     }
-    super.clouseLoading(context);
+    super.closeLoading(context);
 
   }
 
@@ -69,11 +84,11 @@ class AuthNotifier extends ArnuvNotifier<AuthState>  {
     
   }
 
-  void _setUsuarioLogeado( User user ) async {
+  void _setUsuarioLogeado( User user, List<Menu>? menu ) async {
     try {
-      await keyValueStorageService.setKeyValue<String>('token', "");
       state = state.copyWith(
         user: user,
+        menu: menu,
         authStatus: AuthStatus.authenticated,
       );
     } catch (e) {
@@ -92,6 +107,10 @@ class AuthNotifier extends ArnuvNotifier<AuthState>  {
     setMensajeError(errorMessage);
   }
 
+  void setOpcionMenu(Item item) {
+    state = state.copyWith(opcionesMenu: item);
+  }
+
 }
 
 enum AuthStatus { checking, authenticated, notAuthenticated }
@@ -100,24 +119,34 @@ class AuthState extends ArnuvState {
 
   final AuthStatus authStatus;
   final User? user;
+  final List<Menu>? menu;
+  final Item? opcionesMenu;
 
   AuthState({
     this.authStatus = AuthStatus.checking, 
     this.user,
+    this.menu,
+    this.opcionesMenu,
     super.errorMessage
   });
 
   AuthState copyWith({
     AuthStatus? authStatus,
     User? user,
+    List<Menu>? menu,
+    Item? opcionesMenu
   }) => AuthState(
     authStatus: authStatus ?? this.authStatus,
     user: user ?? this.user,
+    menu: menu ?? this.menu,
+    opcionesMenu: opcionesMenu ?? this.opcionesMenu
   );
 
   AuthState limpiarState() => AuthState(
     user: null,
+    menu: [],
     authStatus: AuthStatus.checking,
+    opcionesMenu: null,
     errorMessage: ""
   );
   

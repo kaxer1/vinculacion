@@ -15,3 +15,5 @@ export 'package:arnuvapp/modulos/shared/widgets/dialogos.dart';
 export 'package:arnuvapp/modulos/shared/widgets/side_menu.dart';
 export 'package:arnuvapp/modulos/shared/widgets/titulo_seccion.dart';
 export 'package:arnuvapp/modulos/shared/widgets/dropdown.dart';
+export 'package:arnuvapp/modulos/shared/widgets/datatable/data_table.dart';
+export 'package:arnuvapp/modulos/shared/widgets/botones/botones_formulario.dart';

@@ -32,6 +32,19 @@ class InputDecorations {
         color: const Color.fromARGB(255, 66, 66, 66),
         fontSize: labelFontSize
       ),
+      errorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      focusedErrorBorder:  const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 2
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
       prefixIcon: prefixIcon != null 
         ? GestureDetector(onTap: onTap as void Function()?, child: Icon( prefixIcon, color: colorDecoration ))
         : null,

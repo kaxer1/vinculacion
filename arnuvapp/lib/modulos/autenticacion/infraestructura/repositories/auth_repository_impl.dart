@@ -18,8 +18,8 @@ class AuthRepositoryImpl extends AuthRepository {
   }
   
   @override
-  Future<User> checkLogin() {
-    return dataSource.checkLogin();
+  Future<MenuResponse> checkMenuLogin() {
+    return dataSource.checkMenuLogin();
   }
 
 }

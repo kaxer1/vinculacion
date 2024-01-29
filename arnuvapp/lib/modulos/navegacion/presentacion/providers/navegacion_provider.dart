@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //! 3 - StateNotifierProvider - consume afuera
@@ -37,11 +36,6 @@ class NavegacionState {
         activeIcon: Icon(Icons.home_outlined),
         label: 'Home'
       ),
-      // BottomNavigationBarItem(
-      //   icon: ImageIcon( AssetImage('assets/footer icons/ic_transaction.png') ),
-      //   activeIcon: ImageIcon( AssetImage('assets/footer icons/ic_transaction_act.png') ),
-      //   label: localizations.translate('transacciones'),
-      // ),
       BottomNavigationBarItem(
         icon: Icon(Icons.person),
         activeIcon: Icon(Icons.person_outline),
@@ -58,12 +52,4 @@ class NavegacionState {
     items: items ?? this.items,
   );
 
-  @override
-  String toString() {
-    return '''
-  NavegacionState:
-    menuIndex: $menuIndex
-    items: $items
-''';
-  }
 }

@@ -1,0 +1,1 @@
+export 'catalogo_screen.dart';

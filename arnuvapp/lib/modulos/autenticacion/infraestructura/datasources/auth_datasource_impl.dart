@@ -1,5 +1,5 @@
 import 'package:arnuvapp/modulos/autenticacion/domain/domain.dart';
-import 'package:arnuvapp/modulos/autenticacion/infraestructura/infrastructure.dart';
+import 'package:arnuvapp/modulos/autenticacion/infraestructura/errors/auth_errors.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
 
 class AuthDataSourceImpl extends AuthDataSource with ArnuvServicios {
@@ -12,18 +12,25 @@ class AuthDataSourceImpl extends AuthDataSource with ArnuvServicios {
       'password': password
     });
   
-    print(response);
-    // return UserMapper.userJsonToEntity(response.data); 
-    return User(username: username);
+    return User.fromJson(response.data["dto"]);
   }
   
   @override
-  Future<User> checkLogin() async {
-    final response = await postServicio('/api/autenticacion/menu', data: {
-      'serial': await getUuid(true)
-    });
+  Future<MenuResponse> checkMenuLogin() async {
+    final response = await postServicio('/api/autenticacion/menu');
 
-    return UserMapper.userJsonToEntity(response.data);
+    var resp = MenuResponse.fromJson(response.data);
+    if (resp.lista == []) {
+      throw AutenticacionException("NO EXISTE INFORMACION DEL USUARIO");
+    }
+    int index = 1;
+    for (var menu in resp.lista) {
+      for (var itemmenu in menu.items) {
+        itemmenu.index = index;
+        index++;
+      }
+    }
+    return resp;
   }
   
 }

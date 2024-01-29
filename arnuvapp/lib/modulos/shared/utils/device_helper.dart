@@ -1,7 +1,7 @@
+import 'package:arnuvapp/modulos/shared/infrastructure/errors/system_errors.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:arnuvapp/modulos/autenticacion/infraestructura/infrastructure.dart';
 
 class DevicesHelper {
 

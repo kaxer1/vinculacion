@@ -1,10 +1,10 @@
-import '../entities/user.dart';
+import 'package:arnuvapp/modulos/autenticacion/domain/domain.dart';
 
 abstract class AuthDataSource {
 
   Future<User> login( String username, String password );
 
-  Future<User> checkLogin();
+  Future<MenuResponse> checkMenuLogin();
 
 }
 

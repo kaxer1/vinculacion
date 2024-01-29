@@ -16,7 +16,7 @@ class AppTheme {
       bodyMedium: GoogleFonts.openSans()
         .copyWith( fontWeight: FontWeight.w400)
     ),
-    scaffoldBackgroundColor: Colors.blue,
+    scaffoldBackgroundColor: Colors.white70,
     // colorScheme: const ColorScheme( 
     //   brightness: Brightness.light, 
     //   primary: Color.fromARGB(255, 218, 34, 255), 

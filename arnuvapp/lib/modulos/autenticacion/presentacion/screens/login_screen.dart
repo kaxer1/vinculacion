@@ -15,14 +15,14 @@ class LoginScreen extends StatelessWidget {
       child: const Scaffold(
         body: InicioBackground(
           child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
+            physics: ClampingScrollPhysics(),
             child: Column(
               children: [
-                const SizedBox( height: 200 ),
+                SizedBox( height: 200 ),
                 
                 CardContainer(
                   height: 270,
-                  child: const _LoginForm(),
+                  child: _LoginForm(),
                 )  
               ],
             ),
@@ -46,7 +46,7 @@ class _LoginForm extends ConsumerWidget {
 
     ref.listen(authProvider, (ArnuvState? previous , ArnuvState next) {
       if ( next.errorMessage.isEmpty ) return;
-      mostrarErrorSnackBar( context, next.errorMessage );
+      mostrarErrorSnackBar( context, next.errorMessage, ref);
     });
 
     return Column(

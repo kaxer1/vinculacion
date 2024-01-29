@@ -1,8 +1,6 @@
+import 'package:arnuvapp/modulos/autenticacion/autenticacion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:animation_wrappers/animation_wrappers.dart';
-// import 'package:arnuvapp/modulos/navegacion/domain/domain.dart';
-// import 'package:arnuvapp/modulos/navegacion/presentacion/providers/providers.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,8 +22,10 @@ class _HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final themeStyle = Theme.of(context);
-    // final home = ref.watch(homeProvider);
-    // final homeNotifier = ref.watch(homeProvider.notifier);
+    ref.listen(authProvider, (ArnuvState? previous , ArnuvState next) {
+      if ( next.errorMessage.isEmpty ) return;
+      mostrarErrorSnackBar( context, next.errorMessage, ref);
+    });
     // final localizations = AppLocalizations.of(context);
     
 
