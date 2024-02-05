@@ -54,19 +54,29 @@ final goRouterProvider = Provider((ref) {
         builder: (context, state) => const CatalogoScreen(),
       ),
 
-      // En construccion
       GoRoute(
-        path: ConstRoutes.REGISTRAR_USUARIO_ROL,
-        builder: (context, state) => PaginaEjemploScreen(),
+        path: ConstRoutes.REGISTRAR_CATALOGOS_DETALLE,
+        builder: (context, state) => const CatalogoDetalleScreen(),
       ),
 
       GoRoute(
-        path: ConstRoutes.REGISTRAR_ROL,
-        builder: (context, state) => PaginaEjemploScreen(),
+        path: ConstRoutes.REGISTRAR_MODULOS,
+        builder: (context, state) => const ModulosScreen(),
       ),
 
       GoRoute(
         path: ConstRoutes.REGISTRAR_POLITICA_SEGURIDAD,
+        builder: (context, state) => const SeguridadPoliticaScreen(),
+      ),
+
+      GoRoute(
+        path: ConstRoutes.REGISTRAR_ROL,
+        builder: (context, state) => const RolScreen(),
+      ),
+
+      // En construccion
+      GoRoute(
+        path: ConstRoutes.REGISTRAR_USUARIO_ROL,
         builder: (context, state) => PaginaEjemploScreen(),
       ),
       
@@ -75,15 +85,6 @@ final goRouterProvider = Provider((ref) {
         builder: (context, state) => PaginaEjemploScreen(),
       ),
 
-      GoRoute(
-        path: ConstRoutes.REGISTRAR_CATALOGOS_DETALLE,
-        builder: (context, state) => PaginaEjemploScreen(),
-      ),
-
-      GoRoute(
-        path: ConstRoutes.REGISTRAR_MODULOS,
-        builder: (context, state) => PaginaEjemploScreen(),
-      ),
       GoRoute(
         path: ConstRoutes.REGISTRAR_PERSONA_DIRECCION,
         builder: (context, state) => PaginaEjemploScreen(),

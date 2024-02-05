@@ -8,7 +8,7 @@ class CatalogoDataSourceImpl extends CatalogoDataSource with ArnuvServicios {
   Future<Catalogo> crear(Catalogo catalogo) async {
     try {
       final data = CatalogoMapper.entityToJsonData(catalogo);
-      final response = await postServicio('/personas/crear', data: data);
+      final response = await postServicio('/catalogos/crear', data: data);
       var resp = Catalogo.fromJson(response.data["dto"]);
       return resp;
     } on SystemException catch (e) {
@@ -20,7 +20,7 @@ class CatalogoDataSourceImpl extends CatalogoDataSource with ArnuvServicios {
   Future<Catalogo> editar(Catalogo catalogo) async {
     try {
       final data = CatalogoMapper.entityToJsonData(catalogo);
-      final response = await putServicio('/personas/actualizar', data: data );
+      final response = await putServicio('/catalogos/actualizar', data: data );
       var resp = Catalogo.fromJson(response.data["dto"]);
       return resp;
     } on SystemException catch (e) {
@@ -37,8 +37,8 @@ class CatalogoDataSourceImpl extends CatalogoDataSource with ArnuvServicios {
   @override
   Future<List<Catalogo>> listar(int limit, int page) async {
     try {
-      final response = await getServicio('/personas/listar');
-      var resp = CatalogoMapper.listPersonaJsonToList(response.data["lista"]);
+      final response = await getServicio('/catalogos/listar');
+      var resp = CatalogoMapper.listaJsonToList(response.data["lista"]);
       return resp;
     } on SystemException catch (e) {
       throw GeneralesException(e.message);

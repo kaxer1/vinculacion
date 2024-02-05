@@ -23,7 +23,7 @@ class PersonaDetalleMapper {
         fechamodificacion: json["fechamodificacion"],
         nombres: json["nombres"],
         apellidos: json["apellidos"],
-        catalogodetalle: Catalogodetalle.fromJson(json["catalogodetalle"]),
+        catalogodetalle: CatalogoDetalle.fromJson(json["catalogodetalle"]),
         identificacion: json["identificacion"],
         celular: json["celular"],
         email: json["email"],
@@ -42,7 +42,7 @@ class PersonaDetalleMapper {
         mapa.addAll({"idcatalogoidentificacion": persona.catalogodetalle.id.idcatalogo });
         mapa.addAll({"iddetalleidentificacion": persona.catalogodetalle.id.iddetalle });
         mapa.addAll({"identificacion": persona.identificacion });
-        mapa.addAll({"celular": persona.identificacion });
+        mapa.addAll({"celular": persona.celular });
         mapa.addAll({"email": persona.email });
     return mapa;
   } 

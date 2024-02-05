@@ -8,6 +8,7 @@ Map<String, String> english() {
     // Mensajes Validacion fromulario
     'validaCedula': 'Invalid ID number',
     'validarSoloLetras': 'You can only enter letters',
+    'validarLetrasNumeros': 'Only numbers or letters without special characters',
     'validarSoloNumeros': 'You can only enter numbers',
     'validarEmail': 'Please enter a correct email',
 
@@ -25,6 +26,19 @@ Map<String, String> english() {
     'lblCelular': 'Cell phone',
     'lblEmil': 'Email',
     'lblCodigo': 'Code',
+    'lblCodigoCat': 'Catalog Code',
+    'lblCodigoCatDet': 'Code Detail',
+    'lblCheckActivo': 'Active',
+    'lblCatalogo': 'Select a catalog',
+    'lblTipoIdentificacion': 'ID Type',
+
+    'lblEspeciales': 'Special characters',
+    'lblIntentos': 'Attempts',
+    'lblLongitud': 'Length',
+    'lblMayusculas': 'Capital letters',
+    'lblMinusculas': 'Lower case',
+    'lblNumeros': 'Numbers',
+    'lblTiempoRegToken': 'Token regeneration time',
     
     // Mensaje de botones
     'btnOk': 'Ok',
@@ -42,9 +56,13 @@ Map<String, String> english() {
     'digTitEditar': 'Edit',
 
     // App Bar titulos
-    'AppTitUsuario':'Usuarios',
-    'AppTitPersona':'Personas',
-    'AppTitCatalogo':'Catalogo',
+    'AppTitUsuario':'Users',
+    'AppTitPersona':'People',
+    'AppTitCatalogo':'Catalogue',
+    'AppTitCatalogoDetalle':'Catalogs Detail',
+    'AppTitModulos':'Modules',
+    'AppTitSegPol':'Security politics',
+    'AppTitRol':'Role',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',

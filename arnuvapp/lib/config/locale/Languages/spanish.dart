@@ -8,6 +8,7 @@ Map<String, String> spanish() {
     // Mensajes Validacion fromulario
     'validaCedula': 'Número de cédula no valido',
     'validarSoloLetras': 'Solo se puede ingresar letras',
+    'validarLetrasNumeros': 'Solo números o letras no caracteres especiales',
     'validarSoloNumeros': 'Solo se puede ingresar números',
     'validarEmail': 'Ingrese un correo electrónico correcto',
 
@@ -25,6 +26,18 @@ Map<String, String> spanish() {
     'lblCelular': 'Celular',
     'lblEmil': 'Email',
     'lblCodigo': 'Código',
+    'lblCodigoCat': 'Código Catálogo',
+    'lblCodigoCatDet': 'Código Detalle',
+    'lblCheckActivo': 'Activo',
+    'lblCatalogo': 'Seleciona un catálogo',
+    'lblTipoIdentificacion': 'Tipo de identificación',
+    'lblEspeciales': 'Caracteres Especiales',
+    'lblIntentos': 'Intentos',
+    'lblLongitud': 'Longitud',
+    'lblMayusculas': 'Mayusculas',
+    'lblMinusculas': 'Minusculas',
+    'lblNumeros': 'Números',
+    'lblTiempoRegToken': 'Tiempo de regeneración de token',
     
     // Labels de botones
     'btnOk': 'Ok',
@@ -44,6 +57,11 @@ Map<String, String> spanish() {
     // App Bar titulos
     'AppTitUsuario':'Usuarios',
     'AppTitPersona':'Personas',
+    'AppTitCatalogo':'Catálogos',
+    'AppTitCatalogoDetalle':'Catálogos Detalle',
+    'AppTitModulos':'Módulos',
+    'AppTitSegPol':'Políticas de seguridad',
+    'AppTitRol':'Rol',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',

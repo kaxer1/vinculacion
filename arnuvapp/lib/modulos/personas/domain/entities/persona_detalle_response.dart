@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:arnuvapp/modulos/personas/domain/domain.dart';
+
 PersonaDetalleResponse personaResponseFromJson(String str) => PersonaDetalleResponse.fromJson(json.decode(str));
 
 String personaResponseToJson(PersonaDetalleResponse data) => json.encode(data.toJson());
@@ -40,7 +42,7 @@ class PersonaDetalle {
     String? fechamodificacion;
     String nombres;
     String apellidos;
-    Catalogodetalle catalogodetalle;
+    CatalogoDetalle catalogodetalle;
     String identificacion;
     String celular;
     String email;
@@ -67,7 +69,7 @@ class PersonaDetalle {
         dynamic fechamodificacion,
         String? nombres,
         String? apellidos,
-        Catalogodetalle? catalogodetalle,
+        CatalogoDetalle? catalogodetalle,
         String? identificacion,
         String? celular,
         String? email,
@@ -94,7 +96,7 @@ class PersonaDetalle {
         fechamodificacion: json["fechamodificacion"],
         nombres: json["nombres"],
         apellidos: json["apellidos"],
-        catalogodetalle: Catalogodetalle.fromJson(json["catalogodetalle"]),
+        catalogodetalle: CatalogoDetalle.fromJson(json["catalogodetalle"]),
         identificacion: json["identificacion"],
         celular: json["celular"],
         email: json["email"],
@@ -115,70 +117,6 @@ class PersonaDetalle {
     };
 }
 
-class Catalogodetalle {
-    Id id;
-    String nombre;
-    bool activo;
-
-    Catalogodetalle({
-        required this.id,
-        required this.nombre,
-        required this.activo,
-    });
-
-    Catalogodetalle copyWith({
-        Id? id,
-        String? nombre,
-        bool? activo,
-    }) => 
-        Catalogodetalle(
-            id: id ?? this.id,
-            nombre: nombre ?? this.nombre,
-            activo: activo ?? this.activo,
-        );
-
-    factory Catalogodetalle.fromJson(Map<String, dynamic> json) => Catalogodetalle(
-        id: Id.fromJson(json["id"]),
-        nombre: json["nombre"],
-        activo: json["activo"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id.toJson(),
-        "nombre": nombre,
-        "activo": activo,
-    };
-
-}
-
-class Id {
-    int idcatalogo;
-    String iddetalle;
-
-    Id({
-        required this.idcatalogo,
-        required this.iddetalle,
-    });
-
-     Id copyWith({
-        int? idcatalogo,
-        String? iddetalle,
-    }) => 
-        Id(
-            idcatalogo: idcatalogo ?? this.idcatalogo,
-            iddetalle: iddetalle ?? this.iddetalle,
-        );
-
-    factory Id.fromJson(Map<String, dynamic> json) => Id(
-        idcatalogo: json["idcatalogo"],
-        iddetalle: json["iddetalle"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "idcatalogo": idcatalogo,
-        "iddetalle": iddetalle,
-    };
-}
 
 final personaDetalleDefault = PersonaDetalle(
         id: 0,
@@ -188,7 +126,7 @@ final personaDetalleDefault = PersonaDetalle(
         fechamodificacion: '',
         nombres: '',
         apellidos: '',
-        catalogodetalle: Catalogodetalle(
+        catalogodetalle: CatalogoDetalle(
           id: Id(idcatalogo: 1, iddetalle: ''), 
           nombre: '', 
           activo: true

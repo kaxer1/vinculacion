@@ -4,7 +4,7 @@ import 'package:arnuvapp/modulos/shared/infrastructure/errors/system_errors.dart
 
 class CatalogoMapper {
 
-  static List<Catalogo> listPersonaJsonToList( List<dynamic> ljson ) {
+  static List<Catalogo> listaJsonToList( List<dynamic> ljson ) {
     try {
       var lresult = ljson.map((e) => mapJsonToEntity(e));
       return List<Catalogo>.from(lresult);

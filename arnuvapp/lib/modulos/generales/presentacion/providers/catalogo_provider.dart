@@ -24,16 +24,14 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
   CatalogoNotifier({
     required this.catalogoRepository,
   }): super( CatalogoState(registro: catalogoDefault, formKey: GlobalKey<FormState>()) ) {
-    listar(1, 1);  
+    listar(1, 1);
   }
 
   @override
   listar(int limit, int page) async {
     try {
       final lista = await catalogoRepository.listar(limit, page);
-      state = state.copyWith(
-        lregistros: lista
-      );
+      state = state.copyWith( lregistros: lista );
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -43,6 +41,7 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
   actualizar(Catalogo reg) async {
     try {
       await catalogoRepository.editar(state.registro);
+      listar(1, 1);
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -51,7 +50,9 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
   @override
   guardar() async {
     try {
-      await catalogoRepository.crear(state.registro);
+      var registro = await catalogoRepository.crear(state.registro);
+      state.lregistros.add(registro);
+      state = state.copyWith(lregistros: state.lregistros);
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -76,6 +77,10 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
     state = state.copyWith( esValidoForm: false );
     if (state.formKey.currentState?.validate() != true) return;
     state = state.copyWith( esValidoForm: true );
+  }
+
+  setCheckActivo(bool? value) {
+    state = state.copyWith(registro: state.registro.copyWith(activo: value!));
   }
 
 }

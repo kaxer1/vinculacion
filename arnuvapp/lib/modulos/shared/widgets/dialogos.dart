@@ -61,6 +61,7 @@ void aletaDialogAndroid( {
       builder: ( context ) {
         final localizations = AppLocalizations.of(context);
         return AlertDialog(
+          scrollable: true,
           elevation: 5,
           title: titulo,
           shape: RoundedRectangleBorder( borderRadius: BorderRadiusDirectional.circular(15) ),

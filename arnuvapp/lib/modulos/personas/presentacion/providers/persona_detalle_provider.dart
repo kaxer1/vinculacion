@@ -1,3 +1,4 @@
+import 'package:arnuvapp/modulos/generales/presentacion/providers/catalogo_detalle_dropdown_provider.dart';
 import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 import 'package:arnuvapp/modulos/personas/infraestructura/infraestructure.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,13 @@ import 'package:arnuvapp/modulos/shared/shared.dart';
 final personaDetalleProvider = StateNotifierProvider.autoDispose<PersonaDetalleNotifier,PersonaDetalleState>((ref) {
 
   final personaDetalleRep = PersonaDetalleRepositoryImpl();
+  final metodoCatalogoDetalle = ref.watch(catalogoDetalleDropdownProvider.notifier).getRegistroSeleccionado;
+  final catdellseleccionado = ref.watch(catalogoDetalleDropdownProvider.notifier).onSeleccionChange;
 
   return PersonaDetalleNotifier(
-    personaDetalleRepository: personaDetalleRep
+    personaDetalleRepository: personaDetalleRep,
+    registroSeleccionadoCallback: metodoCatalogoDetalle,
+    catdelSelectCallback: catdellseleccionado
   );
 });
 
@@ -19,11 +24,15 @@ final personaDetalleProvider = StateNotifierProvider.autoDispose<PersonaDetalleN
 class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implements ArnuvCrud<PersonaDetalle> {
 
   final PersonaDetalleRepository personaDetalleRepository;
+  final Function() registroSeleccionadoCallback;
+  final Function(String?) catdelSelectCallback;
 
   PersonaDetalleNotifier({
     required this.personaDetalleRepository,
+    required this.registroSeleccionadoCallback,
+    required this.catdelSelectCallback,
   }): super( PersonaDetalleState(registro: personaDetalleDefault, formKey: GlobalKey<FormState>()) ) {
-    listar(1, 1);  
+    listar(1, 1);
   }
 
   @override
@@ -41,7 +50,10 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   @override
   actualizar(PersonaDetalle reg) async {
     try {
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(catalogodetalle: reg));
       await personaDetalleRepository.editar(state.registro);
+      listar(1, 1);
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -50,7 +62,11 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   @override
   guardar() async {
     try {
-      await personaDetalleRepository.crear(state.registro);
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(catalogodetalle: reg));
+      var registro = await personaDetalleRepository.crear(state.registro);
+      state.lregistros.add(registro);
+      state = state.copyWith(lregistros: state.lregistros);
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -68,6 +84,7 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   
   @override
   seleccionaRegistro(PersonaDetalle reg) {
+    catdelSelectCallback(reg.catalogodetalle.id.iddetalle);
     state = state.copyWith(registro: reg, esValidoForm: false);
   }
 

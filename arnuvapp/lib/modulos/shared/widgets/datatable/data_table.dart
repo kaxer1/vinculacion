@@ -2,6 +2,7 @@
 
 import 'package:arnuvapp/modulos/autenticacion/domain/entities/menu.dart';
 import 'package:arnuvapp/modulos/autenticacion/presentacion/providers/autenticacion_provider.dart';
+import 'package:arnuvapp/modulos/shared/widgets/mostrar_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,35 +29,44 @@ class DataTableArnuv extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final itempermisos = ref.read(authProvider).opcionesMenu;
-    var tableRow = TableCustomRow(rows: rowTablas, itempermisos: itempermisos!, onDelete: onDelete, onEdit: onEdit, numColumn: columnsName.length);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox( height: 50 ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.90,
-          child: PaginatedDataTable(
-            header: Text(nombreTabla, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            onRowsPerPageChanged: (perPage) {},
-            rowsPerPage: 5,
-            columns: <DataColumn>[
-              ..._listaColumnas(columnsName)
-            ],
-            source: tableRow,
-            controller: ScrollController(),
-            actions: [
-              itempermisos.crear == 0 ? Container()
-                : ElevatedButton.icon(onPressed: onNew, icon: const Icon(Icons.add), 
-                  label: const Text("Nuevo"))
-            ],
-            availableRowsPerPage: const [5,10,15,20],
-            showFirstLastButtons: true,
-            
-          )
-        ),
-      ],
-    );
+    try {  
+      var tableRow = TableCustomRow(rows: rowTablas, itempermisos: itempermisos!, onDelete: onDelete, onEdit: onEdit, numColumn: columnsName.length);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox( height: 50 ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.90,
+            child: PaginatedDataTable(
+              header: Text(nombreTabla, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              onRowsPerPageChanged: (perPage) {},
+              rowsPerPage: 5,
+              columns: <DataColumn>[
+                ..._listaColumnas(columnsName)
+              ],
+              source: tableRow,
+              controller: ScrollController(),
+              actions: [
+                itempermisos.crear == 0 ? Container()
+                  : ElevatedButton.icon(onPressed: onNew, icon: const Icon(Icons.add), 
+                    label: const Text("Nuevo"))
+              ],
+              availableRowsPerPage: const [5,10,15,20],
+              showFirstLastButtons: true,
+              
+            )
+          ),
+        ],
+      );
+    } catch (e) {
+      mostrarErrorSnackBar( context, e.toString(), ref);
+      return const Column(
+        children: [
+          SizedBox( height: 50 ),
+          Text("Tabla")
+        ],
+      );
+    }    
   }
 
   List<DataColumn> _listaColumnas(List<String> columnsName) {

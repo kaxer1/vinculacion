@@ -1,3 +1,5 @@
+import 'package:arnuvapp/modulos/generales/domain/entities/catalogo_detalle_response.dart';
+import 'package:arnuvapp/modulos/generales/presentacion/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/personas/presentacion/providers/providers.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
@@ -81,6 +83,13 @@ class _Formulario extends ConsumerWidget {
     final localizations = AppLocalizations.of(context);
     final state = ref.watch(personaDetalleProvider);
     final metodos = ref.read(personaDetalleProvider.notifier);
+
+    // Sacar informacion del dropdown por defecto
+    final stateCatalogoDetalle = ref.watch(catalogoDetalleDropdownProvider);
+    final metodosCatalogoDetalle = ref.watch(catalogoDetalleDropdownProvider.notifier);
+    if (stateCatalogoDetalle.idcatalogo == 0) {
+      metodosCatalogoDetalle.listarCatalogDetalle(1);
+    }
     
     final valiacion = ValidacionesInputUtil(localizations: localizations);
     return Column(
@@ -135,16 +144,19 @@ class _Formulario extends ConsumerWidget {
                 onChange: (value) => state.registro.email = value, 
                 validacion: (valor) => valiacion.validarEmail(valor)             
               ),
-              // DropdownPersonalizado(
-              //   value: cuentaLov == null ? "" : cuentaLov.coperacion!, 
-              //   onchange: ref.watch(lovOperacionCarteraProvider.notifier).onSeleccionCuentaChange,
-              //   items: lrespuestacuenta.map<DropdownMenuItem<String>>((LovOperacionCarteraResponse value) {
-              //     return DropdownMenuItem<String>(
-              //       value: value.coperacion,
-              //       child: value.coperacion == "" ? Text(value.ntipoproducto!) : Text('${value.coperacion} - ${value.ntipoproducto}'),
-              //     );
-              //   }).toList()
-              // ),
+              DropdownPersonalizado(
+                label: localizations.translate('lblTipoIdentificacion'),
+                porcentajeWidth: 0.6,
+                transaparente: true,
+                value: stateCatalogoDetalle.registroSelect.id.iddetalle.toString(), 
+                onchange: metodosCatalogoDetalle.onSeleccionChange,
+                items: stateCatalogoDetalle.lregistros.map<DropdownMenuItem<String>>((CatalogoDetalle value) {
+                  return DropdownMenuItem<String>(
+                    value: value.id.iddetalle.toString(),
+                    child: Text(value.nombre),
+                  );
+                }).toList(),
+              ),
               BotonesForm(
                 esValidoForm: state.esValidoForm, 
                 onPressedOk: onPressedOk

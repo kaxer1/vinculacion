@@ -20,7 +20,7 @@ class CatalogoScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(localizations.translate('AppTitCatalogo')) ),
         body: Column(
           children: [
-            DataTableArnuv(nombreTabla: "Catalogo",
+            DataTableArnuv(nombreTabla: "Tabla de Catalogo",
             columnsName: const ['Id Catalogo','Nombre','Activo'],
             onNew: () {
               ref.watch(catalogProvider.notifier).limpiarRegistro();
@@ -96,8 +96,8 @@ class _Formulario extends ConsumerWidget {
                 textInputType: TextInputType.number,
                 label: localizations.translate('lblCodigo'),
                 maxLength: 10,
-                onChange: (value) => state.registro.id = int.tryParse(value) ?? 0,          
-                validacion: (valor) => valiacion.validarSoloLetras(valor),
+                onChange: (value) => state.registro.id = int.tryParse(value) ?? 0,
+                validacion: (valor) => valiacion.validarSoloNumeros(valor),
                 readOnly: true,
               ),
               InputTexto(
@@ -108,6 +108,11 @@ class _Formulario extends ConsumerWidget {
                 maxLength: 100,
                 onChange: (value) => state.registro.nombre = value,    
                 validacion: (valor) => valiacion.validarSoloLetras(valor)         
+              ),
+              InputCheck(
+                label: localizations.translate('lblCheckActivo'), 
+                onChanged: metodos.setCheckActivo,
+                initialValue: state.registro.activo,
               ),
               BotonesForm(
                 esValidoForm: state.esValidoForm, 
@@ -123,4 +128,5 @@ class _Formulario extends ConsumerWidget {
     );
   }
 }
+
 

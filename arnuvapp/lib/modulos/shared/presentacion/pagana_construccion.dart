@@ -36,12 +36,12 @@ class PaginaEjemploScreen extends ConsumerWidget {
             onDelete: (index) {},
             onEdit: (index) { },
             rowTablas: [...lregistros.map((e) {
-                  List<Widget> lista = [];
-                  lista.add(Text(e.id.toString()));
-                  lista.add(Text(e.nombre));
-                  lista.add(Text(e.email));
-                  return lista;
-                })],
+                List<Widget> lista = [];
+                lista.add(Text(e.id.toString()));
+                lista.add(Text(e.nombre));
+                lista.add(Text(e.email));
+                return lista;
+              })],
             ),
 
           ]

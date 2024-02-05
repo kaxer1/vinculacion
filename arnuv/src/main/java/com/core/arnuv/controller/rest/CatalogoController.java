@@ -36,15 +36,15 @@ public class CatalogoController {
 		var entity = servicioCatalogo.insertarCatalogo(catalogo.mapearDato(catalogo, Catalogo.class));
 		CatalogoResponse resp = new CatalogoResponse();
 		resp.mapearDato(entity, CatalogoResponse.CatalogoDto.class,  "catalogodetalles");
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PutMapping("/actualizar")
-	public ResponseEntity<?> actualizarCatalogo(@RequestBody CatalogoRequest catalogo) throws Exception {
+	public ResponseEntity<RespuestaComun> actualizarCatalogo(@RequestBody CatalogoRequest catalogo) throws Exception {
 		var entity = servicioCatalogo.actualizarCatalogo(catalogo.mapearDato(catalogo, Catalogo.class));
 		CatalogoResponse resp = new CatalogoResponse();
 		resp.mapearDato(entity, CatalogoResponse.CatalogoDto.class,  "catalogodetalles");
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@GetMapping("/buscar/{id}")

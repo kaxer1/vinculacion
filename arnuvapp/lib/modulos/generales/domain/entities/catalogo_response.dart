@@ -83,5 +83,5 @@ class Catalogo {
 final catalogoDefault = Catalogo(
         id: 0,
         nombre: "",
-        activo: true
+        activo: false
     );

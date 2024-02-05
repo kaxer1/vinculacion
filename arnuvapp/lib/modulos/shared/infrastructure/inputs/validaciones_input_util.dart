@@ -33,6 +33,14 @@ class ValidacionesInputUtil {
       ? null 
       : localizations.translate('validarSoloLetras');
   }
+  validarLetrasNumeros( value ) {
+    // if (value.length < 1) return;
+    String pattern = r'^[a-zA-ZáéíóúüÜÁÉÍÓÚÑñ0-9\s]+$';
+    RegExp regExp  = RegExp(pattern);
+    return regExp.hasMatch(value) 
+      ? null 
+      : localizations.translate('validarLetrasNumeros');
+  }
 
   validarSoloNumeros( value ) {
     // if (value.length < 1) return;
