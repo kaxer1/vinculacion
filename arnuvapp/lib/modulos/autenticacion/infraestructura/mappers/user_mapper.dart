@@ -7,7 +7,7 @@ class UserMapper {
 
   static User userJsonToEntity( Map<String,dynamic> json ) {
     try {
-      return User( username: json['username'], nrol: json['nrol'] );
+      return User( username: json['username'], nrol: json['nrol'], email: json['email'] );
     } catch (e) {
       throw AutenticacionException( e.toString());
     }

@@ -1,3 +1,4 @@
+import 'package:arnuvapp/modulos/autenticacion/domain/domain.dart';
 import 'package:arnuvapp/modulos/autenticacion/presentacion/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
@@ -82,6 +83,10 @@ class _Formulario extends ConsumerWidget {
     final state = ref.watch(rolProvider);
     final metodos = ref.read(rolProvider.notifier);
     
+    // Sacar informacion del dropdown por defecto
+    final stateSegPolitica = ref.watch(segPoliticaDropdownProvider);
+    final metodosSegPolitica = ref.watch(segPoliticaDropdownProvider.notifier);
+    
     final valiacion = ValidacionesInputUtil(localizations: localizations);
     return Column(
       children: [
@@ -108,6 +113,19 @@ class _Formulario extends ConsumerWidget {
                 maxLength: 100,
                 onChange: (value) => state.registro.nombre = value,    
                 validacion: (valor) => valiacion.validarSoloLetras(valor)         
+              ),
+              DropdownPersonalizado(
+                label: localizations.translate('lblSeguridadPol'),
+                porcentajeWidth: 0.6,
+                transaparente: true,
+                value: stateSegPolitica.registroSelect.id.toString(), 
+                onchange: metodosSegPolitica.onSeleccionChange,
+                items: stateSegPolitica.lregistros.map<DropdownMenuItem<String>>((SeguridadPolitica value) {
+                  return DropdownMenuItem<String>(
+                    value: value.id.toString(),
+                    child: Text(value.id.toString()),
+                  );
+                }).toList(),
               ),
               InputCheck(
                 label: localizations.translate('lblCheckActivo'), 

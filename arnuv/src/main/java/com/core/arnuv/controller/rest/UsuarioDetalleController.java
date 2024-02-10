@@ -6,9 +6,10 @@ import com.core.arnuv.request.UsuarioDetalleRequest;
 import com.core.arnuv.response.UsuarioDetalleResponse;
 import com.core.arnuv.service.IPersonaDetalleService;
 import com.core.arnuv.service.IUsuarioDetalleService;
-import com.core.arnuv.utils.ArnuvUtils;
+import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,12 @@ public class UsuarioDetalleController {
 		var personaentity = servicioPersonaDetalle.buscarPorId(usuario.getIdpersona());
 		Usuariodetalle usuariodetalle = usuario.mapearDato(usuario, Usuariodetalle.class);
 		usuariodetalle.setIdpersona(personaentity);
-		var entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
+		Usuariodetalle entity = null;
+		try {
+			entity = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
+		} catch (DataIntegrityViolationException e) {
+			throw new ArnuvNotFoundException("Error al guardar datos: {0}", e.getMessage().split("Detail:")[1].split("]")[0]);
+		}
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
@@ -50,7 +56,12 @@ public class UsuarioDetalleController {
 		var personaentity = servicioPersonaDetalle.buscarPorId(usuario.getIdpersona());
 		Usuariodetalle usuariodetalle = usuario.mapearDato(usuario, Usuariodetalle.class);
 		usuariodetalle.setIdpersona(personaentity);
-		var entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuariodetalle);
+		Usuariodetalle entity = null;
+		try {
+			entity = servicioUsuarioDetalle.actualizarUsuarioDetalle(usuariodetalle);
+		} catch (DataIntegrityViolationException e) {
+			throw new ArnuvNotFoundException("Error al guardar datos: {0}", e.getMessage().split("Detail:")[1].split("]")[0]);
+		}
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
@@ -59,6 +70,17 @@ public class UsuarioDetalleController {
 	@GetMapping("/buscar/{id}")
 	public ResponseEntity<RespuestaComun> buscarCatalogoPorId(@PathVariable int id) throws Exception {
 		var entity = servicioUsuarioDetalle.buscarPorId(id);
+		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
+		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
+
+	@GetMapping("/validar/{username}")
+	public ResponseEntity<RespuestaComun> buscarPorUserName(@PathVariable String username) throws Exception {
+		var entity = servicioUsuarioDetalle.buscarPorEmail(username);
+		if (entity == null) {
+			throw new ArnuvNotFoundException("El usuario {0} no existe", username);
+		}
 		UsuarioDetalleResponse resp = new UsuarioDetalleResponse();
 		resp.mapearDato(entity, UsuarioDetalleResponse.UsuarioDetalleDto.class,  "usuariorols","idpersona");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);

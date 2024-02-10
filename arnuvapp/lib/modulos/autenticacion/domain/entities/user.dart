@@ -36,6 +36,7 @@ class User {
     int? idusuario;
     int? idpersona;
     String username;
+    String email;
     int? idrol;
     String nrol;
 
@@ -43,6 +44,7 @@ class User {
         this.idusuario,
         this.idpersona,
         required this.username,
+        required this.email,
         this.idrol,
         required this.nrol,
     });
@@ -51,6 +53,7 @@ class User {
         idusuario: json["idusuario"],
         idpersona: json["idpersona"],
         username: json["username"],
+        email: json["email"],
         idrol: json["idrol"],
         nrol: json["nrol"],
     );
@@ -59,6 +62,7 @@ class User {
         "idusuario": idusuario,
         "idpersona": idpersona,
         "username": username,
+        "email": email,
         "idrol": idrol,
         "nrol": nrol,
     };

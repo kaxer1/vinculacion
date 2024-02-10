@@ -1,6 +1,7 @@
 
 import 'package:arnuvapp/modulos/autenticacion/domain/domain.dart';
 import 'package:arnuvapp/modulos/autenticacion/infraestructura/infrastructure.dart';
+import 'package:arnuvapp/modulos/autenticacion/presentacion/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
@@ -9,9 +10,13 @@ import 'package:arnuvapp/modulos/shared/shared.dart';
 final rolProvider = StateNotifierProvider.autoDispose<RolNotifier,RolState>((ref) {
 
   final repository = RolRepositoryImpl();
+  final metodoSegPolitica = ref.watch(segPoliticaDropdownProvider.notifier).getRegistroSeleccionado;
+  final segpoliseleccionado = ref.watch(segPoliticaDropdownProvider.notifier).onSeleccionChange;
 
   return RolNotifier(
-    rolRepository: repository
+    rolRepository: repository,
+    registroSeleccionadoCallback: metodoSegPolitica,
+    segpolSelectCallback: segpoliseleccionado
   );
 });
 
@@ -20,9 +25,13 @@ final rolProvider = StateNotifierProvider.autoDispose<RolNotifier,RolState>((ref
 class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
 
   final RolRepository rolRepository;
+  final Function() registroSeleccionadoCallback;
+  final Function(String?) segpolSelectCallback;
 
   RolNotifier({
     required this.rolRepository,
+    required this.registroSeleccionadoCallback,
+    required this.segpolSelectCallback,
   }): super( RolState(registro: rolDefault, formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);
   }
@@ -40,6 +49,8 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
   @override
   actualizar(Rol reg) async {
     try {
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(idpolitica: reg));
       await rolRepository.editar(state.registro);
       listar(1, 1);
     } on AutenticacionException catch (e) {
@@ -50,6 +61,8 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
   @override
   guardar() async {
     try {
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(idpolitica: reg));
       var registro = await rolRepository.crear(state.registro);
       state.lregistros.add(registro);
       state = state.copyWith(lregistros: state.lregistros);
@@ -70,6 +83,7 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
   
   @override
   seleccionaRegistro(Rol reg) {
+    segpolSelectCallback(reg.idpolitica.id.toString());
     state = state.copyWith(registro: reg, esValidoForm: false);
   }
 

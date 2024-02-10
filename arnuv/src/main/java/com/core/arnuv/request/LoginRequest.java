@@ -8,8 +8,8 @@ public class LoginRequest {
     @Comment("serial telefono")
     private String serial;
 
-    @Comment("Username")
-    private String username;
+    @Comment("email")
+    private String email;
 
     @Comment("Password")
     private String password;

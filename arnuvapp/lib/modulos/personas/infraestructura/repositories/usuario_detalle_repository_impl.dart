@@ -32,5 +32,10 @@ class UsuarioDetalleRepositoryImpl extends UsuarioDetalleRepository {
   Future<List<UsuarioDetalle>> listar(int limit, int page) {
     return dataSource.listar(limit, page);
   }
+  
+  @override
+  Future<UsuarioDetalle> buscarPorEmail(String username) {
+    return dataSource.buscarPorEmail(username);
+  }
 
 }

@@ -9,7 +9,7 @@ String usuarioDetalleResponseToJson(UsuarioDetalleResponse data) => json.encode(
 class UsuarioDetalleResponse {
     dynamic mensaje;
     dynamic codigo;
-    dynamic dto;
+    UsuarioDetalle? dto;
     List<UsuarioDetalle> lista;
 
     UsuarioDetalleResponse({
@@ -116,7 +116,7 @@ class UsuarioDetalle {
         idusuariomod: json["idusuariomod"],
         idusuarioaprobacion: json["idusuarioaprobacion"],
         fechaingreso: DateTime.tryParse(json["fechaingreso"]),
-        fechamodificacion: DateTime.tryParse(json["fechamodificacion"]),
+        fechamodificacion: DateTime.tryParse(json["fechamodificacion"]) ?? DateTime.now(),
         fechaaprobacion: DateTime.tryParse(json["fechaaprobacion"]),
         estado: json["estado"],
         username: json["username"],

@@ -45,4 +45,15 @@ class UsuarioDetalleDataSourceImpl extends UsuarioDetalleDataSource with ArnuvSe
     }
   }
   
+  @override
+  Future<UsuarioDetalle> buscarPorEmail(String email) async {
+    try {
+      final response = await getServicio('/usuarios/validar/$email');
+      var resp = UsuarioDetalleMapper.mapJsonToEntity(response.data["dto"]);
+      return resp;
+    } on SystemException catch (e) {
+      throw PersonaException(e.message);
+    }
+  }
+  
 }

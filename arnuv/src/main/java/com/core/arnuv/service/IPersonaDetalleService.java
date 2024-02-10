@@ -13,4 +13,7 @@ public interface IPersonaDetalleService {
 	public Personadetalle actualizarPersonaDetalle(Personadetalle data);
 
 	public Personadetalle buscarPorId(int id);
+
+	public Personadetalle buscarPorIdentificacion(String identificacion);
+
 }

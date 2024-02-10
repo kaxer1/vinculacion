@@ -11,4 +11,6 @@ public interface IUsuarioRolService {
 	public Usuariorol insertarUsuarioRol(Usuariorol data);
 
 	public Usuariorol buscarPorId(int idrol, int idusuario);
+
+	List<Usuariorol>  buscarPorRol(int idrol);
 }

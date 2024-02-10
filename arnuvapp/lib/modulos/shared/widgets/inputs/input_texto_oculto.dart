@@ -57,7 +57,8 @@ class InputTextoOculto extends StatelessWidget {
         labelText: label ?? '',
         prefixIcon: prefixIcon,
         suffixIcon: mostrarTexto ? Icons.visibility: Icons.visibility_off,
-        onTap: onTapIcon
+        onTap: onTapIcon,
+        colorDecoration: const Color.fromRGBO(179, 0, 255, 1)
       )
     );
   }

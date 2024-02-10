@@ -85,4 +85,9 @@ public class OpcionesPermisoServiceImp implements IOpcionesPermisoService {
 
 		return lresponse;
 	}
+
+	@Override
+	public List<Opcionespermiso> buscarIdRol(int idrol) {
+		return repo.buscarPorRol(idrol);
+	}
 }

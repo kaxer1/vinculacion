@@ -1,6 +1,9 @@
 package com.core.arnuv.request;
 
 import com.core.arnuv.model.Usuariorol;
+import com.core.arnuv.model.UsuariorolId;
+import com.core.arnuv.response.RolResponse;
+import com.core.arnuv.response.UsuarioDetalleResponse;
 import com.core.arnuv.utils.RequestComun;
 import lombok.Data;
 import org.hibernate.annotations.Comment;

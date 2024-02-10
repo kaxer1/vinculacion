@@ -45,4 +45,15 @@ class PersonaDetalleDataSourceImpl extends PersonaDetalleDataSource with ArnuvSe
     }
   }
   
+  @override
+  Future<PersonaDetalle> buscarPorIdentificacion(String identificacion) async {
+    try {
+      final response = await getServicio('/personas/buscaridentificacion/$identificacion' );
+      var resp = PersonaDetalle.fromJson(response.data["dto"]);
+      return resp;
+    } on SystemException catch (e) {
+      throw PersonaException(e.message);
+    }
+  }
+  
 }

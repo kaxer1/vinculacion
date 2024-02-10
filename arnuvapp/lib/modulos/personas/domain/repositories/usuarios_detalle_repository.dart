@@ -11,5 +11,7 @@ abstract class UsuarioDetalleRepository {
 
   Future<bool> eliminar( UsuarioDetalle usuario );
 
+  Future<UsuarioDetalle> buscarPorEmail( String email );
+
 }
 

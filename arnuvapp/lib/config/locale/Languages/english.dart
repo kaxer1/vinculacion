@@ -11,6 +11,7 @@ Map<String, String> english() {
     'validarLetrasNumeros': 'Only numbers or letters without special characters',
     'validarSoloNumeros': 'You can only enter numbers',
     'validarEmail': 'Please enter a correct email',
+    'validarPassword': 'Enter a correct password',
 
     // AppBars
     'barMiCuenta': 'My account',
@@ -31,7 +32,6 @@ Map<String, String> english() {
     'lblCheckActivo': 'Active',
     'lblCatalogo': 'Select a catalog',
     'lblTipoIdentificacion': 'ID Type',
-
     'lblEspeciales': 'Special characters',
     'lblIntentos': 'Attempts',
     'lblLongitud': 'Length',
@@ -39,6 +39,21 @@ Map<String, String> english() {
     'lblMinusculas': 'Lower case',
     'lblNumeros': 'Numbers',
     'lblTiempoRegToken': 'Token regeneration time',
+    'lblSeguridadPol': 'Select Security Policy',
+    'lblSelUsuario': 'Select user',
+    'lblSelUsuarioRol': 'Select user role',
+    'lblSelRol': 'Select role',
+    'lblValidaUsuario': 'Validate Username',
+    'lblObservacion': 'Observation',
+    'lblIdrol': 'Role code',
+    'lblIdOpcion': 'Option code',
+    'lblOpcionPadre': 'Parent option code',
+    'lblNombreItem': 'Item name',
+    'lblRecurso': 'Select resource',
+    'lblCheckMostrar': 'Show',
+    'lblCheckCrear': 'Create',
+    'lblCheckEditar': 'Edit',
+    'lblCheckEliminar': 'Delete',
     
     // Mensaje de botones
     'btnOk': 'Ok',
@@ -47,6 +62,7 @@ Map<String, String> english() {
     'btnContinuar': 'Continue',
     'btnRegresar': 'Go back',
     'btnCancelar': 'Cancel',
+    'btnValidar': 'Validate',
 
     // Titulos Dialogs 
     'dialogTitEncuetra': 'Where is it?',
@@ -63,6 +79,8 @@ Map<String, String> english() {
     'AppTitModulos':'Modules',
     'AppTitSegPol':'Security politics',
     'AppTitRol':'Role',
+    'AppTitUsuarioRol':'User Role',
+    'AppTitOpcionesPermisos':'Menu Options',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',

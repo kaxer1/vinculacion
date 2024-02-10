@@ -22,4 +22,7 @@ public interface IOpcionesPermisoService {
 	List<Map<String, Object>> buscarTitulosMenu(int idrol);
 
 	List<Map<String, Object>> buscarItemMenu(int idrol, Long idopcionpadre);
+
+	List<Opcionespermiso> buscarIdRol(int idrol);
+
 }

@@ -14,11 +14,9 @@ import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -43,10 +41,10 @@ public class AutenticacionRestController {
 
     @PostMapping("/login")
     public ResponseEntity<RespuestaComun> validarLogin(HttpServletRequest request, @RequestBody LoginRequest login) throws Exception {
-        var entity = serviceUsuarioDetalle.buscarPorUsuario(login.getUsername());
+        var entity = serviceUsuarioDetalle.buscarPorEmail(login.getEmail());
         LoginResponse resp = new LoginResponse();
         if (entity == null) {
-            throw new ArnuvNotFoundException("El usuario {0} no existe", login.getUsername());
+            throw new ArnuvNotFoundException("El usuario {0} no existe", login.getEmail());
         } else {
             if (!entity.getPassword().equals(login.getPassword())) {
                 throw new ArnuvNotFoundException("Credenciales del usuario no existe");
@@ -85,6 +83,7 @@ public class AutenticacionRestController {
             dto.setIdusuario(entity.getIdusuario());
             dto.setIdpersona(entity.getIdpersona().getId());
             dto.setUsername(entity.getUsername());
+            dto.setEmail(entity.getIdpersona().getEmail());
             var lroles = entity.getUsuariorols();
             if (!lroles.isEmpty()) {
                 dto.setIdrol(lroles.get(0).getIdrol().getId());
@@ -98,6 +97,7 @@ public class AutenticacionRestController {
         mdatos.put("idusuario",resp.getDto().getIdusuario());
         mdatos.put("idpersona",resp.getDto().getIdpersona());
         mdatos.put("username",resp.getDto().getUsername());
+        mdatos.put("email",resp.getDto().getEmail());
         mdatos.put("idrol",resp.getDto().getIdrol());
         mdatos.put("nrol",resp.getDto().getNrol());
         return new ResponseEntity<>(resp, serviceJwt.generaToken(mdatos, entity), HttpStatus.OK);
@@ -107,8 +107,8 @@ public class AutenticacionRestController {
     public ResponseEntity<RespuestaComun> consultaMenu() throws Exception {
 
         var data = serviceJwt.extraerTokenData();
-        String username = (String) data.get("username");
-        var entity = serviceUsuarioDetalle.buscarPorUsuario(username);
+        String email = (String) data.get("email");
+        var entity = serviceUsuarioDetalle.buscarPorEmail(email);
 
         int idrol = Integer.parseInt(data.get("idrol").toString());
         var lresultados = servicioOpciones.buscarTitulosMenu(idrol);
@@ -129,6 +129,7 @@ public class AutenticacionRestController {
         mdatos.put("idusuario", entity.getIdusuario());
         mdatos.put("idpersona", entity.getIdpersona().getId());
         mdatos.put("username", entity.getUsername());
+        mdatos.put("email", entity.getIdpersona().getEmail());
         var lroles = entity.getUsuariorols();
         if (!lroles.isEmpty()) {
             mdatos.put("idrol", lroles.get(0).getIdrol().getId());

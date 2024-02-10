@@ -94,6 +94,15 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
     state = state.copyWith( esValidoForm: true );
   }
 
+  Future<PersonaDetalle> buscarPorIdentificacion(String identificacion) async {
+    try {
+      return await personaDetalleRepository.buscarPorIdentificacion(identificacion);
+    } on PersonaException catch (e) {
+      super.setMensajeError(e.message);
+    }
+    return personaDetalleDefault;
+  }
+
 }
 
 

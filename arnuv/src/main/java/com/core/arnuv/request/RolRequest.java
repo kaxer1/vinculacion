@@ -1,6 +1,7 @@
 package com.core.arnuv.request;
 
 import com.core.arnuv.model.Rol;
+import com.core.arnuv.model.Seguridadpolitica;
 import com.core.arnuv.utils.RequestComun;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
@@ -11,7 +12,7 @@ public class RolRequest extends RequestComun<Rol> {
     private Integer id;
 
     @Comment("Codigo de politica")
-    private Integer idpolitica;
+    private Seguridadpolitica idpolitica;
 
     @Comment("Nombre del catalogo")
     private String nombre;

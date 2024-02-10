@@ -60,7 +60,8 @@ class InputCurrency extends StatelessWidget {
             hintText: '\$ 0.00',
             labelText: label ?? '',
             prefixIcon: prefixIcon,
-            labelFontSize: labelFontSize ?? 20
+            labelFontSize: labelFontSize ?? 20,
+            colorDecoration: const Color.fromRGBO(179, 0, 255, 1)
           ),
           onChanged: onChange,
           validator: validacion

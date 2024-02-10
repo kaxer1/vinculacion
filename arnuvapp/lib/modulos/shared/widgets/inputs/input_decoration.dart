@@ -8,23 +8,24 @@ class InputDecorations {
     double? labelFontSize,
     IconData? prefixIcon,
     IconData? suffixIcon,
-    Function? onTap
+    Function? onTap,
+    required Color colorDecoration
   }) {
-    const colorDecoration = Color.fromRGBO(179, 0, 255, 1);
+    
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-      enabledBorder: const OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: colorDecoration,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
-      focusedBorder: const OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: colorDecoration,
           width: 2
         ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
       hintText: hintText,
       labelText: labelText,

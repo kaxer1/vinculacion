@@ -32,5 +32,10 @@ class PersonaDetalleRepositoryImpl extends PersonaDetalleRepository {
   Future<bool> eliminar(PersonaDetalle persona) {
     return dataSource.eliminar(persona);
   }
+  
+  @override
+  Future<PersonaDetalle> buscarPorIdentificacion(String identificacion) {
+    return dataSource.buscarPorIdentificacion(identificacion);
+  }
 
 }

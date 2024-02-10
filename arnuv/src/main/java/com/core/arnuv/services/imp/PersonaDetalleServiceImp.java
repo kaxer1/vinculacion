@@ -46,4 +46,9 @@ public class PersonaDetalleServiceImp implements IPersonaDetalleService {
 	public Personadetalle buscarPorId(int id) {
 		return repo.findById(id).orElse(null);
 	}
+
+	@Override
+	public Personadetalle buscarPorIdentificacion(String identificacion) {
+		return repo.buscarPorIdentificacion(identificacion);
+	}
 }

@@ -37,12 +37,10 @@ class CatalogoDetalleDropdownNotifier extends ArnuvNotifier<CatalogoDetalleDropd
   }
 
   onSeleccionChange(String? value) {
-    if (value == null || value =="" || state.lregistros.length <= 1) return;
-    var registro = state.lregistros.firstWhere((o) => o.id.iddetalle.toString() == value);
-    state = state.copyWith(
-      registroSelect: registro,
+    if (value == null || value == "" || state.lregistros.length <= 1) return;
+    state = state.copyWith( 
+      registroSelect: state.lregistros.firstWhere((o) => o.id.iddetalle.toString() == value) 
     );
- 
   }
   
   CatalogoDetalle getRegistroSeleccionado(){

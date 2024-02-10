@@ -97,12 +97,55 @@ class _Formulario extends ConsumerWidget {
               InputTexto(
                 initialValue: state.registro.username,
                 textInputType: TextInputType.text,
-                label: localizations.translate('lblNombres'),
+                label: localizations.translate('lblUsuario'),
                 maxLength: 120,
-                onChange: (value) => state.registro.username = value,          
+                onChange: (value) => state.registro.username = value,
                 validacion: (valor) => valiacion.validarSoloLetras(valor)
               ),
-              
+              const SizedBox(height: 20),
+              if (state.registro.idpersona.id == 0)
+                InputTextoOculto(
+                  mostrarTexto: true,
+                  label: localizations.translate('lblContrasenia'),
+                  maxLength: 16,
+                  onChange: (value) => state.registro.password = value,
+                  // validacion: (value) => valiacion.validarContrasenia(value),
+                ),
+
+              InputTexto(
+                initialValue: state.registro.observacion,
+                textInputType: TextInputType.text,
+                espacioTop: 20,
+                label: localizations.translate('lblObservacion'),
+                maxLength: 120,
+                onChange: (value) => state.registro.observacion = value,
+                validacion: (valor) => valiacion.validarSoloLetras(valor)
+              ),
+              InputCheck(
+                label: localizations.translate('lblCheckActivo'), 
+                onChanged: metodos.setCheckActivo,
+                initialValue: state.registro.estado,
+              ),
+
+              InputTexto(
+                initialValue: state.registro.idpersona.identificacion,
+                espacioTop: 20.0,
+                textInputType: TextInputType.number,
+                label: localizations.translate('lblIdentificacion'),
+                maxLength: 100,
+                onChange: (value) => state.registro.idpersona.identificacion = value,    
+                validacion: (valor) => valiacion.validarSoloNumeros(valor),
+                suffixIcon: state.registro.idpersona.id == 0 ? Icons.close : Icons.check,
+                colorIcon: state.registro.idpersona.id == 0 ? Colors.red : Colors.green,
+              ),
+              BotonPrimario(
+                label: localizations.translate('btnValidar'),
+                py: 10,
+                mt: 20,
+                mb: 10,
+                radius: 30,
+                onPressed: () => metodos.validarIdentificacion(state.registro.idpersona.identificacion)
+              ),
               
               BotonesForm(
                 esValidoForm: state.esValidoForm, 

@@ -74,12 +74,17 @@ final goRouterProvider = Provider((ref) {
         builder: (context, state) => const RolScreen(),
       ),
 
-      // En construccion
       GoRoute(
         path: ConstRoutes.REGISTRAR_USUARIO_ROL,
-        builder: (context, state) => PaginaEjemploScreen(),
+        builder: (context, state) => const UsuarioRolScreen(),
       ),
       
+      GoRoute(
+        path: ConstRoutes.REGISTRAR_MENU,
+        builder: (context, state) => const OpcionesPermisosScreen(),
+      ),
+
+      // En construccion      
       GoRoute(
         path: ConstRoutes.SESIONES_ACTIVAS,
         builder: (context, state) => PaginaEjemploScreen(),
@@ -91,10 +96,6 @@ final goRouterProvider = Provider((ref) {
       ),
       GoRoute(
         path: ConstRoutes.REGISTRAR_RECURSOS,
-        builder: (context, state) => PaginaEjemploScreen(),
-      ),
-      GoRoute(
-        path: ConstRoutes.REGISTRAR_MENU,
         builder: (context, state) => PaginaEjemploScreen(),
       ),
       

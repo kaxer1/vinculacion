@@ -11,5 +11,7 @@ abstract class PersonaDetalleRepository {
 
   Future<bool> eliminar( PersonaDetalle persona );
 
+  Future<PersonaDetalle> buscarPorIdentificacion( String identificacion );
+
 }
 

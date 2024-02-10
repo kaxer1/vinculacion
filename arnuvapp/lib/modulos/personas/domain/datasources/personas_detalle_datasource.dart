@@ -10,5 +10,7 @@ abstract class PersonaDetalleDataSource {
 
   Future<bool> eliminar( PersonaDetalle persona );
 
+  Future<PersonaDetalle> buscarPorIdentificacion( String identificacion );
+
 }
 

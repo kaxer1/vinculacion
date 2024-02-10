@@ -31,13 +31,13 @@ public class RolController {
 	public ResponseEntity<RespuestaComun> getRoles() throws Exception {
 		var entity = servicioRol.listarTodosRoles();
 		RolResponse resp = new RolResponse();
-		resp.setListaDto(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
+		resp.setListaDto(entity, RolResponse.RolDto.class, "usuariorols" );
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
 	public ResponseEntity<RespuestaComun> crearRol(@RequestBody RolRequest rolrequest) throws Exception {
-		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica());
+		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica().getId());
 		Rol rol = rolrequest.mapearDato(rolrequest, Rol.class, "idpolitica");
 		rol.setIdpolitica(seguridad);
 
@@ -49,7 +49,7 @@ public class RolController {
 
 	@PutMapping("/actualizar")
 	public ResponseEntity<RespuestaComun> actualizarRol(@RequestBody RolRequest rolrequest) throws Exception {
-		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica());
+		Seguridadpolitica seguridad = servicioSeguridadPolitica.buscarPorId(rolrequest.getIdpolitica().getId());
 		Rol rol = rolrequest.mapearDato(rolrequest, Rol.class);
 		rol.setIdpolitica(seguridad);
 		var entity = servicioRol.actualizarRol(rol);

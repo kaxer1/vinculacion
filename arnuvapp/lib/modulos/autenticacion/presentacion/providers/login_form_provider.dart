@@ -23,27 +23,19 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
     required this.loginUserCallback,
   }): super( LoginFormState() );
   
-  // onEmailChange( String value ) {
-  //   final newEmail = Email.dirty(value);
-  //   state = state.copyWith(
-  //     email: newEmail,
-  //     esValido: Formz.validate([ newEmail, state.password ])
-  //   );
-  // }
-
-  onUsernameChange( String value ) {
+  onEmailChange( String value ) {
+    final newEmail = Email.dirty(value);
     state = state.copyWith(
-      username: value,
-      esValido: true
+      email: newEmail,
+      esValido: Formz.validate([ newEmail, state.password ])
     );
-  }
+  }  
 
   onPasswordChanged( String value ) {
     final newPassword = Password.dirty(value);
     state = state.copyWith(
       password: newPassword,
-      esValido: Formz.validate([ newPassword ])
-      // esValido: Formz.validate([ newPassword, state.email ])
+      esValido: Formz.validate([ newPassword, state.email ])
     );
   }
 
@@ -53,20 +45,12 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
     );
   }
 
-  Function onCheckChange( bool? value ) {
-    state = state.copyWith(
-      esAceptoTerminos: value,
-    );
-    return (){};
-  }
-
-
   onFormSubmit(context) async {
     _touchEveryField();
 
-    if ( !state.esValido && !state.esAceptoTerminos ) return;
+    if ( !state.esValido ) return;
 
-    await loginUserCallback( state.username, ArnuvUtils.hashSHA256(state.password.value), context);
+    await loginUserCallback( state.email.value, ArnuvUtils.hashSHA256(state.password.value), context);
 
   }
 
@@ -78,7 +62,7 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
     state = state.copyWith(
       email: email,
       password: password,
-      // esValido: Formz.validate([ email, password ])
+      esValido: Formz.validate([ email, password ])
     );
 
   }
@@ -89,18 +73,14 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
 //! 1 - State del provider
 class LoginFormState {
 
-  final bool esAceptoTerminos;
   final bool esValido;
   final Email email;
-  final String username;
   final Password password;
   final bool mostrarTextoContrasenia;
 
   LoginFormState({
-    this.esAceptoTerminos = false,
     this.esValido = false,
     this.email = const Email.pure(),
-    this.username = '',
     this.password = const Password.pure(),
     this.mostrarTextoContrasenia = true,
   });
@@ -109,14 +89,11 @@ class LoginFormState {
     bool? esAceptoTerminos,
     bool? esValido,
     Email? email,
-    String? username,
     Password? password,
     bool? mostrarTextoContrasenia
   }) => LoginFormState(
-    esAceptoTerminos: esAceptoTerminos ?? this.esAceptoTerminos,
     esValido: esValido ?? this.esValido,
     email: email ?? this.email,
-    username: username ?? this.username,
     password: password ?? this.password,
     mostrarTextoContrasenia: mostrarTextoContrasenia ?? this.mostrarTextoContrasenia,
   );
@@ -125,10 +102,8 @@ class LoginFormState {
   String toString() {
     return '''
   LoginFormState:
-    esAceptoTerminos: $esAceptoTerminos
     esValido: $esValido
     email: $email
-    username: $username
     password: $password
     mostrarTextoContrasenia: $mostrarTextoContrasenia
 ''';

@@ -20,6 +20,9 @@ public class LoginResponse extends RespuestaComun<LoginResponse.DataUserDto> {
 		@Comment("Nombre de usuarios")
 		private String username;
 
+		@Comment("Email")
+		private String email;
+
 		@Comment("Codigo de rol")
 		private Integer idrol;
 

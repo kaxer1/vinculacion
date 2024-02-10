@@ -61,12 +61,13 @@ class AuthNotifier extends ArnuvNotifier<AuthState>  {
 
   }
 
-  Future<void> loginUser( String username, String password, dynamic context ) async {
+  Future<void> loginUser( String email, String password, dynamic context ) async {
     super.showLoading(context);
+    await keyValueStorageService.removeKey('token');
     await Future.delayed(const Duration(seconds: 1));
 
     try {
-      final user = await authRepository.login(username, password);
+      final user = await authRepository.login(email, password);
       final menu = await authRepository.checkMenuLogin();
       _setUsuarioLogeado( user, menu.lista );
     } on AutenticacionException catch (e) {

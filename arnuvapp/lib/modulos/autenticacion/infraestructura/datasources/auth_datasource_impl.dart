@@ -5,10 +5,10 @@ import 'package:arnuvapp/modulos/shared/shared.dart';
 class AuthDataSourceImpl extends AuthDataSource with ArnuvServicios {
 
   @override
-  Future<User> login(String username, String password) async {
+  Future<User> login(String email, String password) async {
     final response = await postServicio('/api/autenticacion/login', data: {
       'serial': await getUuid(true),
-      'username': username,
+      'email': email,
       'password': password
     });
   

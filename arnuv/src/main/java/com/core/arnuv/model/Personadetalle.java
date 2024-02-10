@@ -59,15 +59,15 @@ public class Personadetalle implements Serializable {
 	private CatalogoDetalle catalogodetalle;
 
 	@Comment("Identificacion, cedula, ruc, pasaporte")
-	@Column(name = "identificacion", length = 15)
+	@Column(name = "identificacion", length = 15, unique=true)
 	private String identificacion;
 
 	@Comment("Numero de celular")
-	@Column(name = "celular", length = 20)
+	@Column(name = "celular", length = 20, unique=true)
 	private String celular;
 
 	@Comment("Correo electronico")
-	@Column(name = "email", length = 150)
+	@Column(name = "email", length = 150, unique=true)
 	private String email;
 
 	@OneToMany(mappedBy = "idpersona")

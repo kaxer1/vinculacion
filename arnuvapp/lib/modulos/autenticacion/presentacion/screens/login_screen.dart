@@ -57,7 +57,7 @@ class _LoginForm extends ConsumerWidget {
           label: localizations.translate('lblUsuario'),
           prefixIcon: Icons.person_outline,
           maxLength: 16,
-          onChange: ref.read(loginFormProvider.notifier).onUsernameChange,
+          onChange: ref.read(loginFormProvider.notifier).onEmailChange,
           // validacion: (value) => ValidacionesInputs.validarNombreUsuario(value.toString(), 'validarUsernameLogin'),
         ),
         const SizedBox(height: 20),

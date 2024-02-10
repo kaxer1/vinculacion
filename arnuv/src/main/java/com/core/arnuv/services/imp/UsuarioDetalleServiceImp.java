@@ -52,8 +52,8 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	}
 
 	@Override
-	public Usuariodetalle buscarPorUsuario(String username) {
-		return repo.buscarPorUsuario(username);
+	public Usuariodetalle buscarPorEmail(String email) {
+		return repo.buscarPorEmail(email);
 	}
 
 	@Override
@@ -66,4 +66,5 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 			}
 		};
 	}
+
 }

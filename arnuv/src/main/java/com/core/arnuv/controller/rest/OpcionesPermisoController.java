@@ -96,4 +96,12 @@ public class OpcionesPermisoController {
 		resp.mapearDato(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class);
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
+
+	@GetMapping("/buscaporrol/{idrol}")
+	public ResponseEntity<RespuestaComun> listarPorRol(@PathVariable int idrol) throws Exception {
+		var entity = servicioOpcionPermiso.buscarIdRol(idrol);
+		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
+		resp.setListaDto(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class );
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
 }

@@ -1,5 +1,6 @@
 import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 import 'package:arnuvapp/modulos/personas/infraestructura/infraestructure.dart';
+import 'package:arnuvapp/modulos/personas/presentacion/providers/persona_detalle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
@@ -8,9 +9,11 @@ import 'package:arnuvapp/modulos/shared/shared.dart';
 final usuarioDetalleProvider = StateNotifierProvider.autoDispose<UsuarioDetalleNotifier,UsuarioDetalleState>((ref) {
 
   final repository = UsuarioDetalleRepositoryImpl();
+  final buscarIdentificacionCallback = ref.watch(personaDetalleProvider.notifier).buscarPorIdentificacion;
 
   return UsuarioDetalleNotifier(
-    usuarioRepository: repository
+    usuarioRepository: repository,
+    buscarIdentificacionCallback: buscarIdentificacionCallback
   );
 });
 
@@ -19,11 +22,22 @@ final usuarioDetalleProvider = StateNotifierProvider.autoDispose<UsuarioDetalleN
 class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implements ArnuvCrud<UsuarioDetalle> {
 
   final UsuarioDetalleRepository usuarioRepository;
+  final Future<PersonaDetalle> Function(String) buscarIdentificacionCallback;
 
   UsuarioDetalleNotifier({
     required this.usuarioRepository,
+    required this.buscarIdentificacionCallback,
   }): super( UsuarioDetalleState(registro: usuarioDetalleDefault, formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);  
+  }
+
+  Future<UsuarioDetalle> buscarPorEmail(String email) async {
+    try {
+      return await usuarioRepository.buscarPorEmail(email);
+    } on PersonaException catch (e) {
+      super.setMensajeError(e.message);
+    }
+    return usuarioDetalleDefault;
   }
 
   @override
@@ -41,7 +55,9 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
   @override
   actualizar(UsuarioDetalle reg) async {
     try {
+      
       await usuarioRepository.editar(state.registro);
+      listar(1, 1);
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -50,7 +66,10 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
   @override
   guardar() async {
     try {
-      await usuarioRepository.crear(state.registro);
+      state = state.copyWith(registro: state.registro.copyWith(password: ArnuvUtils.hashSHA256(state.registro.password)));
+      var registro = await usuarioRepository.crear(state.registro);
+      state.lregistros.add(registro);
+      state = state.copyWith(lregistros: state.lregistros);
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -68,13 +87,26 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
   
   @override
   seleccionaRegistro(UsuarioDetalle reg) {
-    state = state.copyWith(registro: reg, esValidoForm: false);
+    state = state.copyWith(registro: reg.copyWith(), esValidoForm: false);
   }
 
   esFormularioValido() {
     state = state.copyWith( esValidoForm: false );
     if (state.formKey.currentState?.validate() != true) return;
     state = state.copyWith( esValidoForm: true );
+  }
+
+  setCheckActivo(bool? value) {
+    state = state.copyWith(registro: state.registro.copyWith(estado: value!));
+  }
+
+  validarIdentificacion(String identificacion) async {
+     var personaDetalle = await buscarIdentificacionCallback(identificacion);
+      if (personaDetalle.id == 0) {
+        super.setMensajeError("PERSONA NO VALIDA");
+        return;
+      } 
+      state = state.copyWith(registro: state.registro.copyWith(idpersona: personaDetalle));
   }
 
 }

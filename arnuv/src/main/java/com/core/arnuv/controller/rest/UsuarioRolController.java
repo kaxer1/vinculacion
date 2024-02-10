@@ -35,7 +35,7 @@ public class UsuarioRolController {
 	public ResponseEntity<RespuestaComun> getUsuariosRol() throws Exception {
 		var entity = servicioUsuarioRol.listarTodosUsuariosRol();
 		UsuarioRolResponse resp = new UsuarioRolResponse();
-		resp.setListaDto(entity, UsuarioRolResponse.UsuarioRolDto.class,  "usuariorols","idpersona");
+		resp.setListaDto(entity, UsuarioRolResponse.UsuarioRolDto.class,  "idrol","idusuario");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 
@@ -63,6 +63,14 @@ public class UsuarioRolController {
 		var entity = servicioUsuarioRol.buscarPorId(idrol, idusuario);
 		UsuarioRolResponse resp = new UsuarioRolResponse();
 		resp.mapearDato(entity, UsuarioRolResponse.UsuarioRolDto.class,  "idrol", "idusuario" );
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
+
+	@GetMapping("/buscar/{idrol}")
+	public ResponseEntity<RespuestaComun> buscarUsuarioRol(@PathVariable int idrol) throws Exception {
+		var entity = servicioUsuarioRol.buscarPorRol(idrol);
+		UsuarioRolResponse resp = new UsuarioRolResponse();
+		resp.setListaDto(entity, UsuarioRolResponse.UsuarioRolDto.class,  "idrol","idusuario");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
 }

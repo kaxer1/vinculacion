@@ -21,6 +21,7 @@ class InputTexto extends StatelessWidget {
   final String? Function(String?)? validacion;
   final Function? onTapIcon; // permite realizar algo al presionar en el icono
   final double? espacioTop; 
+  final Color? colorIcon; 
   
   const InputTexto({
     Key? key, 
@@ -39,7 +40,8 @@ class InputTexto extends StatelessWidget {
     required this.onChange,
     this.validacion,
     this.onTapIcon,
-    this.espacioTop = 0.0
+    this.espacioTop = 0.0,
+    this.colorIcon
   }) : super(key: key);
 
   @override
@@ -64,7 +66,8 @@ class InputTexto extends StatelessWidget {
             labelText: label ?? '',
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
-            onTap: onTapIcon
+            onTap: onTapIcon,
+            colorDecoration: colorIcon == null ?  const Color.fromRGBO(179, 0, 255, 1) : colorIcon!
           ),
           onChanged: onChange,
           validator: validacion

@@ -52,10 +52,10 @@ public class JwtServiceImpl implements IJwtService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        var timeexp = System.currentTimeMillis() + 1000 * 120 * 24;
+        var diaexp = System.currentTimeMillis() + (1000 * 60 * 60 * 24); // expira al siguiente dia
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(timeexp))
+                .setExpiration(new Date(diaexp))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 

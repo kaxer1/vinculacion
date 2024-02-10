@@ -30,4 +30,9 @@ public class UsuarioRolServiceImp implements IUsuarioRolService {
 	public Usuariorol buscarPorId(int idrol, int idusuario) {
 		return repo.buscarbyid(idrol, idusuario);
 	}
+
+	@Override
+	public List<Usuariorol>  buscarPorRol(int idrol) {
+		return repo.buscarPorRol(idrol);
+	}
 }

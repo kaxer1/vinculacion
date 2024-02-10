@@ -17,7 +17,7 @@ class UsuarioDetalleMapper {
   }
 
   static UsuarioDetalle mapJsonToEntity(Map<String, dynamic> json) => UsuarioDetalle(
-        idusuario: json["idusuario"],
+        idusuario: json["idusuario"] == null ? 0 : json["idusuario"],
         idpersona: PersonaDetalleMapper.personaJsonToEntity(json["idpersona"]),
         idusuarioing: json["idusuarioing"],
         idusuariomod: json["idusuariomod"],
@@ -39,9 +39,9 @@ class UsuarioDetalleMapper {
         mapa.addAll({"idusuarioing": usuario.idusuarioing });
         mapa.addAll({"idusuariomod": usuario.idusuariomod });
         mapa.addAll({"idusuarioaprobacion": usuario.idusuarioaprobacion });
-        mapa.addAll({"fechaingreso": usuario.fechaingreso });
-        mapa.addAll({"fechamodificacion": usuario.fechamodificacion });
-        mapa.addAll({"fechaaprobacion": usuario.fechaaprobacion });
+        mapa.addAll({"fechaingreso": usuario.fechaingreso!.toIso8601String() });
+        mapa.addAll({"fechamodificacion": usuario.fechamodificacion!.toIso8601String() });
+        mapa.addAll({"fechaaprobacion": usuario.fechaaprobacion!.toIso8601String() });
         mapa.addAll({"estado": usuario.estado });
         mapa.addAll({"username": usuario.username });
         mapa.addAll({"password": usuario.password });

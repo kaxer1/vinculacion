@@ -63,7 +63,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
 
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 16, 10),
-          child: Text(user != null ? user.username : "", style: textStyles.titleSmall ),
+          child: Text(user != null ? user.email : "", style: textStyles.titleSmall ),
         ),
         
         ...litemsmenu(lmenu),
@@ -114,7 +114,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
       for (var element in menuitem.items) {
         lresulado.add(
           NavigationDrawerDestination(
-            icon: const Icon( Icons.home_outlined ), 
+            icon: const Icon( Icons.label_important_outline_sharp ), 
             label: Text( element.nombre! ),
           )
         );

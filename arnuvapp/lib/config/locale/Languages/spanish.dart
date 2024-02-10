@@ -11,6 +11,7 @@ Map<String, String> spanish() {
     'validarLetrasNumeros': 'Solo números o letras no caracteres especiales',
     'validarSoloNumeros': 'Solo se puede ingresar números',
     'validarEmail': 'Ingrese un correo electrónico correcto',
+    'validarPassword': 'Ingrese una contraseña correcta',
 
     // AppBars
     'barMiCuenta': 'Mi cuenta',
@@ -38,6 +39,21 @@ Map<String, String> spanish() {
     'lblMinusculas': 'Minusculas',
     'lblNumeros': 'Números',
     'lblTiempoRegToken': 'Tiempo de regeneración de token',
+    'lblSeguridadPol': 'Seleccionar seguridad Política',
+    'lblSelUsuario': 'Seleccionar usuario',
+    'lblSelUsuarioRol': 'Seleccionar usuario rol',
+    'lblSelRol': 'Seleccionar rol',
+    'lblValidaUsuario': 'Valida Username',
+    'lblObservacion': 'Observación',
+    'lblIdrol': 'Código rol',
+    'lblIdOpcion': 'Código opción',
+    'lblOpcionPadre': 'Código opcion padre',
+    'lblNombreItem': 'Nombre item',
+    'lblRecurso': 'Seleccionar recurso',
+    'lblCheckMostrar': 'Mostrar',
+    'lblCheckCrear': 'Crear',
+    'lblCheckEditar': 'Editar',
+    'lblCheckEliminar': 'Eliminar',
     
     // Labels de botones
     'btnOk': 'Ok',
@@ -46,6 +62,7 @@ Map<String, String> spanish() {
     'btnContinuar': 'Continuar',
     'btnRegresar': 'Regresar',
     'btnCancelar': 'Cancelar',
+    'btnValidar': 'Validate',
     
     // Titulos Dialogs 
     'dialogTitEncuetra': '¿En donde se encuentra?',
@@ -62,6 +79,8 @@ Map<String, String> spanish() {
     'AppTitModulos':'Módulos',
     'AppTitSegPol':'Políticas de seguridad',
     'AppTitRol':'Rol',
+    'AppTitUsuarioRol':'Usuario Rol',
+    'AppTitOpcionesPermisos':'Opciones del Menú',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',
