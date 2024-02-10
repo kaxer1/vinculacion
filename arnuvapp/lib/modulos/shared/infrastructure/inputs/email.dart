@@ -7,7 +7,7 @@ enum EmailError { empty, format }
 class Email extends FormzInput<String, EmailError> {
 
   static final RegExp emailRegExp = RegExp(
-    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
 
   // Llame a super.pure para representar una entrada de formulario sin modificar.

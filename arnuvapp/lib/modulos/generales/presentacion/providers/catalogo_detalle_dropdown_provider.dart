@@ -77,6 +77,7 @@ class CatalogoDetalleDropdownState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => CatalogoDetalleDropdownState(
     lregistros: [catalogoDetalleDefault],
     registroSelect: catalogoDetalleDefault,
+    idcatalogo: idcatalogo,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

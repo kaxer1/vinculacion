@@ -118,6 +118,8 @@ class ModulosState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => ModulosState(
     formKey: formKey,
     registro: modulosDefault,
+    esValidoForm: esValidoForm,
+    lregistros: lregistros,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

@@ -114,6 +114,8 @@ class SeguridadPoliticaState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => SeguridadPoliticaState(
     formKey: formKey,
     registro: seguridadPoliticaDefault,
+    esValidoForm: esValidoForm,
+    lregistros: lregistros,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

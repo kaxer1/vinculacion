@@ -138,7 +138,9 @@ class PersonaDetalleState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => PersonaDetalleState(
     formKey: formKey,
     registro: personaDetalleDefault,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    esValidoForm: esValidoForm,
+    lregistros: lregistros
   );
 
 }

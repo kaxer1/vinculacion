@@ -36,6 +36,7 @@ class LocalState extends ArnuvState {
   
   @override
   ArnuvState copyWithArnuv({String? errorMessage}) => LocalState(
+    locale: locale,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

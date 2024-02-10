@@ -70,7 +70,8 @@ class IdiomaState extends ArnuvState {
   
   @override
   ArnuvState copyWithArnuv({String? errorMessage}) => IdiomaState(
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    seleccionLocal: seleccionLocal
   );
 
 }

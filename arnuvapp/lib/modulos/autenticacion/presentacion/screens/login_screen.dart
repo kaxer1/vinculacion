@@ -44,6 +44,8 @@ class _LoginForm extends ConsumerWidget {
     final loginForm = ref.watch(loginFormProvider);
     final localizations = AppLocalizations.of(context);
 
+    final valiacion = ValidacionesInputUtil(localizations: localizations);
+
     ref.listen(authProvider, (ArnuvState? previous , ArnuvState next) {
       if ( next.errorMessage.isEmpty ) return;
       mostrarErrorSnackBar( context, next.errorMessage, ref);
@@ -53,12 +55,12 @@ class _LoginForm extends ConsumerWidget {
       children: [
         const SizedBox(height: 10),
         InputTexto(
-          textInputType: TextInputType.text,
-          label: localizations.translate('lblUsuario'),
+          textInputType: TextInputType.emailAddress,
+          label: localizations.translate('lblEmil'),
           prefixIcon: Icons.person_outline,
           maxLength: 16,
           onChange: ref.read(loginFormProvider.notifier).onEmailChange,
-          // validacion: (value) => ValidacionesInputs.validarNombreUsuario(value.toString(), 'validarUsernameLogin'),
+          validacion: (valor) => valiacion.validarEmail(valor),
         ),
         const SizedBox(height: 20),
         InputTextoOculto(
@@ -67,7 +69,7 @@ class _LoginForm extends ConsumerWidget {
           prefixIcon: Icons.lock_outline,
           maxLength: 16,
           onChange: ref.read(loginFormProvider.notifier).onPasswordChanged,
-          // validacion: (value) => ValidacionesInputs.validarContrasenia(value),
+          validacion: (value) => valiacion.validarContrasenia(value),
           onTapIcon: ref.read(loginFormProvider.notifier).onMostrarContrasenia,
         ),
         

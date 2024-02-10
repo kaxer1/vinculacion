@@ -138,6 +138,9 @@ class CatalogoDetalleState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => CatalogoDetalleState(
     formKey: formKey,
     registro: catalogoDetalleDefault,
+    esValidoForm: esValidoForm,
+    idcatalogo: idcatalogo,
+    lregistros: lregistros,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

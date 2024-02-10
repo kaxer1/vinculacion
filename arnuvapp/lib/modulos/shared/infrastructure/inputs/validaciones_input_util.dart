@@ -20,7 +20,7 @@ class ValidacionesInputUtil {
   }
 
   validarContrasenia( value ) {
-    return ( value != null && value.length >= 12 ) 
+    return ( value != null && value.length >= 6 ) 
     ? null 
     : localizations.translate('validarPassword');
   }

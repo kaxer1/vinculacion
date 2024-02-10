@@ -153,7 +153,11 @@ class AuthState extends ArnuvState {
   
   @override
   ArnuvState copyWithArnuv({String? errorMessage}) => AuthState(
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    authStatus: authStatus,
+    user: user,
+    menu: menu,
+    opcionesMenu: opcionesMenu
   );
 
 }

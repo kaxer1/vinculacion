@@ -77,6 +77,7 @@ class RolDropdownState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => RolDropdownState(
     lregistros: [rolDefault],
     registroSelect: rolDefault,
+    idcatalogo: idcatalogo,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

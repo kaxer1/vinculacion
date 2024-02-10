@@ -149,6 +149,9 @@ class OpcionesPermisosState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => OpcionesPermisosState(
     formKey: formKey,
     registro: opcionesPermisosDefault,
+    esValidoForm: esValidoForm,
+    idrol: idrol,
+    lregistros: lregistros,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

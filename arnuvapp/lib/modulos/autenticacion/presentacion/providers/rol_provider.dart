@@ -132,6 +132,8 @@ class RolState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => RolState(
     formKey: formKey,
     registro: rolDefault,
+    esValidoForm: esValidoForm,
+    lregistros: lregistros,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

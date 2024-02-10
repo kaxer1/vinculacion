@@ -77,6 +77,7 @@ class RecursosDropdownState extends ArnuvState {
   ArnuvState copyWithArnuv({String? errorMessage}) => RecursosDropdownState(
     lregistros: [recursoDefault],
     registroSelect: recursoDefault,
+    idcatalogo: idcatalogo,
     errorMessage: errorMessage ?? super.errorMessage
   );
 

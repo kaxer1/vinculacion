@@ -97,7 +97,7 @@ class _Formulario extends ConsumerWidget {
     final state = ref.watch(usuarioRolProvider);
     final metodos = ref.read(usuarioRolProvider.notifier);
     
-    final valiacion = ValidacionesInputUtil(localizations: localizations);    
+    final valiacion = ValidacionesInputUtil(localizations: localizations);  
     return Column(
       children: [
         Form(
