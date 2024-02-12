@@ -12,5 +12,7 @@ abstract class UsuarioDetalleDataSource {
 
   Future<UsuarioDetalle> buscarPorEmail( String email );
 
+  Future<bool> guardarUsuarioUnificado( UsuarioUnificado request );
+
 }
 

@@ -34,8 +34,13 @@ class UsuarioDetalleRepositoryImpl extends UsuarioDetalleRepository {
   }
   
   @override
-  Future<UsuarioDetalle> buscarPorEmail(String username) {
-    return dataSource.buscarPorEmail(username);
+  Future<UsuarioDetalle> buscarPorEmail(String email) {
+    return dataSource.buscarPorEmail(email);
+  }
+  
+  @override
+  Future<bool> guardarUsuarioUnificado(UsuarioUnificado request) {
+    return dataSource.guardarUsuarioUnificado(request);
   }
 
 }

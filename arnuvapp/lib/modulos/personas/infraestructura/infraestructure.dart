@@ -5,5 +5,6 @@ export 'repositories/usuario_detalle_repository_impl.dart';
 
 export 'mapper/persona_detalle_mapper.dart';
 export 'mapper/usuario_detalle_mapper.dart';
+export 'mapper/usuario_unificado_mapper.dart';
 
 export './errors/persona_errors.dart';

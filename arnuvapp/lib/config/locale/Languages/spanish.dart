@@ -54,6 +54,10 @@ Map<String, String> spanish() {
     'lblCheckCrear': 'Crear',
     'lblCheckEditar': 'Editar',
     'lblCheckEliminar': 'Eliminar',
+    'lblCodModulo': 'Código Módulo',
+    'lblCodRecurso': 'Código Recursos',
+    'lblRuta': 'Ruta acceso aplicación',
+    'lblSelectModulo': 'Selecciona módulo',
     
     // Labels de botones
     'btnOk': 'Ok',
@@ -63,6 +67,7 @@ Map<String, String> spanish() {
     'btnRegresar': 'Regresar',
     'btnCancelar': 'Cancelar',
     'btnValidar': 'Validate',
+    'btnRefrescar': 'Refrescar',
     
     // Titulos Dialogs 
     'dialogTitEncuetra': '¿En donde se encuentra?',
@@ -81,6 +86,8 @@ Map<String, String> spanish() {
     'AppTitRol':'Rol',
     'AppTitUsuarioRol':'Usuario Rol',
     'AppTitOpcionesPermisos':'Opciones del Menú',
+    'AppTitRecursos':'Recursos',
+    'AppTitRegistroUsuario':'Registro Unificado Usuario',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',

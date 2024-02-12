@@ -34,11 +34,4 @@ class HomeState {
     opciones: opciones ?? this.opciones,
   );
 
-  @override
-  String toString() {
-    return '''
-  HomeState:
-    opciones: $opciones
-''';
-  }
 }

@@ -35,6 +35,11 @@ class RecursosRepositoryImpl extends RecursosRepository {
     return dataSource.listar(limit, page);
   }
   
+  @override
+  Future<List<Recursos>> listarByIdModulo(int limit, int page, int idmodulo) {
+    return dataSource.listarByIdModulo(limit, page, idmodulo);
+  }
+  
   
 
 }

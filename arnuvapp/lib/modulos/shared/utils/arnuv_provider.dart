@@ -17,6 +17,16 @@ abstract class ArnuvNotifier<T> extends StateNotifier<T> {
     }
   }
 
+  void setMensajeExito( [String? succesMessage, BuildContext? context] ) {
+    
+    if (super.state != null && succesMessage != null) {
+      super.state = (super.state as dynamic).copyWithArnuv(succesMessage: succesMessage);
+    }
+    if (context != null) {
+      closeLoading(context);
+    }
+  }
+
   void showLoading(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -47,14 +57,17 @@ abstract class ArnuvNotifier<T> extends StateNotifier<T> {
 abstract class ArnuvState {
 
   final String errorMessage;
+  final String succesMessage;
 
   ArnuvState({
-    this.errorMessage = ''
+    this.errorMessage = '',
+    this.succesMessage = ''
   });
 
 
   ArnuvState copyWithArnuv({
-    String? errorMessage
+    String? errorMessage,
+    String? succesMessage
   }) ;
 
 

@@ -13,5 +13,7 @@ abstract class UsuarioDetalleRepository {
 
   Future<UsuarioDetalle> buscarPorEmail( String email );
 
+  Future<bool> guardarUsuarioUnificado( UsuarioUnificado request );
+
 }
 

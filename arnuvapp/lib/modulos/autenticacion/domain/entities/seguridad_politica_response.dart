@@ -108,6 +108,17 @@ class SeguridadPolitica {
         "mayusculas": mayusculas,
         "tiemporegeraciontoken": tiemporegeraciontoken,
     };
+    
+    SeguridadPolitica clone() => SeguridadPolitica(
+      id: id,
+      longitud: longitud,
+      intentos: intentos,
+      numeros: numeros,
+      especiales: especiales,
+      minusculas: minusculas,
+      mayusculas: mayusculas,
+      tiemporegeraciontoken: tiemporegeraciontoken,
+    );
 }
 
 

@@ -1,5 +1,6 @@
 
 import 'package:arnuvapp/modulos/generales/domain/domain.dart';
+import 'package:arnuvapp/modulos/generales/presentacion/providers/recursos_dropdown_provider.dart';
 import 'package:arnuvapp/modulos/generales/infraestructura/infraestructure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,9 +10,12 @@ import 'package:arnuvapp/modulos/shared/shared.dart';
 final opcionesPermisosProvider = StateNotifierProvider.autoDispose<OpcionesPermisosNotifier,OpcionesPermisosState>((ref) {
 
   final repository = OpcionesPermisosRepositoryImpl();
+  final metodoDropRecursos = ref.watch(recursosDropdownProvider.notifier).getRegistroSeleccionado;
+  // final segpoliseleccionado = ref.watch(segPoliticaDropdownProvider.notifier).onSeleccionChange;
 
   return OpcionesPermisosNotifier(
-    opcionesPermisosRepository: repository
+    opcionesPermisosRepository: repository,
+    registroSeleccionadoCallback: metodoDropRecursos
   );
 });
 
@@ -20,10 +24,12 @@ final opcionesPermisosProvider = StateNotifierProvider.autoDispose<OpcionesPermi
 class OpcionesPermisosNotifier extends ArnuvNotifier<OpcionesPermisosState> implements ArnuvCrud<OpcionesPermisos> {
 
   final OpcionesPermisosRepository opcionesPermisosRepository;
+  final Function() registroSeleccionadoCallback;
 
   OpcionesPermisosNotifier({
     required this.opcionesPermisosRepository,
-  }): super( OpcionesPermisosState(registro: opcionesPermisosDefault, formKey: GlobalKey<FormState>()) ) {
+    required this.registroSeleccionadoCallback
+  }): super( OpcionesPermisosState(registro: opcionesPermisosDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     // listar(1, 1);
   }
 
@@ -40,6 +46,8 @@ class OpcionesPermisosNotifier extends ArnuvNotifier<OpcionesPermisosState> impl
   @override
   actualizar(OpcionesPermisos reg) async {
     try {
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(recursos: reg));
       await opcionesPermisosRepository.editar(state.registro);
       listarPorIdRol(state.idrol);
     } on GeneralesException catch (e) {
@@ -50,6 +58,8 @@ class OpcionesPermisosNotifier extends ArnuvNotifier<OpcionesPermisosState> impl
   @override
   guardar() async {
     try {
+      var reg = registroSeleccionadoCallback();
+      state = state.copyWith(registro: state.registro.copyWith(recursos: reg));
       var registro = await opcionesPermisosRepository.crear(state.registro);
       state.lregistros.add(registro);
       state = state.copyWith(lregistros: state.lregistros);
@@ -65,7 +75,7 @@ class OpcionesPermisosNotifier extends ArnuvNotifier<OpcionesPermisosState> impl
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: opcionesPermisosDefault, esValidoForm: false);
+    state = state.copyWith(registro: opcionesPermisosDefault.clone().copyWith(id: opcionesPermisosDefault.clone().id.copyWith(idrol: state.idrol)), esValidoForm: false);
   }
   
   @override
@@ -81,22 +91,27 @@ class OpcionesPermisosNotifier extends ArnuvNotifier<OpcionesPermisosState> impl
 
   setCheckActivo(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(activo: value!));
+    esFormularioValido();
   }
 
   setCheckMostrar(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(mostar: value!));
+    esFormularioValido();
   }
 
   setCheckCrear(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(crear: value!));
+    esFormularioValido();
   }
 
   setCheckEditar(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(editar: value!));
+    esFormularioValido();
   }
 
   setCheckEliminar(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(eliminar: value!));
+    esFormularioValido();
   }
 
   listarPorIdRol(int idrol ) async {
@@ -128,7 +143,8 @@ class OpcionesPermisosState extends ArnuvState {
     this.idrol = 0,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   OpcionesPermisosState copyWith({
@@ -146,13 +162,14 @@ class OpcionesPermisosState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => OpcionesPermisosState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => OpcionesPermisosState(
     formKey: formKey,
-    registro: opcionesPermisosDefault,
+    registro: opcionesPermisosDefault.clone(),
     esValidoForm: esValidoForm,
     idrol: idrol,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

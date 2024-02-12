@@ -60,6 +60,7 @@ class UsuarioRolScreen extends ConsumerWidget {
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
+                    esActualizar: true,
                     onPressedOk: () {
                     ref.watch(usuarioRolProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
@@ -84,9 +85,11 @@ class UsuarioRolScreen extends ConsumerWidget {
 class _Formulario extends ConsumerWidget {
 
   final Function()? onPressedOk;
+  final bool esActualizar;
 
   const _Formulario({
-    required this.onPressedOk
+    required this.onPressedOk,
+    this.esActualizar = false
   });
 
 
@@ -117,6 +120,7 @@ class _Formulario extends ConsumerWidget {
                 validacion: (valor) => valiacion.validarEmail(valor),
                 suffixIcon: state.registro.idusuario.idusuario == 0 ? Icons.close : Icons.check,
                 colorIcon: state.registro.idusuario.idusuario == 0 ? Colors.red : Colors.green,      
+                readOnly: esActualizar,
               ),
               BotonPrimario(
                 label: localizations.translate('btnValidar'),

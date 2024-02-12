@@ -6,31 +6,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
 
 //! 3 - StateNotifierProvider - consume afuera
-final modulosProvider = StateNotifierProvider.autoDispose<ModulosNotifier,ModulosState>((ref) {
+final recursosProvider = StateNotifierProvider.autoDispose<RecursosNotifier,RecursosState>((ref) {
 
-  final repository = ModulosRepositoryImpl();
+  final repository = RecursosRepositoryImpl();
 
-  return ModulosNotifier(
-    modulosRepository: repository
+  return RecursosNotifier(
+    recursosRepository: repository
   );
 });
 
 
 //! 2 - Como implementamos un notifier
-class ModulosNotifier extends ArnuvNotifier<ModulosState> implements ArnuvCrud<Modulos> {
+class RecursosNotifier extends ArnuvNotifier<RecursosState> implements ArnuvCrud<Recursos> {
 
-  final ModulosRepository modulosRepository;
+  final RecursosRepository recursosRepository;
 
-  ModulosNotifier({
-    required this.modulosRepository,
-  }): super( ModulosState(registro: modulosDefault.clone(), formKey: GlobalKey<FormState>()) ) {
-    listar(1, 1);
+  RecursosNotifier({
+    required this.recursosRepository,
+  }): super( RecursosState(registro: recursoDefault.clone(), formKey: GlobalKey<FormState>()) ) {
+    // listar(1, 1);
   }
 
   @override
   listar(int limit, int page) async {
     try {
-      final lista = await modulosRepository.listar(limit, page);
+      final lista = await recursosRepository.listar(limit, page);
       state = state.copyWith( lregistros: lista );
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
@@ -38,10 +38,10 @@ class ModulosNotifier extends ArnuvNotifier<ModulosState> implements ArnuvCrud<M
   }
   
   @override
-  actualizar(Modulos reg) async {
+  actualizar(Recursos reg) async {
     try {
-      await modulosRepository.editar(state.registro);
-      listar(1, 1);
+      await recursosRepository.editar(state.registro);
+      listarPorIdModulo(state.idmodulo);
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
     }
@@ -50,7 +50,7 @@ class ModulosNotifier extends ArnuvNotifier<ModulosState> implements ArnuvCrud<M
   @override
   guardar() async {
     try {
-      var registro = await modulosRepository.crear(state.registro);
+      var registro = await recursosRepository.crear(state.registro);
       state.lregistros.add(registro);
       state = state.copyWith(lregistros: state.lregistros);
     } on GeneralesException catch (e) {
@@ -59,17 +59,17 @@ class ModulosNotifier extends ArnuvNotifier<ModulosState> implements ArnuvCrud<M
   }
   
   @override
-  eliminar(Modulos reg) {
+  eliminar(Recursos reg) {
     // print("METODO DE ELIMINAR PROVIDER ${reg.apellidos }");
   }
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: modulosDefault.clone(), esValidoForm: false);
+    state = state.copyWith(registro: recursoDefault.clone().copyWith(id: recursoDefault.clone().id.copyWith(idmodulo: state.idmodulo)), esValidoForm: false);
   }
   
   @override
-  seleccionaRegistro(Modulos reg) {
+  seleccionaRegistro(Recursos reg) {
     state = state.copyWith(registro: reg, esValidoForm: false);
   }
 
@@ -79,49 +79,60 @@ class ModulosNotifier extends ArnuvNotifier<ModulosState> implements ArnuvCrud<M
     state = state.copyWith( esValidoForm: true );
   }
 
-  setCheckActivo(bool? value) {
-    state = state.copyWith(registro: state.registro.copyWith(activo: value!));
-    esFormularioValido();
+  listarPorIdModulo(int idmodulo ) async {
+    if (idmodulo == 0) return;
+
+    try {
+      final lista = await recursosRepository.listarByIdModulo(1,1, idmodulo);
+      state = state.copyWith( lregistros: lista, idmodulo: idmodulo );
+    } on GeneralesException catch (e) {
+      super.setMensajeError(e.message);
+    }
   }
 
 }
 
 
 //! 1 - State del provider
-class ModulosState extends ArnuvState {
+class RecursosState extends ArnuvState {
 
-  final List<Modulos> lregistros;
-  final Modulos registro;
+  final List<Recursos> lregistros;
+  final Recursos registro;
   final bool esValidoForm;
+  final int idmodulo;
   GlobalKey<FormState> formKey;
 
-  ModulosState({
+  RecursosState({
     this.lregistros = const [],
     required this.registro,
     this.esValidoForm = false,
+    this.idmodulo = 0,
     required this.formKey,
     super.errorMessage,
     super.succesMessage
   });
 
-  ModulosState copyWith({
-    List<Modulos>? lregistros,
-    Modulos? registro,
+  RecursosState copyWith({
+    List<Recursos>? lregistros,
+    Recursos? registro,
     bool? esValidoForm,
+    int? idmodulo,
     GlobalKey<FormState>? formKey
-  }) => ModulosState(
+  }) => RecursosState(
     lregistros: lregistros ?? this.lregistros,
     registro: registro ?? this.registro,
+    idmodulo: idmodulo ?? this.idmodulo,
     esValidoForm: esValidoForm ?? this.esValidoForm,
     formKey: formKey ?? this.formKey,
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => ModulosState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => RecursosState(
     formKey: formKey,
-    registro: modulosDefault.clone(),
+    registro: recursoDefault.clone(),
     esValidoForm: esValidoForm,
     lregistros: lregistros,
+    idmodulo: idmodulo,
     errorMessage: errorMessage ?? super.errorMessage,
     succesMessage: succesMessage ?? super.succesMessage
   );

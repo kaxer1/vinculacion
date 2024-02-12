@@ -25,4 +25,6 @@ class ConstRoutes {
   static const REGISTRAR_CATALOGOS_DETALLE = '/registrar-catalogo-detalle'; 
   static const REGISTRAR_MODULOS = '/registrar-modulos'; 
   static const REGISTRAR_MENU = '/registrar-menu'; 
+
+  static const REGISTRO_UNIFICADO_USUARIO = '/registro-unificado-usuario'; 
 }

@@ -24,6 +24,11 @@ public class RecursoServiceImp implements IRecursoService {
 	}
 
 	@Override
+	public List<Recurso> bucarPorIdmodulo(int idmodulo) {
+		return repo.bucarPorIdmodulo(idmodulo);
+	}
+
+	@Override
 	public Recurso insertar(Recurso data) {
 		return repo.save(data);
 	}

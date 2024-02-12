@@ -54,7 +54,8 @@ class IdiomaState extends ArnuvState {
 
   IdiomaState({
     this.seleccionLocal = '',
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   IdiomaState copyWith({
@@ -69,8 +70,9 @@ class IdiomaState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => IdiomaState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => IdiomaState(
     errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage,
     seleccionLocal: seleccionLocal
   );
 

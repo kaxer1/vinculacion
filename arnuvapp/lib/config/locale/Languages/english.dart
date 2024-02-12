@@ -54,6 +54,10 @@ Map<String, String> english() {
     'lblCheckCrear': 'Create',
     'lblCheckEditar': 'Edit',
     'lblCheckEliminar': 'Delete',
+    'lblCodModulo': 'Module Code',
+    'lblCodRecurso': 'Code Resources',
+    'lblRuta': 'Application path',
+    'lblSelectModulo': 'Select module',
     
     // Mensaje de botones
     'btnOk': 'Ok',
@@ -63,6 +67,7 @@ Map<String, String> english() {
     'btnRegresar': 'Go back',
     'btnCancelar': 'Cancel',
     'btnValidar': 'Validate',
+    'btnRefrescar': 'Refresh',
 
     // Titulos Dialogs 
     'dialogTitEncuetra': 'Where is it?',
@@ -81,6 +86,8 @@ Map<String, String> english() {
     'AppTitRol':'Role',
     'AppTitUsuarioRol':'User Role',
     'AppTitOpcionesPermisos':'Menu Options',
+    'AppTitRecursos':'Resources',
+    'AppTitRegistroUsuario':'Unified User Registration',
 
     // Etiquetas
     'EtiLabelUser': 'USERNAME :',

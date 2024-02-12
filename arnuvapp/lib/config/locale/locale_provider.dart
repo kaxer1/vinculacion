@@ -20,7 +20,8 @@ class LocalState extends ArnuvState {
 
   LocalState({
     this.locale = const Locale('es'),
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage,
   });
 
   LocalState copyWith({
@@ -35,9 +36,10 @@ class LocalState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => LocalState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => LocalState(
     locale: locale,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

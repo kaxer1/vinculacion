@@ -27,7 +27,7 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
   UsuarioDetalleNotifier({
     required this.usuarioRepository,
     required this.buscarIdentificacionCallback,
-  }): super( UsuarioDetalleState(registro: usuarioDetalleDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( UsuarioDetalleState(registro: usuarioDetalleDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);  
   }
 
@@ -37,7 +37,7 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
-    return usuarioDetalleDefault;
+    return usuarioDetalleDefault.clone();
   }
 
   @override
@@ -82,7 +82,7 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: usuarioDetalleDefault, esValidoForm: false);
+    state = state.copyWith(registro: usuarioDetalleDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -98,6 +98,7 @@ class UsuarioDetalleNotifier extends ArnuvNotifier<UsuarioDetalleState> implemen
 
   setCheckActivo(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(estado: value!));
+    esFormularioValido();
   }
 
   validarIdentificacion(String identificacion) async {
@@ -125,7 +126,8 @@ class UsuarioDetalleState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   UsuarioDetalleState copyWith({
@@ -141,12 +143,13 @@ class UsuarioDetalleState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => UsuarioDetalleState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => UsuarioDetalleState(
     formKey: formKey,
-    registro: usuarioDetalleDefault,
+    registro: usuarioDetalleDefault.clone(),
     esValidoForm: esValidoForm,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

@@ -19,6 +19,7 @@ class InputTextoOculto extends StatelessWidget {
   final String? Function(String?)? validacion;
   final Function? onTapIcon; // permite realizar algo al presionar en el icono
   final bool mostrarTexto; // permite realizar algo al presionar en el icono
+  final double? espacioTop; 
 
   const InputTextoOculto({
     Key? key, 
@@ -35,31 +36,37 @@ class InputTextoOculto extends StatelessWidget {
     required this.onChange,
     required this.mostrarTexto,
     this.validacion,
+    this.espacioTop = 0.0,
     this.onTapIcon
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(maxLength ?? 255),
+    return Column(
+      children: [
+        SizedBox(height: espacioTop),
+        TextFormField(
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(maxLength ?? 255),
+          ],
+          autocorrect: false,
+          obscureText: mostrarTexto,
+          keyboardType: TextInputType.visiblePassword,
+          readOnly: readOnly ?? false,
+          maxLines: maxLines ?? 1,
+          textAlign: textAlign ?? TextAlign.left,
+          onChanged: onChange,
+          validator: validacion,
+          decoration: InputDecorations.inputDecorationPersonalizado(
+            hintText: hint ?? '',
+            labelText: label ?? '',
+            prefixIcon: prefixIcon,
+            suffixIcon: mostrarTexto ? Icons.visibility: Icons.visibility_off,
+            onTap: onTapIcon,
+            colorDecoration: const Color.fromRGBO(179, 0, 255, 1)
+          )
+        ),
       ],
-      autocorrect: false,
-      obscureText: mostrarTexto,
-      keyboardType: TextInputType.visiblePassword,
-      readOnly: readOnly ?? false,
-      maxLines: maxLines ?? 1,
-      textAlign: textAlign ?? TextAlign.left,
-      onChanged: onChange,
-      validator: validacion,
-      decoration: InputDecorations.inputDecorationPersonalizado(
-        hintText: hint ?? '',
-        labelText: label ?? '',
-        prefixIcon: prefixIcon,
-        suffixIcon: mostrarTexto ? Icons.visibility: Icons.visibility_off,
-        onTap: onTapIcon,
-        colorDecoration: const Color.fromRGBO(179, 0, 255, 1)
-      )
     );
   }
 }

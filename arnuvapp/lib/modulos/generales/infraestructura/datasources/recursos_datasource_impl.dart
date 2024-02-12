@@ -44,4 +44,15 @@ class RecursosDataSourceImpl extends RecursosDataSource with ArnuvServicios {
     }
   }
   
+  @override
+  Future<List<Recursos>> listarByIdModulo(int limit, int page, int idmodulo) async {
+    try {
+      final response = await getServicio('/recursos/buscarporidmodulo/$idmodulo');
+      var resp = RecursosMapper.listaJsonToList(response.data["lista"]);
+      return resp;
+    } on SystemException catch (e) {
+      throw GeneralesException(e.message);
+    }
+  }
+  
 }

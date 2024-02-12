@@ -90,12 +90,19 @@ class Rol {
         "nombre": nombre,
         "activo": activo,
     };
+
+    Rol clone() => Rol(
+      id: id,
+      idpolitica: idpolitica,
+      nombre: nombre,
+      activo: activo,
+    );
 }
 
 
 final rolDefault = Rol(
       id: 0,
-      idpolitica: seguridadPoliticaDefault,
+      idpolitica: seguridadPoliticaDefault.clone(),
       nombre: "",
       activo: false,
     );

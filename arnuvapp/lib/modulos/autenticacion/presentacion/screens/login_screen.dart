@@ -58,7 +58,7 @@ class _LoginForm extends ConsumerWidget {
           textInputType: TextInputType.emailAddress,
           label: localizations.translate('lblEmil'),
           prefixIcon: Icons.person_outline,
-          maxLength: 16,
+          maxLength: 100,
           onChange: ref.read(loginFormProvider.notifier).onEmailChange,
           validacion: (valor) => valiacion.validarEmail(valor),
         ),

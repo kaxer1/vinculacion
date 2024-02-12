@@ -47,7 +47,8 @@ class UsuarioDetalleScreen extends ConsumerWidget {
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
-                    onPressedOk: () {
+                  esActualizar: true,
+                  onPressedOk: () {
                     ref.watch(usuarioDetalleProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
                   }
@@ -72,9 +73,11 @@ class UsuarioDetalleScreen extends ConsumerWidget {
 class _Formulario extends ConsumerWidget {
 
   final Function()? onPressedOk;
+  final bool esActualizar;
 
   const _Formulario({
-    required this.onPressedOk
+    required this.onPressedOk,
+    this.esActualizar = false
   });
 
 
@@ -100,17 +103,18 @@ class _Formulario extends ConsumerWidget {
                 label: localizations.translate('lblUsuario'),
                 maxLength: 120,
                 onChange: (value) => state.registro.username = value,
-                validacion: (valor) => valiacion.validarSoloLetras(valor)
+                validacion: (valor) => valiacion.validarSoloLetras(valor),
+                readOnly: esActualizar,
               ),
-              const SizedBox(height: 20),
-              if (state.registro.idpersona.id == 0)
-                InputTextoOculto(
-                  mostrarTexto: true,
-                  label: localizations.translate('lblContrasenia'),
-                  maxLength: 16,
-                  onChange: (value) => state.registro.password = value,
-                  // validacion: (value) => valiacion.validarContrasenia(value),
-                ),
+              
+              InputTextoOculto(
+                mostrarTexto: true,
+                label: localizations.translate('lblContrasenia'),
+                maxLength: 16,
+                onChange: (value) => state.registro.password = value,
+                readOnly: esActualizar,
+                // validacion: (value) => valiacion.validarContrasenia(value),
+              ),
 
               InputTexto(
                 initialValue: state.registro.observacion,

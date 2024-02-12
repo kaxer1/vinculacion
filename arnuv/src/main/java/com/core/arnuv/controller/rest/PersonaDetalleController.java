@@ -7,7 +7,6 @@ import com.core.arnuv.response.PersonaDetalleResponse;
 import com.core.arnuv.service.ICatalogoDetalleService;
 import com.core.arnuv.service.IPersonaDetalleService;
 import com.core.arnuv.utils.ArnuvNotFoundException;
-import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

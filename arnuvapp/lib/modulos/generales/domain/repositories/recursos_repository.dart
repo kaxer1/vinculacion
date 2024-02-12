@@ -12,5 +12,7 @@ abstract class RecursosRepository {
 
   Future<bool> eliminar( Recursos recursos );
 
+  Future<List<Recursos>> listarByIdModulo( int limit, int page, int idmodulo );
+
 }
 

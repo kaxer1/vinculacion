@@ -22,14 +22,14 @@ class RecursosDropdownNotifier extends ArnuvNotifier<RecursosDropdownState> {
 
   RecursosDropdownNotifier({
     required this.recursosRepository,
-  }): super( RecursosDropdownState(lregistros: [recursoDefault], registroSelect: recursoDefault ) ){
+  }): super( RecursosDropdownState(lregistros: [recursoDefault.clone()], registroSelect: recursoDefault.clone() ) ){
     listarRecursos();
   }
 
   listarRecursos() async {
     try {
       final lista = await recursosRepository.listar(1,1);
-      lista.insert(0, recursoDefault);
+      lista.insert(0, recursoDefault.clone());
       state = state.copyWith( lregistros: lista);
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
@@ -60,7 +60,8 @@ class RecursosDropdownState extends ArnuvState {
     required this.lregistros,
     required this.registroSelect,
     this.idcatalogo = 0,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   RecursosDropdownState copyWith({
@@ -74,11 +75,12 @@ class RecursosDropdownState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => RecursosDropdownState(
-    lregistros: [recursoDefault],
-    registroSelect: recursoDefault,
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => RecursosDropdownState(
+    lregistros: [recursoDefault.clone()],
+    registroSelect: recursoDefault.clone(),
     idcatalogo: idcatalogo,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

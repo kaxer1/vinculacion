@@ -140,12 +140,28 @@ class UsuarioDetalle {
         "cambiopassword": cambiopassword,
         "observacion": observacion,
     };
+
+    UsuarioDetalle clone() => UsuarioDetalle(
+      idusuario: idusuario,
+      idpersona: idpersona,
+      idusuarioing: idusuarioing,
+      idusuariomod: idusuariomod,
+      idusuarioaprobacion: idusuarioaprobacion,
+      fechaingreso: fechaingreso,
+      fechamodificacion: fechamodificacion,
+      fechaaprobacion: fechaaprobacion,
+      estado: estado,
+      username: username,
+      password: password,
+      cambiopassword: cambiopassword,
+      observacion: observacion,
+    );
 }
 
 
 final usuarioDetalleDefault = UsuarioDetalle(
           idusuario: 0,
-          idpersona: personaDetalleDefault,
+          idpersona: personaDetalleDefault.clone(),
           idusuarioing: null,
           idusuariomod: null,
           idusuarioaprobacion: null,

@@ -56,4 +56,16 @@ class UsuarioDetalleDataSourceImpl extends UsuarioDetalleDataSource with ArnuvSe
     }
   }
   
+  @override
+  Future<bool> guardarUsuarioUnificado(UsuarioUnificado request) async {
+    try {
+      final data = UsuarioUnificadoMapper.entityToJsonData(request);
+      final response = await postServicio('/usuarios/crear-persona-usuario', data: data);
+      var resp = response.data["codigo"] == "OK" ? true : false;
+      return resp;
+    } on SystemException catch (e) {
+      throw PersonaException(e.message);
+    }
+  }
+  
 }

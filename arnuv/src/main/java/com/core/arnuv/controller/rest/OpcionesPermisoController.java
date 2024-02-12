@@ -77,6 +77,11 @@ public class OpcionesPermisoController {
 		var rolEntity = servicioRol.buscarPorId(data.getIdrol());
 
 		var opcionPermisoEntity = data.mapearDato(data, Opcionespermiso.class);
+		OpcionespermisoId opcionespermisoId = new OpcionespermisoId();
+		opcionespermisoId.setIdrol(data.getIdrol());
+		opcionespermisoId.setIdopcion(data.getIdopcion());
+
+		opcionPermisoEntity.setId(opcionespermisoId);
 		opcionPermisoEntity.setRecursos(recursoEntity);
 		opcionPermisoEntity.setIdrol(rolEntity);
 

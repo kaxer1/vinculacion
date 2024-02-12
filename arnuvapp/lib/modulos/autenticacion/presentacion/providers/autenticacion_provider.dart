@@ -128,7 +128,8 @@ class AuthState extends ArnuvState {
     this.user,
     this.menu,
     this.opcionesMenu,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   AuthState copyWith({
@@ -148,12 +149,14 @@ class AuthState extends ArnuvState {
     menu: [],
     authStatus: AuthStatus.checking,
     opcionesMenu: null,
-    errorMessage: ""
+    errorMessage: "",
+    succesMessage: "",
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => AuthState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => AuthState(
     errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage,
     authStatus: authStatus,
     user: user,
     menu: menu,

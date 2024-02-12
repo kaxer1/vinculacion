@@ -1,47 +1,48 @@
-import 'package:arnuvapp/modulos/generales/domain/entities/catalogo_response.dart';
+import 'package:arnuvapp/modulos/generales/domain/entities/modulos_response.dart';
 import 'package:arnuvapp/modulos/generales/presentacion/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-class CatalogoDetalleScreen extends ConsumerWidget {
-  const CatalogoDetalleScreen({super.key});
+class RecursosScreen extends ConsumerWidget {
+  const RecursosScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context);
-    final lcatalogos = ref.watch(catalogoDropdownProvider).lregistros;
-    final registroSelect = ref.watch(catalogoDropdownProvider).registroSelect;
-    final lregistros = ref.watch(catalogoDetalleProvider).lregistros;
+    final lregistros = ref.watch(recursosProvider).lregistros;
 
-    ref.listen(catalogoDetalleProvider, (ArnuvState? previous , ArnuvState next) {
+    final lmodulos = ref.watch(modulosDropdownProvider).lregistros;
+    final registroSelect = ref.watch(modulosDropdownProvider).registroSelect;
+
+    ref.listen(recursosProvider, (ArnuvState? previous , ArnuvState next) {
       if ( next.errorMessage.isEmpty ) return;
       mostrarErrorSnackBar( context, next.errorMessage, ref );
     });
 
     return Scaffold(
-      appBar: AppBar(title: Text(localizations.translate('AppTitCatalogoDetalle')) ),
+      appBar: AppBar(title: Text(localizations.translate('AppTitRecursos')) ),
         body: Column(
           children: [
             DropdownPersonalizado(
-              label: localizations.translate('lblCatalogo'),
+              label: localizations.translate('lblSelectModulo'),
               value: registroSelect.id.toString(), 
-              onchange: ref.watch(catalogoDropdownProvider.notifier).onSeleccionChange,
-              items: lcatalogos.map<DropdownMenuItem<String>>((Catalogo value) {
+              onchange: ref.watch(modulosDropdownProvider.notifier).onSeleccionChange,
+              items: lmodulos.map<DropdownMenuItem<String>>((Modulos value) {
                 return DropdownMenuItem<String>(
                   value: value.id.toString(),
                   child: Text(value.nombre),
                 );
               }).toList(),
-              onPressed: () => ref.watch(catalogoDetalleProvider.notifier).listarPorIdCatalogo(registroSelect.id),
+              onPressed: () => ref.watch(recursosProvider.notifier).listarPorIdModulo(registroSelect.id),
             ),
-            DataTableArnuv(nombreTabla: "Tabla de Catalogo Detalle",
-            columnsName: const ['Id Catalogo','Id Detalle','Nombre','Activo'],
+            DataTableArnuv(nombreTabla: "Tabla de Recursos",
+            columnsName: const ['Id Módulo', 'Id recurso','Nombre','Ruta'],
             onNew: () {
-              ref.watch(catalogoDetalleProvider.notifier).limpiarRegistro();
+              ref.watch(recursosProvider.notifier).limpiarRegistro();
               dialogRegister(context: context,
                 children: [_Formulario( onPressedOk: () {
-                  ref.watch(catalogoDetalleProvider.notifier).guardar();
+                  ref.watch(recursosProvider.notifier).guardar();
                   Navigator.pop(context);
                 })],
               );
@@ -49,19 +50,19 @@ class CatalogoDetalleScreen extends ConsumerWidget {
             onDelete: (index) {
               aletaEliminaReg(context: context,
                 onPressedOk: () {
-                  ref.watch(catalogoDetalleProvider.notifier).eliminar(lregistros[index]);
+                  ref.watch(recursosProvider.notifier).eliminar(lregistros[index]);
                   Navigator.pop(context);
                 },
               );
             },
             onEdit: (index) {
-              ref.watch(catalogoDetalleProvider.notifier).seleccionaRegistro(lregistros[index]);
+              ref.watch(recursosProvider.notifier).seleccionaRegistro(lregistros[index]);
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
-                  esActualizar: true,
-                  onPressedOk: () {
-                    ref.watch(catalogoDetalleProvider.notifier).actualizar(lregistros[index]);
+                    esActualizar: true,
+                    onPressedOk: () {
+                    ref.watch(recursosProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
                   }
                 )],
@@ -69,10 +70,10 @@ class CatalogoDetalleScreen extends ConsumerWidget {
             },
             rowTablas: [...lregistros.map((e) {
                   List<Widget> lista = [];
-                  lista.add(Text(e.id.idcatalogo.toString()));
-                  lista.add(Text(e.id.iddetalle));
+                  lista.add(Text(e.id.idmodulo.toString()));
+                  lista.add(Text(e.id.idrecurso.toString()));
                   lista.add(Text(e.nombre));
-                  lista.add(Text(e.activo.toString()));
+                  lista.add(Text(e.ruta));
                   return lista;
                 })],
             ),
@@ -98,8 +99,10 @@ class _Formulario extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final localizations = AppLocalizations.of(context);
-    final state = ref.watch(catalogoDetalleProvider);
-    final metodos = ref.read(catalogoDetalleProvider.notifier);
+    final state = ref.watch(recursosProvider);
+    final metodos = ref.read(recursosProvider.notifier);
+
+    
     
     final valiacion = ValidacionesInputUtil(localizations: localizations);
     return Column(
@@ -111,22 +114,22 @@ class _Formulario extends ConsumerWidget {
           child: Column(
             children: [
               InputTexto(
-                initialValue: state.registro.id.idcatalogo.toString(),
+                initialValue: state.registro.id.idmodulo.toString(),
                 textInputType: TextInputType.number,
-                label: localizations.translate('lblCodigoCat'),
+                label: localizations.translate('lblCodModulo'),
                 maxLength: 10,
-                onChange: (value) => state.registro.id.idcatalogo = int.tryParse(value) ?? 0,
+                onChange: (value) => state.registro.id.idmodulo = int.tryParse(value) ?? 0,
                 validacion: (valor) => valiacion.validarSoloNumeros(valor),
-                readOnly: esActualizar,
+                readOnly: true,
               ),
               InputTexto(
-                initialValue: state.registro.id.iddetalle.toString(),
+                initialValue: state.registro.id.idrecurso.toString(),
+                textInputType: TextInputType.number,
                 espacioTop: 20.0,
-                textInputType: TextInputType.text,
-                label: localizations.translate('lblCodigoCatDet'),
-                maxLength: 3,
-                onChange: (value) => state.registro.id.iddetalle = value,
-                validacion: (valor) => valiacion.validarLetrasNumeros(valor),
+                label: localizations.translate('lblCodRecurso'),
+                maxLength: 10,
+                onChange: (value) => state.registro.id.idrecurso = int.tryParse(value) ?? 0,
+                validacion: (valor) => valiacion.validarSoloNumeros(valor),
                 readOnly: esActualizar,
               ),
               InputTexto(
@@ -134,15 +137,20 @@ class _Formulario extends ConsumerWidget {
                 espacioTop: 20.0,
                 textInputType: TextInputType.text,
                 label: localizations.translate('lblNombres'),
-                maxLength: 100,
+                maxLength: 200,
                 onChange: (value) => state.registro.nombre = value,    
                 validacion: (valor) => valiacion.validarSoloLetras(valor)         
               ),
-              InputCheck(
-                label: localizations.translate('lblCheckActivo'), 
-                onChanged: metodos.setCheckActivo,
-                initialValue: state.registro.activo,
+              InputTexto(
+                initialValue: state.registro.ruta,
+                espacioTop: 20.0,
+                textInputType: TextInputType.text,
+                label: localizations.translate('lblRuta'),
+                maxLength: 300,
+                onChange: (value) => state.registro.ruta = value,    
+                // validacion: (valor) => valiacion.validarLetrasNumeros(valor)         
               ),
+              
               BotonesForm(
                 esValidoForm: state.esValidoForm, 
                 onPressedOk: onPressedOk

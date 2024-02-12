@@ -38,7 +38,7 @@ class UsuarioRolNotifier extends ArnuvNotifier<UsuarioRolState> implements Arnuv
     required this.registroSeleccionadoCallback,
     required this.rolSelectCallback,
     required this.buscarUsernameCallback,
-  }): super( UsuarioRolState(registro: usuarioRolDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( UsuarioRolState(registro: usuarioRolDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     // listar(1, 1);
   }
 
@@ -94,7 +94,7 @@ class UsuarioRolNotifier extends ArnuvNotifier<UsuarioRolState> implements Arnuv
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: usuarioRolDefault, esValidoForm: false);
+    state = state.copyWith(registro: usuarioRolDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -134,7 +134,8 @@ class UsuarioRolState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   UsuarioRolState copyWith({
@@ -150,12 +151,13 @@ class UsuarioRolState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => UsuarioRolState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => UsuarioRolState(
     formKey: formKey,
-    registro: usuarioRolDefault,
+    registro: usuarioRolDefault.clone(),
     lregistros: lregistros,
     esValidoForm: esValidoForm,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

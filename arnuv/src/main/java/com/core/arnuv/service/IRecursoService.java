@@ -12,6 +12,8 @@ public interface IRecursoService {
 
 	List<Recurso> listarTodos();
 
+	List<Recurso> bucarPorIdmodulo(int idmodulo);
+
 	public Recurso insertar(Recurso data);
 
 	public Recurso actualizar(Recurso data);

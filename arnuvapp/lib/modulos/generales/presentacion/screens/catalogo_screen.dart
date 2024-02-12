@@ -44,7 +44,8 @@ class CatalogoScreen extends ConsumerWidget {
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
-                    onPressedOk: () {
+                  esActualizar: true,
+                  onPressedOk: () {
                     ref.watch(catalogProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
                   }
@@ -69,9 +70,11 @@ class CatalogoScreen extends ConsumerWidget {
 class _Formulario extends ConsumerWidget {
 
   final Function()? onPressedOk;
+  final bool esActualizar;
 
   const _Formulario({
-    required this.onPressedOk
+    required this.onPressedOk,
+    this.esActualizar = false
   });
 
 
@@ -98,7 +101,7 @@ class _Formulario extends ConsumerWidget {
                 maxLength: 10,
                 onChange: (value) => state.registro.id = int.tryParse(value) ?? 0,
                 validacion: (valor) => valiacion.validarSoloNumeros(valor),
-                readOnly: true,
+                readOnly: esActualizar,
               ),
               InputTexto(
                 initialValue: state.registro.nombre,

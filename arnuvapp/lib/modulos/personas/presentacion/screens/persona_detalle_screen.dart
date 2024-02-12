@@ -46,7 +46,8 @@ class PersonaDetalleScreen extends ConsumerWidget {
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
-                    onPressedOk: () {
+                  esActualizar: true,
+                  onPressedOk: () {
                     ref.watch(personaDetalleProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
                   }
@@ -71,9 +72,11 @@ class PersonaDetalleScreen extends ConsumerWidget {
 class _Formulario extends ConsumerWidget {
 
   final Function()? onPressedOk;
+  final bool esActualizar;
 
   const _Formulario({
-    required this.onPressedOk
+    required this.onPressedOk,
+    this.esActualizar = false
   });
 
 

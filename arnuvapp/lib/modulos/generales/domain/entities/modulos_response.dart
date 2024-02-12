@@ -78,6 +78,12 @@ class Modulos {
         "nombre": nombre,
         "activo": activo,
     };
+
+    Modulos clone() => Modulos(
+      id: id,
+      nombre: nombre,
+      activo: activo,
+    );
 }
 
 

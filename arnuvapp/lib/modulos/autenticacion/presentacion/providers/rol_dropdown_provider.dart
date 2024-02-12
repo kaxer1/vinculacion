@@ -22,14 +22,14 @@ class RolDropdownNotifier extends ArnuvNotifier<RolDropdownState> {
 
   RolDropdownNotifier({
     required this.rolRepository,
-  }): super( RolDropdownState(lregistros: [rolDefault], registroSelect: rolDefault ) ){
+  }): super( RolDropdownState(lregistros: [rolDefault.clone()], registroSelect: rolDefault.clone() ) ){
     listar(1, 1);
   }
 
   listar(int limit, int page) async {
     try {
       final lista = await rolRepository.listar(limit, page);
-      lista.insert(0, rolDefault);
+      lista.insert(0, rolDefault.clone());
       state = state.copyWith( lregistros: lista );
     } on AutenticacionException catch (e) {
       super.setMensajeError(e.message);
@@ -60,7 +60,8 @@ class RolDropdownState extends ArnuvState {
     required this.lregistros,
     required this.registroSelect,
     this.idcatalogo = 0,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   RolDropdownState copyWith({
@@ -74,11 +75,12 @@ class RolDropdownState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => RolDropdownState(
-    lregistros: [rolDefault],
-    registroSelect: rolDefault,
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => RolDropdownState(
+    lregistros: [rolDefault.clone()],
+    registroSelect: rolDefault.clone(),
     idcatalogo: idcatalogo,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

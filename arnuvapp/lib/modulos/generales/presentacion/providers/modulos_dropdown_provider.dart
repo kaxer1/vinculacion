@@ -5,31 +5,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:arnuvapp/modulos/shared/shared.dart';
 
 //! 3 - StateNotifierProvider - consume afuera
-final catalogoDropdownProvider = StateNotifierProvider.autoDispose<CatalogoDropdownNotifier,CatalogoDropdownState>((ref) {
+final modulosDropdownProvider = StateNotifierProvider.autoDispose<ModulosDropdownNotifier,ModulosDropdownState>((ref) {
 
-  final repository = CatalogoRepositoryImpl();
+  final repository = ModulosRepositoryImpl();
 
-  return CatalogoDropdownNotifier(
-    catalogoRepository: repository
+  return ModulosDropdownNotifier(
+    modulosRepository: repository
   );
 });
 
 
 //! 2 - Como implementamos un notifier
-class CatalogoDropdownNotifier extends ArnuvNotifier<CatalogoDropdownState> {
+class ModulosDropdownNotifier extends ArnuvNotifier<ModulosDropdownState> {
 
-  final CatalogoRepository catalogoRepository;
+  final ModulosRepository modulosRepository;
 
-  CatalogoDropdownNotifier({
-    required this.catalogoRepository,
-  }): super( CatalogoDropdownState(lregistros: [catalogoDefault.clone()], registroSelect: catalogoDefault.clone() ) ){
+  ModulosDropdownNotifier({
+    required this.modulosRepository,
+  }): super( ModulosDropdownState(lregistros: [modulosDefault.clone()], registroSelect: modulosDefault.clone() ) ){
     listar(1, 1);
   }
 
   listar(int limit, int page) async {
     try {
-      final lista = await catalogoRepository.listar(limit, page);
-      lista.insert(0, catalogoDefault.clone());
+      final lista = await modulosRepository.listar(limit, page);
+      lista.insert(0, modulosDefault.clone());
       state = state.copyWith( lregistros: lista );
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
@@ -49,30 +49,30 @@ class CatalogoDropdownNotifier extends ArnuvNotifier<CatalogoDropdownState> {
 
 
 //! 1 - State del provider
-class CatalogoDropdownState extends ArnuvState {
+class ModulosDropdownState extends ArnuvState {
 
-  final List<Catalogo> lregistros;
-  final Catalogo registroSelect;
+  final List<Modulos> lregistros;
+  final Modulos registroSelect;
 
-  CatalogoDropdownState({
+  ModulosDropdownState({
     required this.lregistros,
     required this.registroSelect,
     super.errorMessage,
     super.succesMessage
   });
 
-  CatalogoDropdownState copyWith({
-    List<Catalogo>? lregistros,
-    Catalogo? registroSelect,
-  }) => CatalogoDropdownState(
+  ModulosDropdownState copyWith({
+    List<Modulos>? lregistros,
+    Modulos? registroSelect,
+  }) => ModulosDropdownState(
     lregistros: lregistros ?? this.lregistros,
     registroSelect: registroSelect ?? this.registroSelect,
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => CatalogoDropdownState(
-    lregistros: [catalogoDefault.clone()],
-    registroSelect: catalogoDefault.clone(),
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => ModulosDropdownState(
+    lregistros: [modulosDefault.clone()],
+    registroSelect: modulosDefault.clone(),
     errorMessage: errorMessage ?? super.errorMessage,
     succesMessage: succesMessage ?? super.succesMessage
   );

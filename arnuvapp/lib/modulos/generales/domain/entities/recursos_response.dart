@@ -90,6 +90,13 @@ class Recursos {
         "nombre": nombre,
         "ruta": ruta,
     };
+
+    Recursos clone() => Recursos(
+      id: id,
+      idmodulo: idmodulo,
+      nombre: nombre,
+      ruta: ruta,
+    );
 }
 
 class RecursosId {
@@ -124,11 +131,16 @@ class RecursosId {
     String toString() {
       return '$idmodulo-$idrecurso';
     }
+
+    RecursosId clone() => RecursosId(
+      idrecurso: idrecurso,
+      idmodulo: idmodulo,
+    );
 }
 
 final recursoDefault =  Recursos(
-      id: RecursosId(idrecurso: 0, idmodulo: 0),
-      idmodulo: modulosDefault,
+      id: RecursosId(idrecurso: 0, idmodulo: 0).clone(),
+      idmodulo: modulosDefault.clone(),
       nombre: "",
       ruta: "",
     );

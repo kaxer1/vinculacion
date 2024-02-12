@@ -127,6 +127,19 @@ class OpcionesPermisos {
         "editar": editar,
         "eliminar": eliminar,
     };
+
+    OpcionesPermisos clone() => OpcionesPermisos(
+      id: id,
+      idrol: idrol,
+      recursos: recursos,
+      idopcionpadre: idopcionpadre,
+      nombre: nombre,
+      activo: activo,
+      mostar: mostar,
+      crear: crear,
+      editar: editar,
+      eliminar: eliminar,
+    );
 }
 
 class OpcionesPermisosId {
@@ -156,15 +169,20 @@ class OpcionesPermisosId {
         "idrol": idrol,
         "idopcion": idopcion,
     };
+
+    OpcionesPermisosId clone() => OpcionesPermisosId(
+      idrol: idrol,
+      idopcion: idopcion,
+    );
 }
 
 
 final opcionesPermisosDefault = OpcionesPermisos(
-      id: OpcionesPermisosId(idrol: 0, idopcion: 0),
-      idrol: rolDefault,
-      recursos: recursoDefault,
+      id: OpcionesPermisosId(idrol: 0, idopcion: 0).clone(),
+      idrol: rolDefault.clone(),
+      recursos: recursoDefault.clone().copyWith(id: recursoDefault.clone().id.copyWith(idmodulo: null, idrecurso: null)),
       idopcionpadre: 0,
-      nombre: "",
+      nombre: null,
       activo: false,
       mostar: false,
       crear: false,

@@ -34,9 +34,9 @@ class OpcionesPermisosMapper {
         mapa.addAll({"idrol": obj.id.idrol});
         mapa.addAll({"idopcion": obj.id.idopcion});
         mapa.addAll({"idrecurso": obj.recursos?.id.idrecurso});
-        mapa.addAll({"idmodulo": obj.recursos?.id.idrecurso});
-        mapa.addAll({"idopcionpadre": obj.idopcionpadre});
-        mapa.addAll({"nombre": obj.nombre});
+        mapa.addAll({"idmodulo": obj.recursos?.id.idmodulo});
+        mapa.addAll({"idopcionpadre": obj.idopcionpadre == 0 ? null : obj.idopcionpadre});
+        mapa.addAll({"nombre": obj.nombre == "" ? null : obj.nombre});
         mapa.addAll({"activo": obj.activo});
         mapa.addAll({"mostar": obj.mostar});
         mapa.addAll({"crear": obj.crear});

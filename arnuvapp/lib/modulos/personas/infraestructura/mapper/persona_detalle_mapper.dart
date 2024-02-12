@@ -1,6 +1,7 @@
 
 
 
+import 'package:arnuvapp/modulos/generales/domain/entities/catalogo_detalle_response.dart';
 import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 import 'package:arnuvapp/modulos/shared/infrastructure/errors/system_errors.dart';
 

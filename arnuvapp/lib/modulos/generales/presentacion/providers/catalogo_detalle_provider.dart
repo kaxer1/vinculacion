@@ -23,7 +23,7 @@ class CatalogoDetalleNotifier extends ArnuvNotifier<CatalogoDetalleState> implem
 
   CatalogoDetalleNotifier({
     required this.catalogoDetalleRepository,
-  }): super( CatalogoDetalleState(registro: catalogoDetalleDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( CatalogoDetalleState(registro: catalogoDetalleDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     // listar(1, 1);
   }
 
@@ -66,10 +66,11 @@ class CatalogoDetalleNotifier extends ArnuvNotifier<CatalogoDetalleState> implem
   @override
   limpiarRegistro() {
     if (state.idcatalogo == 0) {
-      state = state.copyWith(registro: catalogoDetalleDefault, esValidoForm: false);
+      state = state.copyWith(registro: catalogoDetalleDefault.clone(), esValidoForm: false);
     } else {
       catalogoDetalleDefault.id.idcatalogo = state.idcatalogo;
-      state = state.copyWith(registro: catalogoDetalleDefault, esValidoForm: false);
+      catalogoDetalleDefault.id.iddetalle = "";
+      state = state.copyWith(registro: catalogoDetalleDefault.clone(), esValidoForm: false);
     }
   }
   
@@ -86,6 +87,7 @@ class CatalogoDetalleNotifier extends ArnuvNotifier<CatalogoDetalleState> implem
 
   setCheckActivo(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(activo: value!));
+    esFormularioValido();
   }
 
   listarPorIdCatalogo(int idcatalogo ) async {
@@ -117,7 +119,8 @@ class CatalogoDetalleState extends ArnuvState {
     this.idcatalogo = 0,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   CatalogoDetalleState copyWith({
@@ -135,13 +138,14 @@ class CatalogoDetalleState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => CatalogoDetalleState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => CatalogoDetalleState(
     formKey: formKey,
-    registro: catalogoDetalleDefault,
+    registro: catalogoDetalleDefault.clone(),
     esValidoForm: esValidoForm,
     idcatalogo: idcatalogo,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

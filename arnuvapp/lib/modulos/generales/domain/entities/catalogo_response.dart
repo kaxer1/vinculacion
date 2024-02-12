@@ -78,6 +78,12 @@ class Catalogo {
         "nombre": nombre,
         "activo": activo,
     };
+
+    Catalogo clone() => Catalogo(
+      id: id,
+      nombre: nombre,
+      activo: activo,
+    );
 }
 
 final catalogoDefault = Catalogo(

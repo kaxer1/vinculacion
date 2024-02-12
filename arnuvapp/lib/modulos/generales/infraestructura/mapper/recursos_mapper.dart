@@ -21,10 +21,13 @@ class RecursosMapper {
       ruta: json["ruta"] == null ? "" : json["ruta"],
     );
   
-  static Map<String, dynamic> entityToJsonData(Recursos persona) {
-    var mapa = <String, dynamic>{};
-        mapa.addAll({"id": persona.id} );
-    return mapa;
+  static Map<String, dynamic> entityToJsonData(Recursos obj) {
+    var mapa = <String, dynamic>{};        
+        mapa.addAll({"idrecurso": obj.id.idrecurso});
+        mapa.addAll({"idmodulo": obj.id.idmodulo});
+        mapa.addAll({"nombre": obj.nombre});
+        mapa.addAll({"ruta": obj.ruta});
+        return mapa;
   } 
 
 }

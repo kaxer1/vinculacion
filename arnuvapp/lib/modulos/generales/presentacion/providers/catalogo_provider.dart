@@ -23,7 +23,7 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
 
   CatalogoNotifier({
     required this.catalogoRepository,
-  }): super( CatalogoState(registro: catalogoDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( CatalogoState(registro: catalogoDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);
   }
 
@@ -65,7 +65,7 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: catalogoDefault, esValidoForm: false);
+    state = state.copyWith(registro: catalogoDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -81,6 +81,7 @@ class CatalogoNotifier extends ArnuvNotifier<CatalogoState> implements ArnuvCrud
 
   setCheckActivo(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(activo: value!));
+    esFormularioValido();
   }
 
 }
@@ -99,7 +100,8 @@ class CatalogoState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   CatalogoState copyWith({
@@ -115,12 +117,13 @@ class CatalogoState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => CatalogoState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => CatalogoState(
     formKey: formKey,
-    registro: catalogoDefault,
+    registro: catalogoDefault.clone(),
     esValidoForm: esValidoForm,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

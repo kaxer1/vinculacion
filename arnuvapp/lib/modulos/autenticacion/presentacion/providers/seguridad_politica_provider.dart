@@ -23,7 +23,7 @@ class SeguridadPoliticaNotifier extends ArnuvNotifier<SeguridadPoliticaState> im
 
   SeguridadPoliticaNotifier({
     required this.seguridadPoliticaRepository,
-  }): super( SeguridadPoliticaState(registro: seguridadPoliticaDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( SeguridadPoliticaState(registro: seguridadPoliticaDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);
   }
 
@@ -65,7 +65,7 @@ class SeguridadPoliticaNotifier extends ArnuvNotifier<SeguridadPoliticaState> im
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: seguridadPoliticaDefault, esValidoForm: false);
+    state = state.copyWith(registro: seguridadPoliticaDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -95,7 +95,8 @@ class SeguridadPoliticaState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   SeguridadPoliticaState copyWith({
@@ -111,12 +112,13 @@ class SeguridadPoliticaState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => SeguridadPoliticaState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => SeguridadPoliticaState(
     formKey: formKey,
-    registro: seguridadPoliticaDefault,
+    registro: seguridadPoliticaDefault.clone(),
     esValidoForm: esValidoForm,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

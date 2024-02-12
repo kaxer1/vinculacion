@@ -31,7 +31,7 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
     required this.personaDetalleRepository,
     required this.registroSeleccionadoCallback,
     required this.catdelSelectCallback,
-  }): super( PersonaDetalleState(registro: personaDetalleDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( PersonaDetalleState(registro: personaDetalleDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);
   }
 
@@ -79,7 +79,7 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: personaDetalleDefault, esValidoForm: false);
+    state = state.copyWith(registro: personaDetalleDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -100,7 +100,7 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
     } on PersonaException catch (e) {
       super.setMensajeError(e.message);
     }
-    return personaDetalleDefault;
+    return personaDetalleDefault.clone();
   }
 
 }
@@ -119,7 +119,8 @@ class PersonaDetalleState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   PersonaDetalleState copyWith({
@@ -135,10 +136,11 @@ class PersonaDetalleState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => PersonaDetalleState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => PersonaDetalleState(
     formKey: formKey,
-    registro: personaDetalleDefault,
+    registro: personaDetalleDefault.clone(),
     errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage,
     esValidoForm: esValidoForm,
     lregistros: lregistros
   );

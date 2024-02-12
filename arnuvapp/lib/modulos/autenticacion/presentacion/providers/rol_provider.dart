@@ -32,7 +32,7 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
     required this.rolRepository,
     required this.registroSeleccionadoCallback,
     required this.segpolSelectCallback,
-  }): super( RolState(registro: rolDefault, formKey: GlobalKey<FormState>()) ) {
+  }): super( RolState(registro: rolDefault.clone(), formKey: GlobalKey<FormState>()) ) {
     listar(1, 1);
   }
 
@@ -78,7 +78,7 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
   
   @override
   limpiarRegistro() {
-    state = state.copyWith(registro: rolDefault, esValidoForm: false);
+    state = state.copyWith(registro: rolDefault.clone(), esValidoForm: false);
   }
   
   @override
@@ -95,6 +95,7 @@ class RolNotifier extends ArnuvNotifier<RolState> implements ArnuvCrud<Rol> {
 
   setCheckActivo(bool? value) {
     state = state.copyWith(registro: state.registro.copyWith(activo: value!));
+    esFormularioValido();
   }
 
 }
@@ -113,7 +114,8 @@ class RolState extends ArnuvState {
     required this.registro,
     this.esValidoForm = false,
     required this.formKey,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage,
   });
 
   RolState copyWith({
@@ -129,12 +131,13 @@ class RolState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => RolState(
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => RolState(
     formKey: formKey,
-    registro: rolDefault,
+    registro: rolDefault.clone(),
     esValidoForm: esValidoForm,
     lregistros: lregistros,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage,
   );
 
 }

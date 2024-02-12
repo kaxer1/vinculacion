@@ -1,6 +1,6 @@
 export 'entities/persona_detalle_response.dart';
 export 'entities/usuario_detalle_response.dart';
-export 'package:arnuvapp/modulos/generales/domain/entities/catalogo_detalle_response.dart';
+export 'entities/usuario_unificado.dart';
 
 
 export 'datasources/personas_detalle_datasource.dart';

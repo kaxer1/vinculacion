@@ -22,14 +22,14 @@ class SeguridadPoliticaDropdownNotifier extends ArnuvNotifier<SeguridadPoliticaD
 
   SeguridadPoliticaDropdownNotifier({
     required this.catalogoRepository,
-  }): super( SeguridadPoliticaDropdownState(lregistros: [seguridadPoliticaDefault], registroSelect: seguridadPoliticaDefault ) ){
+  }): super( SeguridadPoliticaDropdownState(lregistros: [seguridadPoliticaDefault.clone()], registroSelect: seguridadPoliticaDefault.clone() ) ){
     listar(1, 1);
   }
 
   listar(int limit, int page) async {
     try {
       final lista = await catalogoRepository.listar(limit, page);
-      lista.insert(0, seguridadPoliticaDefault);
+      lista.insert(0, seguridadPoliticaDefault.clone());
       state = state.copyWith( lregistros: lista );
     } on AutenticacionException catch (e) {
       super.setMensajeError(e.message);
@@ -61,7 +61,8 @@ class SeguridadPoliticaDropdownState extends ArnuvState {
   SeguridadPoliticaDropdownState({
     required this.lregistros,
     required this.registroSelect,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage
   });
 
   SeguridadPoliticaDropdownState copyWith({
@@ -73,10 +74,11 @@ class SeguridadPoliticaDropdownState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => SeguridadPoliticaDropdownState(
-    lregistros: [seguridadPoliticaDefault],
-    registroSelect: seguridadPoliticaDefault,
-    errorMessage: errorMessage ?? super.errorMessage
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => SeguridadPoliticaDropdownState(
+    lregistros: [seguridadPoliticaDefault.clone()],
+    registroSelect: seguridadPoliticaDefault.clone(),
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

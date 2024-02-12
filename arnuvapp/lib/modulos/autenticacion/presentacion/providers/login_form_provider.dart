@@ -98,14 +98,4 @@ class LoginFormState {
     mostrarTextoContrasenia: mostrarTextoContrasenia ?? this.mostrarTextoContrasenia,
   );
 
-  @override
-  String toString() {
-    return '''
-  LoginFormState:
-    esValido: $esValido
-    email: $email
-    password: $password
-    mostrarTextoContrasenia: $mostrarTextoContrasenia
-''';
-  }
 }

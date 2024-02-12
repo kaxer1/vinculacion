@@ -106,6 +106,16 @@ class UsuarioRol {
         "fechaingreso": "${fechaingreso.year.toString().padLeft(4, '0')}-${fechaingreso.month.toString().padLeft(2, '0')}-${fechaingreso.day.toString().padLeft(2, '0')}",
         "fechamodificacion": fechamodificacion,
     };
+
+    UsuarioRol clone() => UsuarioRol(
+      id: id,
+      idrol: idrol,
+      idusuario: idusuario,
+      idususarioing: idususarioing,
+      idususariomod: idususariomod,
+      fechaingreso: fechaingreso,
+      fechamodificacion: fechamodificacion,
+    );
 }
 
 class UsuarioRolId {
@@ -135,12 +145,17 @@ class UsuarioRolId {
         "idrol": idrol,
         "idusuario": idusuario,
     };
+
+    UsuarioRolId clone() => UsuarioRolId(
+      idrol: idrol,
+      idusuario: idusuario,
+    );
 }
 
 final usuarioRolDefault = UsuarioRol(
-      id: UsuarioRolId(idrol: 0, idusuario: 0),
-      idrol: rolDefault,
-      idusuario: usuarioDetalleDefault,
+      id: UsuarioRolId(idrol: 0, idusuario: 0).clone(),
+      idrol: rolDefault.clone(),
+      idusuario: usuarioDetalleDefault.clone(),
       idususarioing: "",
       idususariomod: "",
       fechaingreso: DateTime.now(),

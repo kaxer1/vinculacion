@@ -68,7 +68,8 @@ class OpcionesPermisosScreen extends ConsumerWidget {
               dialogRegister(context: context,
                 esregistrar: false,
                 children: [_Formulario(
-                    onPressedOk: () {
+                  esActualizar: true,
+                  onPressedOk: () {
                     ref.watch(opcionesPermisosProvider.notifier).actualizar(lregistros[index]);
                     Navigator.pop(context);
                   }
@@ -94,9 +95,11 @@ class OpcionesPermisosScreen extends ConsumerWidget {
 class _Formulario extends ConsumerWidget {
 
   final Function()? onPressedOk;
+  final bool esActualizar;
 
   const _Formulario({
-    required this.onPressedOk
+    required this.onPressedOk,
+    this.esActualizar = false
   });
 
 
@@ -127,7 +130,7 @@ class _Formulario extends ConsumerWidget {
                 maxLength: 10,
                 onChange: (value) => state.registro.id.idrol = int.tryParse(value) ?? 0,
                 validacion: (valor) => valiacion.validarSoloNumeros(valor),
-                // readOnly: state.registro.id.idrol != 0,
+                readOnly: true,
               ),
               InputTexto(
                 initialValue: state.registro.id.idopcion.toString(),
@@ -137,7 +140,7 @@ class _Formulario extends ConsumerWidget {
                 maxLength: 10,
                 onChange: (value) => state.registro.id.idopcion = int.tryParse(value) ?? 0,
                 validacion: (valor) => valiacion.validarSoloNumeros(valor),
-                // readOnly: state.registro.id.idopcion != 0,
+                readOnly: esActualizar,
               ),
               InputTexto(
                 initialValue: state.registro.idopcionpadre.toString(),
@@ -145,7 +148,7 @@ class _Formulario extends ConsumerWidget {
                 espacioTop: 20.0,
                 label: localizations.translate('lblOpcionPadre'),
                 maxLength: 10,
-                onChange: (value) => state.registro.idopcionpadre = int.tryParse(value) ?? 0,
+                onChange: (value) => state.registro.idopcionpadre = int.tryParse(value),
                 // validacion: (valor) => valiacion.validarSoloNumeros(valor),
               ),
               InputTexto(

@@ -22,14 +22,14 @@ class CatalogoDetalleDropdownNotifier extends ArnuvNotifier<CatalogoDetalleDropd
 
   CatalogoDetalleDropdownNotifier({
     required this.catalogoDetalleRepository,
-  }): super( CatalogoDetalleDropdownState(lregistros: [catalogoDetalleDefault], registroSelect: catalogoDetalleDefault ) ){
+  }): super( CatalogoDetalleDropdownState(lregistros: [catalogoDetalleDefault.clone()], registroSelect: catalogoDetalleDefault.clone() ) ){
     // listar(1, 1);
   }
 
   listarCatalogDetalle(int idcatalogo) async {
     try {
       final lista = await catalogoDetalleRepository.listarByIdCatalogo(100, 1, idcatalogo);
-      lista.insert(0, catalogoDetalleDefault);
+      lista.insert(0, catalogoDetalleDefault.clone());
       state = state.copyWith( lregistros: lista, idcatalogo: idcatalogo );
     } on GeneralesException catch (e) {
       super.setMensajeError(e.message);
@@ -60,7 +60,8 @@ class CatalogoDetalleDropdownState extends ArnuvState {
     required this.lregistros,
     required this.registroSelect,
     this.idcatalogo = 0,
-    super.errorMessage
+    super.errorMessage,
+    super.succesMessage,
   });
 
   CatalogoDetalleDropdownState copyWith({
@@ -74,11 +75,12 @@ class CatalogoDetalleDropdownState extends ArnuvState {
   );
   
   @override
-  ArnuvState copyWithArnuv({String? errorMessage}) => CatalogoDetalleDropdownState(
-    lregistros: [catalogoDetalleDefault],
-    registroSelect: catalogoDetalleDefault,
+  ArnuvState copyWithArnuv({String? errorMessage, String? succesMessage}) => CatalogoDetalleDropdownState(
+    lregistros: [catalogoDetalleDefault.clone()],
+    registroSelect: catalogoDetalleDefault.clone(),
     idcatalogo: idcatalogo,
-    errorMessage: errorMessage ?? super.errorMessage
+    errorMessage: errorMessage ?? super.errorMessage,
+    succesMessage: succesMessage ?? super.succesMessage
   );
 
 }

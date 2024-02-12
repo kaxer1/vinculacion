@@ -78,6 +78,12 @@ class CatalogoDetalle {
         "nombre": nombre,
         "activo": activo,
     };
+
+    CatalogoDetalle clone() => CatalogoDetalle(
+      id: id,
+      nombre: nombre,
+      activo: activo,
+    );
 }
 
 class Id {
@@ -107,11 +113,16 @@ class Id {
         "idcatalogo": idcatalogo,
         "iddetalle": iddetalle,
     };
+
+    Id clone() => Id(
+      idcatalogo: idcatalogo,
+      iddetalle: iddetalle,
+    );
 }
 
 
 final catalogoDetalleDefault = CatalogoDetalle(
-        id: Id(idcatalogo: 0, iddetalle: ""),
+        id: Id(idcatalogo: 0, iddetalle: "").clone(),
         nombre: "",
         activo: false
     );

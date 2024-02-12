@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:arnuvapp/modulos/generales/domain/domain.dart';
 import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 
 PersonaDetalleResponse personaResponseFromJson(String str) => PersonaDetalleResponse.fromJson(json.decode(str));
@@ -115,6 +116,21 @@ class PersonaDetalle {
         "celular": celular,
         "email": email,
     };
+
+    PersonaDetalle clone() => PersonaDetalle(
+      id: id,
+      idusuarioing: idusuarioing,
+      idusuariomod: idusuariomod,
+      fechaingreso: fechaingreso,
+      fechamodificacion: fechamodificacion,
+      nombres: nombres,
+      apellidos: apellidos,
+      catalogodetalle: catalogodetalle,
+      identificacion: identificacion,
+      celular: celular,
+      email: email,
+    );
+
 }
 
 
@@ -126,11 +142,7 @@ final personaDetalleDefault = PersonaDetalle(
         fechamodificacion: '',
         nombres: '',
         apellidos: '',
-        catalogodetalle: CatalogoDetalle(
-          id: Id(idcatalogo: 1, iddetalle: ''), 
-          nombre: '', 
-          activo: true
-        ),
+        catalogodetalle: catalogoDetalleDefault.clone(),
         identificacion: '',
         celular: '',
         email: '',

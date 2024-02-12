@@ -79,4 +79,12 @@ public class RecursosController {
 		resp.mapearDato(entity, RecursosResponse.RecursosDto.class,  "recursos");
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
+
+	@GetMapping("/buscarporidmodulo/{idmodulo}")
+	public ResponseEntity<RespuestaComun> buscarPorIdModulo( @PathVariable int idmodulo) throws Exception {
+		var entity = servicioRecurso.bucarPorIdmodulo(idmodulo);
+		RecursosResponse resp = new RecursosResponse();
+		resp.setListaDto(entity, RecursosResponse.RecursosDto.class, "opcionespermisos","idmodulo" );
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
 }
