@@ -35,4 +35,10 @@ public class UsuarioRolServiceImp implements IUsuarioRolService {
 	public List<Usuariorol>  buscarPorRol(int idrol) {
 		return repo.buscarPorRol(idrol);
 	}
+
+	@Override
+	public boolean eliminar(Usuariorol data) {
+		repo.delete(data);
+		return true;
+	}
 }

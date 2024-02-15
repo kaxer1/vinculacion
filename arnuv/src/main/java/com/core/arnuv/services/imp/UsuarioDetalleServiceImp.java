@@ -1,5 +1,6 @@
 package com.core.arnuv.services.imp;
 
+import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.model.Usuariodetalle;
 import com.core.arnuv.repository.IUsuarioDetalleRepository;
 import com.core.arnuv.service.IUsuarioDetalleService;
@@ -65,6 +66,12 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 						.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 			}
 		};
+	}
+
+	@Override
+	public boolean eliminar(Usuariodetalle data) {
+		repo.delete(data);
+		return true;
 	}
 
 }

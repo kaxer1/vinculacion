@@ -16,4 +16,6 @@ public interface IPersonaDetalleService {
 
 	public Personadetalle buscarPorIdentificacion(String identificacion);
 
+	public boolean eliminar(Personadetalle data);
+
 }

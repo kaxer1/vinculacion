@@ -104,24 +104,41 @@ public class UsuarioDetalleController {
 		var data = serviceJwt.extraerTokenData();
 		var catDetEntity = servicioCatalogoDetalle.buscarPorId(request.getIdcatalogoidentificacion(), request.getIddetalleidentificacion());
 		var rolEntity = servicioRol.buscarPorId(request.getIdrol());
+		Personadetalle entityPersonaDetalle = null;
+		Usuariodetalle entityUsuarioDetalle = null;
+		Usuariorol entityUsuarioRol = null;
 		try {
 			Personadetalle personadetalle = UsuarioUnificadoHelper.crearPersonaDetalle(request, catDetEntity, (int) data.get("idusuario"));
-			Personadetalle entityPersonaDetalle = servicioPersonaDetalle.insertarPersonaDetalle(personadetalle);
+			entityPersonaDetalle = servicioPersonaDetalle.insertarPersonaDetalle(personadetalle);
 
 			Usuariodetalle usuariodetalle = UsuarioUnificadoHelper.crearUsuarioDetalle(request, entityPersonaDetalle, (int) data.get("idusuario"));
-			Usuariodetalle entityUsuarioDetalle = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
+			entityUsuarioDetalle = servicioUsuarioDetalle.insertarUsuarioDetalle(usuariodetalle);
 
 			Usuariorol usuariorol = UsuarioUnificadoHelper.crearUsuarioRol(request, entityUsuarioDetalle, rolEntity, (int) data.get("idusuario"));
-			servicioUsuarioRol.insertarUsuarioRol(usuariorol);
+			entityUsuarioRol = servicioUsuarioRol.insertarUsuarioRol(usuariorol);
 
 		} catch (DataIntegrityViolationException e) {
+			eliminacionPersona(entityPersonaDetalle, entityUsuarioDetalle, entityUsuarioRol);
 			throw new ArnuvNotFoundException("Error al guardar datos: {0}", e.getMessage().split("Detail:")[1].split("]")[0]);
 		} catch (Exception e) {
+			eliminacionPersona(entityPersonaDetalle, entityUsuarioDetalle, entityUsuarioRol);
 			throw new ArnuvNotFoundException("Error al guardar datos: {0}", e.getMessage());
 		}
 		BaseResponse resp = new BaseResponse();
 		resp.setCodigo("OK");
 
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
+
+	private void eliminacionPersona(Personadetalle personadetalle,	Usuariodetalle usuariodetalle, 	Usuariorol usuariorol) {
+		if (personadetalle != null) {
+			servicioPersonaDetalle.eliminar(personadetalle);
+		}
+		if (usuariodetalle != null) {
+			servicioUsuarioDetalle.eliminar(usuariodetalle);
+		}
+		if (usuariorol != null) {
+			servicioUsuarioRol.eliminar(usuariorol);
+		}
 	}
 }

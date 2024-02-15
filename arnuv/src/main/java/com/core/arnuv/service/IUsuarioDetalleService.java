@@ -1,5 +1,6 @@
 package com.core.arnuv.service;
 
+import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.model.Usuariodetalle;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -18,5 +19,7 @@ public interface IUsuarioDetalleService {
 	public Usuariodetalle buscarPorEmail(String email);
 
 	UserDetailsService userDetailsService();
+
+	public boolean eliminar(Usuariodetalle data);
 
 }

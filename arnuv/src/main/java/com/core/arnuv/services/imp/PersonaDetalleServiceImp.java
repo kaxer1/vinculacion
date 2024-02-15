@@ -51,4 +51,10 @@ public class PersonaDetalleServiceImp implements IPersonaDetalleService {
 	public Personadetalle buscarPorIdentificacion(String identificacion) {
 		return repo.buscarPorIdentificacion(identificacion);
 	}
+
+	@Override
+	public boolean eliminar(Personadetalle data) {
+		repo.delete(data);
+		return true;
+	}
 }
