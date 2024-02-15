@@ -76,6 +76,8 @@ INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, 
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (2, 1, 1, 1, 1, null, 1, 'GENERALES', 2, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (3, 1, 1, 1, 0, 2, 1, null, 2, 1, 5);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (4, 1, 1, 1, 0, 1, 1, null, 2, 1, 9);
+INSERT INTO opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (5, 1, 0, 0, 0, 1, 1, null, 2, 1, 4);
+
 
 
 

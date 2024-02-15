@@ -19,9 +19,9 @@ class UsuarioDetalleMapper {
   static UsuarioDetalle mapJsonToEntity(Map<String, dynamic> json) => UsuarioDetalle(
         idusuario: json["idusuario"] == null ? 0 : json["idusuario"],
         idpersona: PersonaDetalleMapper.personaJsonToEntity(json["idpersona"]),
-        idusuarioing: json["idusuarioing"],
-        idusuariomod: json["idusuariomod"],
-        idusuarioaprobacion: json["idusuarioaprobacion"],
+        idusuarioing: json["idusuarioing"] == null ? "" : json["idusuarioing"],
+        idusuariomod: json["idusuariomod"] == null ? "" : json["idusuariomod"],
+        idusuarioaprobacion: json["idusuarioaprobacion"] == null ? "" : json["idusuarioaprobacion"],
         fechaingreso: json["fechaingreso"] == null? null : DateTime.tryParse(json["fechaingreso"]),
         fechamodificacion: json["fechamodificacion"] == null? null : DateTime.tryParse(json["fechamodificacion"]),
         fechaaprobacion: json["fechaaprobacion"] == null? null : DateTime.tryParse(json["fechaaprobacion"]),

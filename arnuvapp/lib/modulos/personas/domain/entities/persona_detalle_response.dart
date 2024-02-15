@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:arnuvapp/modulos/generales/domain/domain.dart';
-import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 
 PersonaDetalleResponse personaResponseFromJson(String str) => PersonaDetalleResponse.fromJson(json.decode(str));
 
@@ -37,10 +36,10 @@ class PersonaDetalleResponse {
 
 class PersonaDetalle {
     int id;
-    String? idusuarioing;
-    String? idusuariomod;
-    String? fechaingreso;
-    String? fechamodificacion;
+    String idusuarioing;
+    String idusuariomod;
+    DateTime fechaingreso;
+    DateTime fechamodificacion;
     String nombres;
     String apellidos;
     CatalogoDetalle catalogodetalle;
@@ -50,10 +49,10 @@ class PersonaDetalle {
 
     PersonaDetalle({
         required this.id,
-        this.idusuarioing,
-        this.idusuariomod,
-        this.fechaingreso,
-        this.fechamodificacion,
+        required this.idusuarioing,
+        required this.idusuariomod,
+        required this.fechaingreso,
+        required this.fechamodificacion,
         required this.nombres,
         required this.apellidos,
         required this.catalogodetalle,
@@ -64,10 +63,10 @@ class PersonaDetalle {
 
     PersonaDetalle copyWith({
         int? id,
-        dynamic idusuarioing,
-        dynamic idusuariomod,
-        dynamic fechaingreso,
-        dynamic fechamodificacion,
+        String? idusuarioing,
+        String? idusuariomod,
+        DateTime? fechaingreso,
+        DateTime? fechamodificacion,
         String? nombres,
         String? apellidos,
         CatalogoDetalle? catalogodetalle,
@@ -93,8 +92,8 @@ class PersonaDetalle {
         id: json["id"],
         idusuarioing: json["idusuarioing"],
         idusuariomod: json["idusuariomod"],
-        fechaingreso: json["fechaingreso"],
-        fechamodificacion: json["fechamodificacion"],
+        fechaingreso: DateTime.tryParse(json["fechaingreso"]) ?? DateTime.now(),
+        fechamodificacion: DateTime.tryParse(json["fechamodificacion"]) ?? DateTime.now(),
         nombres: json["nombres"],
         apellidos: json["apellidos"],
         catalogodetalle: CatalogoDetalle.fromJson(json["catalogodetalle"]),
@@ -138,8 +137,8 @@ final personaDetalleDefault = PersonaDetalle(
         id: 0,
         idusuarioing: '',
         idusuariomod: '',
-        fechaingreso: '',
-        fechamodificacion: '',
+        fechaingreso: DateTime.now(),
+        fechamodificacion: DateTime.now(),
         nombres: '',
         apellidos: '',
         catalogodetalle: catalogoDetalleDefault.clone(),

@@ -1,3 +1,4 @@
+import 'package:arnuvapp/modulos/generales/domain/entities/catalogo_detalle_response.dart';
 import 'package:arnuvapp/modulos/generales/presentacion/providers/catalogo_detalle_dropdown_provider.dart';
 import 'package:arnuvapp/modulos/personas/domain/domain.dart';
 import 'package:arnuvapp/modulos/personas/infraestructura/infraestructure.dart';
@@ -24,7 +25,7 @@ final personaDetalleProvider = StateNotifierProvider.autoDispose<PersonaDetalleN
 class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implements ArnuvCrud<PersonaDetalle> {
 
   final PersonaDetalleRepository personaDetalleRepository;
-  final Function() registroSeleccionadoCallback;
+  final CatalogoDetalle Function() registroSeleccionadoCallback;
   final Function(String?) catdelSelectCallback;
 
   PersonaDetalleNotifier({
@@ -51,6 +52,9 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   actualizar(PersonaDetalle reg) async {
     try {
       var reg = registroSeleccionadoCallback();
+      if (reg.id.idcatalogo == 0) {
+        throw PersonaException("Seleccione el tipo de identificacion");
+      }
       state = state.copyWith(registro: state.registro.copyWith(catalogodetalle: reg));
       await personaDetalleRepository.editar(state.registro);
       listar(1, 1);
@@ -63,6 +67,10 @@ class PersonaDetalleNotifier extends ArnuvNotifier<PersonaDetalleState> implemen
   guardar() async {
     try {
       var reg = registroSeleccionadoCallback();
+      if (reg.id.idcatalogo == 0) {
+        PersonaException("Seleccione el tipo de identificacion");
+        return;
+      }
       state = state.copyWith(registro: state.registro.copyWith(catalogodetalle: reg));
       var registro = await personaDetalleRepository.crear(state.registro);
       state.lregistros.add(registro);

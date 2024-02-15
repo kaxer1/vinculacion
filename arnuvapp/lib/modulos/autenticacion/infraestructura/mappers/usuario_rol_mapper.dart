@@ -20,8 +20,8 @@ class UsuarioRolMapper {
       idusuario: UsuarioDetalleMapper.mapJsonToEntity(json["idusuario"]),
       idususarioing: json["idususarioing"],
       idususariomod: json["idususariomod"],
-      fechaingreso: DateTime.parse(json["fechaingreso"]),
-      fechamodificacion: json["fechamodificacion"],
+      fechaingreso: DateTime.tryParse(json["fechaingreso"]) ?? DateTime.now(),
+      fechamodificacion: DateTime.tryParse(json["fechamodificacion"]) ?? DateTime.now(),
        
     );
   
