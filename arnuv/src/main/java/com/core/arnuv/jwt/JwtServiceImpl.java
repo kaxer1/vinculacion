@@ -63,7 +63,7 @@ public class JwtServiceImpl implements IJwtService {
     public HttpHeaders generaToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         var jwt = this.generateToken(extraClaims, userDetails);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("token", jwt);
+        responseHeaders.set("Authorization", jwt);
         return responseHeaders;
     }
 
