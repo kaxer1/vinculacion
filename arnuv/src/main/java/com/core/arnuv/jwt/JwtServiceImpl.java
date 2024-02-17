@@ -106,4 +106,12 @@ public class JwtServiceImpl implements IJwtService {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    public String generateTokenNuevoUser(Map<String, Object> extraClaims, UserDetails userDetails) {
+        var diaexp = System.currentTimeMillis() + (1000 * 60 * 60); // expira en una hora
+        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(diaexp))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+    }
 }

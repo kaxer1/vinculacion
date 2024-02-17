@@ -4,6 +4,7 @@ import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.model.Usuariodetalle;
 import com.core.arnuv.repository.IUsuarioDetalleRepository;
 import com.core.arnuv.service.IUsuarioDetalleService;
+import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Component
@@ -72,6 +76,30 @@ public class UsuarioDetalleServiceImp implements IUsuarioDetalleService {
 	public boolean eliminar(Usuariodetalle data) {
 		repo.delete(data);
 		return true;
+	}
+
+	public String generarRandomPassword(int length) {
+		String caracteresPosibles = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		Random random = new Random();
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		// Generar caracteres aleatorios y construir la cadena
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(caracteresPosibles.length());
+			char caracterAleatorio = caracteresPosibles.charAt(index);
+			stringBuilder.append(caracterAleatorio);
+		}
+
+		return stringBuilder.toString();
+	}
+
+	@Override
+	public String encriptarPassword(String password) {
+		return Hashing.sha256()
+				.hashString(password, StandardCharsets.UTF_8)
+				.toString();
 	}
 
 }

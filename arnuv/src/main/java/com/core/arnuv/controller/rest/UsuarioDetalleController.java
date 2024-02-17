@@ -9,6 +9,7 @@ import com.core.arnuv.request.UsuarioUnificadoRequest;
 import com.core.arnuv.response.BaseResponse;
 import com.core.arnuv.response.UsuarioDetalleResponse;
 import com.core.arnuv.service.*;
+import com.core.arnuv.services.imp.EnvioEmail;
 import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.RespuestaComun;
 import com.core.arnuv.utils.helper.UsuarioUnificadoHelper;
@@ -18,12 +19,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioDetalleController {
 
 	@Autowired
 	private IUsuarioDetalleService servicioUsuarioDetalle;
+
+	@Autowired
+	private EnvioEmail serviceEmail;
 
 	@Autowired
 	private IPersonaDetalleService servicioPersonaDetalle;
@@ -107,6 +114,8 @@ public class UsuarioDetalleController {
 		Personadetalle entityPersonaDetalle = null;
 		Usuariodetalle entityUsuarioDetalle = null;
 		Usuariorol entityUsuarioRol = null;
+		var password = servicioUsuarioDetalle.generarRandomPassword(10);
+		request.setPassword(servicioUsuarioDetalle.encriptarPassword(password));
 		try {
 			Personadetalle personadetalle = UsuarioUnificadoHelper.crearPersonaDetalle(request, catDetEntity, (int) data.get("idusuario"));
 			entityPersonaDetalle = servicioPersonaDetalle.insertarPersonaDetalle(personadetalle);
@@ -116,6 +125,17 @@ public class UsuarioDetalleController {
 
 			Usuariorol usuariorol = UsuarioUnificadoHelper.crearUsuarioRol(request, entityUsuarioDetalle, rolEntity, (int) data.get("idusuario"));
 			entityUsuarioRol = servicioUsuarioRol.insertarUsuarioRol(usuariorol);
+
+			Map<String, Object> mdatos = new HashMap<>();
+			mdatos.put("idusuario",entityUsuarioDetalle.getIdusuario());
+			mdatos.put("idpersona",entityPersonaDetalle.getId());
+			mdatos.put("username",entityUsuarioDetalle.getUsername());
+			mdatos.put("email",entityPersonaDetalle.getEmail());
+			mdatos.put("idrol",entityUsuarioRol.getId().getIdrol());
+			mdatos.put("nrol",entityUsuarioRol.getIdrol().getNombre());
+
+			var token = serviceJwt.generateTokenNuevoUser(mdatos, entityUsuarioDetalle);
+			serviceEmail.sendEmailNuevoUsuario(entityPersonaDetalle.getEmail(), token, password, entityPersonaDetalle.getNombres() + " " + entityPersonaDetalle.getApellidos());
 
 		} catch (DataIntegrityViolationException e) {
 			eliminacionPersona(entityPersonaDetalle, entityUsuarioDetalle, entityUsuarioRol);

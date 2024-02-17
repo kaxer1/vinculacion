@@ -1,6 +1,5 @@
 package com.core.arnuv.service;
 
-import com.core.arnuv.model.Personadetalle;
 import com.core.arnuv.model.Usuariodetalle;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -21,5 +20,9 @@ public interface IUsuarioDetalleService {
 	UserDetailsService userDetailsService();
 
 	public boolean eliminar(Usuariodetalle data);
+
+	public String generarRandomPassword(int length);
+
+	public String encriptarPassword(String password) throws Exception;
 
 }
