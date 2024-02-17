@@ -35,13 +35,14 @@ public class EnvioEmail {
     public void sendEmailNuevoUsuario(String to, String token, String password, String nombrecompleto) throws MessagingException {
 
         MimeMessage email = mailSender.createMimeMessage();
-
+        String url = "https://vinculacion-production.up.railway.app";
+        
         email.setFrom(new InternetAddress(emailarnuv));
         email.setRecipients(MimeMessage.RecipientType.TO, to);
         email.setSubject("CONFIRMACIÓN DE CUENTA EN ARNUV");
         String htmlTemplate = themplateMailConfirmacion;
         htmlTemplate = htmlTemplate.replace("${nombrecompleto}", nombrecompleto);
-        htmlTemplate = htmlTemplate.replace("${link}", "http://localhost:49806/#/confirmacion?token=${token}");
+        htmlTemplate = htmlTemplate.replace("${link}", url + "/#/confirmacion?token=${token}");
         htmlTemplate = htmlTemplate.replace("${token}", token);
         htmlTemplate = htmlTemplate.replace("${texto}", "Por favor confirma tu cuenta y cambia tu contraseña para continuar. Tu contraseña temporal es: <h3>${password}</h3>");
         htmlTemplate = htmlTemplate.replace("${password}", password);
