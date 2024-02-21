@@ -35,7 +35,7 @@ public class EnvioEmail {
     public void sendEmailNuevoUsuario(String to, String token, String password, String nombrecompleto) throws MessagingException {
 
         MimeMessage email = mailSender.createMimeMessage();
-        String url = "https://vinculacion-production.up.railway.app";
+        String url = "https://arnuvapp.vercel.app";
         
         email.setFrom(new InternetAddress(emailarnuv));
         email.setRecipients(MimeMessage.RecipientType.TO, to);
