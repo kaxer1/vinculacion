@@ -151,14 +151,14 @@ public class UsuarioDetalleController {
 	}
 
 	private void eliminacionPersona(Personadetalle personadetalle,	Usuariodetalle usuariodetalle, 	Usuariorol usuariorol) {
-		if (personadetalle != null) {
-			servicioPersonaDetalle.eliminar(personadetalle);
+		if (usuariorol != null) {
+			servicioUsuarioRol.eliminar(usuariorol);
 		}
 		if (usuariodetalle != null) {
 			servicioUsuarioDetalle.eliminar(usuariodetalle);
 		}
-		if (usuariorol != null) {
-			servicioUsuarioRol.eliminar(usuariorol);
+		if (personadetalle != null) {
+			servicioPersonaDetalle.eliminar(personadetalle);
 		}
 	}
 }
