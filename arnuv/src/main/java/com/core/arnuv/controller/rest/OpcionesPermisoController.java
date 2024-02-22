@@ -109,4 +109,13 @@ public class OpcionesPermisoController {
 		resp.setListaDto(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class );
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/listarMenusPadres/{idrol}")
+	public ResponseEntity<RespuestaComun> listarMenusPadres(@PathVariable int idrol) throws Exception {
+		var entity = servicioOpcionPermiso.buscarItemMenuPadres(idrol);
+		OpcionesPermisoResponse resp = new OpcionesPermisoResponse();
+		resp.setListaDto(entity, OpcionesPermisoResponse.OpcionesPermisoDto.class );
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
+
 }
