@@ -11,6 +11,7 @@ import com.core.arnuv.response.LoginResponse;
 import com.core.arnuv.service.IOpcionesPermisoService;
 import com.core.arnuv.service.IUsuarioDetalleService;
 import com.core.arnuv.service.IUsuarioSesionService;
+import com.core.arnuv.services.imp.EnvioEmail;
 import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
@@ -39,6 +40,9 @@ public class AutenticacionRestController {
 
     @Autowired
     private JwtServiceImpl serviceJwt;
+
+    @Autowired
+    private EnvioEmail serviceEmail;
 
     @PostMapping("/login")
     public ResponseEntity<RespuestaComun> validarLogin(HttpServletRequest request, @RequestBody LoginRequest login) throws Exception {
@@ -207,5 +211,40 @@ public class AutenticacionRestController {
         mdatos.put("idrol",resp.getDto().getIdrol());
         mdatos.put("nrol",resp.getDto().getNrol());
         return new ResponseEntity<>(resp, serviceJwt.generaToken(mdatos, entity), HttpStatus.OK);
+    }
+
+    @PostMapping("/recuperarcontrasenia/{email}")
+    public ResponseEntity<RespuestaComun> buscarPorEmail(@PathVariable String email) throws Exception {
+        var entity = serviceUsuarioDetalle.buscarPorEmail(email);
+
+        if (entity == null) {
+            throw new ArnuvNotFoundException("El email {0} no existe", email);
+        }
+        try {
+            Map<String, Object> mdatos = new HashMap<>();
+            mdatos.put("idusuario", entity.getIdusuario());
+            mdatos.put("idpersona", entity.getIdpersona().getId());
+            mdatos.put("username", entity.getUsername());
+            mdatos.put("email", entity.getIdpersona().getEmail());
+            mdatos.put("idrol", entity.getUsuariorols().get(0).getId().getIdrol());
+            mdatos.put("nrol", entity.getUsuariorols().get(0).getIdrol().getNombre());
+
+            var password = serviceUsuarioDetalle.generarRandomPassword(10);
+            var passwordencrypt = serviceUsuarioDetalle.encriptarPassword(password);
+
+            entity.setPassword(passwordencrypt);
+
+            var token = serviceJwt.generateTokenNuevoUser(mdatos, entity);
+            serviceEmail.sendEmailNuevoUsuario(entity.getIdpersona().getEmail(), token, password, entity.getIdpersona().getNombres() + " " + entity.getIdpersona().getApellidos());
+
+            serviceUsuarioDetalle.actualizarUsuarioDetalle(entity);
+        } catch (Exception e) {
+            throw new ArnuvNotFoundException("Error: {0}", e.getMessage());
+        }
+        BaseResponse resp = new BaseResponse();
+        resp.setCodigo("OK");
+
+
+        return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
     }
 }
