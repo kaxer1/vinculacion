@@ -59,25 +59,20 @@ INSERT INTO public.recursos (idrecurso, nombre, ruta, idmodulo) VALUES (5, 'REGI
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (1, 1, 1, 1, 1, null, 1, 'USUARIOS', 1, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (2, 1, 1, 1, 1, 1, 1, null, 1, 1, 4);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (3, 1, 1, 1, 1, 5, 1, null, 1, 1, 5);
-INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (4, 1, 1, 1, 1, 5, 1, null, 1, 1, 6);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (5, 1, 1, 1, 1, null, 1, 'SEGURIDAD', 1, null, null);
-INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (6, 1, 1, 1, 1, 1, 1, null, 1, 1, 7);
-INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (7, 1, 1, 1, 1, 5, 1, null, 1, 1, 8);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (8, 1, 1, 1, 1, null, 1, 'PERSONAS', 1, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (9, 1, 1, 1, 1, 8, 1, null, 1, 2, 1);
-INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (10, 1, 1, 1, 1, 8, 1, null, 1, 2, 2);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (11, 1, 1, 1, 1, null, 1, 'GENERALES', 1, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (12, 1, 1, 1, 1, 11, 1, null, 1, 3, 2);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (13, 1, 1, 1, 1, 11, 1, null, 1, 3, 3);
-INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (14, 1, 1, 1, 1, 11, 1, null, 1, 3, 4);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (15, 1, 1, 1, 1, 11, 1, null, 1, 3, 5);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (16, 1, 1, 1, 1, 1, 1, null, 1, 1, 9);
+
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (1, 1, 1, 1, 1, null, 1, 'USUARIOS', 2, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (2, 1, 1, 1, 1, null, 1, 'GENERALES', 2, null, null);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (3, 1, 1, 1, 0, 2, 1, null, 2, 1, 5);
 INSERT INTO public.opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (4, 1, 1, 1, 0, 1, 1, null, 2, 1, 9);
 INSERT INTO opcionespermisos (idopcion, activo, crear, editar, eliminar, idopcionpadre, mostar, nombre, idrol, idmodulo, idrecurso) VALUES (5, 1, 0, 0, 0, 1, 1, null, 2, 1, 4);
-
 
 
 

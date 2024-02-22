@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.core.arnuv.model.Rol;
+import com.core.arnuv.model.Usuariorol;
 import com.core.arnuv.repository.IRolRepository;
+import com.core.arnuv.repository.IUsuarioRolRepository;
 import com.core.arnuv.service.IRolService;
 
 @Service
@@ -16,6 +18,9 @@ public class RolServiceImp implements IRolService {
 
 	@Autowired
 	private IRolRepository repo;
+	
+	@Autowired
+	private IUsuarioRolRepository repoUsuarioRol;
 
 	@Override
 	public List<Rol> listarRolesActivos() {
@@ -43,7 +48,18 @@ public class RolServiceImp implements IRolService {
 		existeRol.setIdpolitica(data.getIdpolitica());
 		existeRol.setNombre(data.getNombre());
 		existeRol.setActivo(data.getActivo());
-		return repo.save(existeRol);
+		Boolean continueUpdating = true;
+		if (!data.getActivo()) {
+			List<Usuariorol> listaReferencias = repoUsuarioRol.buscarPorRol(data.getId());
+			if (!listaReferencias.isEmpty()) {
+				continueUpdating = false;
+			}
+		}
+		if (continueUpdating) {			
+			return repo.save(existeRol);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

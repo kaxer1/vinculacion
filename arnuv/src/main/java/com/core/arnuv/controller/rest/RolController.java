@@ -7,6 +7,7 @@ import com.core.arnuv.request.RolRequest;
 import com.core.arnuv.response.RolResponse;
 import com.core.arnuv.service.IRolService;
 import com.core.arnuv.service.ISeguridadPoliticaService;
+import com.core.arnuv.utils.ArnuvNotFoundException;
 import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,14 @@ public class RolController {
 		resp.setListaDto(entity, RolResponse.RolDto.class, "usuariorols" );
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/listarActivos")
+	public ResponseEntity<RespuestaComun> getRolesActivos() throws Exception {
+		var entity = servicioRol.listarRolesActivos();
+		RolResponse resp = new RolResponse();
+		resp.setListaDto(entity, RolResponse.RolDto.class, "usuariorols" );
+		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
+	}
 
 	@PostMapping("/crear")
 	public ResponseEntity<RespuestaComun> crearRol(@RequestBody RolRequest rolrequest) throws Exception {
@@ -53,6 +62,9 @@ public class RolController {
 		Rol rol = rolrequest.mapearDato(rolrequest, Rol.class);
 		rol.setIdpolitica(seguridad);
 		var entity = servicioRol.actualizarRol(rol);
+		if (entity == null) {
+			throw new ArnuvNotFoundException("Imposible deshabilitar. Rol está relacionado");
+		}
 		RolResponse resp = new RolResponse();
 		resp.mapearDato(entity, RolResponse.RolDto.class, "opcionespermisos", "usuariorols" );
 		return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
