@@ -244,7 +244,6 @@ public class AutenticacionRestController {
         BaseResponse resp = new BaseResponse();
         resp.setCodigo("OK");
 
-
         return new ResponseEntity<>(resp, serviceJwt.regeneraToken(), HttpStatus.OK);
     }
 }
