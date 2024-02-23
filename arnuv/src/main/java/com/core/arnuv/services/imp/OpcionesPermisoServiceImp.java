@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Component
@@ -94,5 +91,12 @@ public class OpcionesPermisoServiceImp implements IOpcionesPermisoService {
 	@Override
 	public List<Opcionespermiso> buscarItemMenuPadres(int idrol) {
 		return repo.buscarItemMenuPadres(idrol);
+	}
+
+	@Override
+	public Long obtenerSiguienteIdopcion(int idrol) {
+		Long idopcion = OptionalLong.of(repo.IdOpcionSiguiente(idrol)).orElse(0);
+		idopcion++;
+		return idopcion++;
 	}
 }

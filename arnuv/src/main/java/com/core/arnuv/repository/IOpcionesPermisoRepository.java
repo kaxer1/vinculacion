@@ -24,6 +24,9 @@ public interface IOpcionesPermisoRepository extends JpaRepository<Opcionespermis
     @Query("select u from Opcionespermiso u where u.id.idrol =?1")
     List<Opcionespermiso> buscarPorRol(int idrol);
     
-    @Query("select u from Opcionespermiso u where u.idopcionpadre is not null and u.id.idrol = ?1")
+    @Query("select u from Opcionespermiso u where u.nombre is not null and u.id.idrol = ?1 and u.activo = 1 and u.mostar = 1")
     List<Opcionespermiso> buscarItemMenuPadres(int idrol);
+
+    @Query("select coalesce(max (u.id.idopcion), 0) from Opcionespermiso u where u.id.idrol = ?1 ")
+    Long IdOpcionSiguiente(int idrol);
 }

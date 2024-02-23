@@ -27,4 +27,6 @@ public interface IOpcionesPermisoService {
 
 	List<Opcionespermiso> buscarItemMenuPadres(int idrol);
 
+	Long obtenerSiguienteIdopcion(int idrol);
+
 }

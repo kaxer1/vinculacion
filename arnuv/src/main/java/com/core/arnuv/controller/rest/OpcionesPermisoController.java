@@ -9,7 +9,6 @@ import com.core.arnuv.response.OpcionesPermisoResponse;
 import com.core.arnuv.service.IOpcionesPermisoService;
 import com.core.arnuv.service.IRecursoService;
 import com.core.arnuv.service.IRolService;
-import com.core.arnuv.utils.ArnuvUtils;
 import com.core.arnuv.utils.RespuestaComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +54,7 @@ public class OpcionesPermisoController {
 		var opcionPermisoEntity = data.mapearDato(data, Opcionespermiso.class);
 		OpcionespermisoId opcionespermisoId = new OpcionespermisoId();
 		opcionespermisoId.setIdrol(data.getIdrol());
-		opcionespermisoId.setIdopcion(data.getIdopcion());
+		opcionespermisoId.setIdopcion(servicioOpcionPermiso.obtenerSiguienteIdopcion(data.getIdrol()) );
 
 		opcionPermisoEntity.setId(opcionespermisoId);
 		opcionPermisoEntity.setRecursos(recursoEntity);
